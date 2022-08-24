@@ -1,0 +1,7 @@
+activities:
+id
+identifier
+user_id
+is_read // if clicked true
+
+select * from activities where user_id = 
