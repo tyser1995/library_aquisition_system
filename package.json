@@ -2,13 +2,15 @@
   "name": "libraryaqui",
   "version": "0.1.0",
   "engines": {
-    "node": "16.x"
+    "node": "16.x",
+    "npm":"8.x"
   },
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.2",
