@@ -10,8 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
+    "heroku-prebuild": "npm install --save --legacy-peer-deps"
   },
   "dependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
