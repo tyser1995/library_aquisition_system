@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable object-curly-newline */
 import mysql from '../../providers/mysql';
 

@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable array-bracket-spacing */
 /* eslint-disable consistent-return */
 /* eslint-disable eqeqeq */

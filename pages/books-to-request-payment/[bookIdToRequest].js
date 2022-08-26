@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-one-expression-per-line */

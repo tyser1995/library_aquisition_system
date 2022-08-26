@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable consistent-return */
 /* eslint-disable eqeqeq */

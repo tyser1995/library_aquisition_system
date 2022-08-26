@@ -59,7 +59,6 @@ export default function RequestedCardsDean({ booksDeanDisplay }) {
             <p className=" font-thin">
               {new Date(booksDeanDisplay.date).toDateString()}
             </p>
-            
             <Link href={`/approve-books-dean/${booksDeanDisplay.requestID}`}>
               <button
                 type="button"

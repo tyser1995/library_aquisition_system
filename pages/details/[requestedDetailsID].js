@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable consistent-return */
 /* eslint-disable eqeqeq */

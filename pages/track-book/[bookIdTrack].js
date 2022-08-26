@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable radix */

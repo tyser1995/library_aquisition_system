@@ -1,16 +1,18 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-props-no-spreading */
 import { useMemo } from 'react';
 import { useTable, useFilters } from 'react-table';
 import { DefaultColumnFilter } from './Filters';
 
-export const fuzzyTextFilterFn = (rows, id, filterValue) => matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
+export const fuzzyTextFilterFn = (rows, id, filterValue) => matchSorter(rows, filterValue, {
+  keys: [(row) => row.values[id]],
+});
 
 // Let the table remove the filter if the string is empty
 fuzzyTextFilterFn.autoRemove = (val) => !val;
 
-const Table = ({
-  data,
-  columns,
-}) => {
+const Table = ({ data, columns }) => {
   const filterTypes = useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -37,16 +39,15 @@ const Table = ({
     [],
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns, data, defaultColumn, filterTypes,
-  },
-  useFilters);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn,
+      filterTypes,
+    },
+    useFilters,
+  );
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -57,21 +58,27 @@ const Table = ({
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => {
               // eslint-disable-next-line no-nested-ternary
-              const isSorted = column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : '';
+              const isSorted = column.isSorted
+                ? column.isSortedDesc
+                  ? ' 🔽'
+                  : ' 🔼'
+                : '';
 
               return (
                 <th
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   {...column.getHeaderProps({
-                    className: column.className || `text-gray-600 dark:text-white px-6 py-3 text-left text-xs
+                    className:
+                      column.className
+                      || `text-gray-600 dark:text-white px-6 py-3 text-left text-xs
                       uppercase tracking-wider dark:bg-primary-dark cursor-pointer`,
                   })}
                 >
                   {column.render('Header')}
-                  <span>
-                    {isSorted}
-                  </span>
-                  <div className="mt-2">{column.canFilter ? column.render('Filter') : null}</div>
+                  <span>{isSorted}</span>
+                  <div className="mt-2">
+                    {column.canFilter ? column.render('Filter') : null}
+                  </div>
                 </th>
               );
             })}
@@ -90,7 +97,8 @@ const Table = ({
               key={i}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...row.getRowProps({
-                className: row.className || 'hover:bg-gray-200 dark:hover:bg-gray-700',
+                className:
+                  row.className || 'hover:bg-gray-200 dark:hover:bg-gray-700',
               })}
             >
               {row.cells.map((cell) => (

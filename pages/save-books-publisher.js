@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-wrap-multilines */

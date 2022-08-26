@@ -57,11 +57,11 @@ export default function RequestedCardsPresident({ booksDisplayToPurchase }) {
           <div>
             <small className="font-bold mr-2">Approved By:</small>
             <p className=" font-thin ">
-              Finance 
+              Finance
               <div>{booksDisplayToPurchase.approvalFinance}</div>
             </p>
             <p className=" font-thin ">
-              President 
+              President
               <div>{booksDisplayToPurchase.approvalPresident}</div>
             </p>
           </div>

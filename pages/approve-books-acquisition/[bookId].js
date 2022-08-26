@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable radix */

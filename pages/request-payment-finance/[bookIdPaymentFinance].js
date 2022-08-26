@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-extend-native */
 import { Form, Field } from 'react-final-form';

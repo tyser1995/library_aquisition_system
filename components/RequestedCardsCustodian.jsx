@@ -57,11 +57,11 @@ export default function BooksCustodian({ booksToVerify }) {
           <div>
             <small className="font-bold mr-2">Approved By:</small>
             <p className=" font-thin ">
-              Finance 
+              Finance
               <div>{booksToVerify.approvalFinance}</div>
             </p>
             <p className=" font-thin ">
-              President 
+              President
               <div>{booksToVerify.approvalPresident}</div>
             </p>
           </div>

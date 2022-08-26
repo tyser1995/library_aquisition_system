@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable consistent-return */
 /* eslint-disable comma-dangle */
 /* eslint-disable object-curly-newline */

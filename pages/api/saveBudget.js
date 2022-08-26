@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import mysql from '../../providers/mysql';
 
 export default async function (req, res) {

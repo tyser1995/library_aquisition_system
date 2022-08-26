@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable comma-dangle */
 /* eslint-disable object-curly-newline */

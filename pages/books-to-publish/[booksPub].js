@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable no-alert */
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
