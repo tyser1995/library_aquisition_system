@@ -1,11 +1,11 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { useSession } from 'next-auth/client';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
-import api from '../../lib/api';
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { useSession } from "next-auth/client";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import api from "../../lib/api";
 
 export const getServerSideProps = async (context) => {
   const { booksconfirmID } = context.query;
@@ -26,7 +26,7 @@ export default function EnterBook({ booksconfirmID }) {
       const { data } = await axios.post("/api/bookentryUpdate", payload);
 
       toast.success(
-        "Update Successfully!",
+        " Update Successfully!",
         {
           position: "bottom-right",
           autoClose: 5000,
