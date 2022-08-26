@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
   console.log();
 
   return {
-    props: { bookIdToRequest: data, account: account },
+    props: { bookIdToRequest: data, account },
   };
 };
 
@@ -83,7 +83,7 @@ export default function RequestForm({ bookIdToRequest, account }) {
   const [session] = useSession();
 
   Date.prototype.toDateInputValue = function () {
-    var local = new Date(this);
+    const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
   };
@@ -140,7 +140,7 @@ export default function RequestForm({ bookIdToRequest, account }) {
                     name="acquisitionName"
                     type="hidden"
                     initialValue={
-                      account.fname + " " + account.mname + " " + account.lname
+                      `${account.fname  } ${  account.mname  } ${  account.lname}`
                     }
                     disabled
                   />

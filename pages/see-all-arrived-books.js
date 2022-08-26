@@ -73,7 +73,7 @@ export default function seeAllEntryForm({ arrivedBooks }) {
       {
         Header: 'Price',
         accessor: 'price', // accessor is the "key" in the data
-        Cell: ({ row: { values } }) => `₱${values['price']}`,
+        Cell: ({ row: { values } }) => `₱${values.price}`,
       },
       {
         Header: 'Approved By Director',

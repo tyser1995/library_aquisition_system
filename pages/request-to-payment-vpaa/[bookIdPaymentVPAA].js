@@ -21,7 +21,7 @@ export const getServerSideProps = async (context) => {
   console.log(data);
 
   return {
-    props: { bookIdPaymentVPAA: data, account: account },
+    props: { bookIdPaymentVPAA: data, account },
 
   };
 };
@@ -79,7 +79,7 @@ export default function RequestForm({ bookIdPaymentVPAA, account }) {
   const [session] = useSession();
 
   Date.prototype.toDateInputValue = (function() {
-    var local = new Date(this);
+    const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0,10);
 });
@@ -128,7 +128,7 @@ export default function RequestForm({ bookIdPaymentVPAA, account }) {
                         component="input"
                         name="vpaaName"
                         type="hidden"
-                        initialValue={account.fname + " "+  account.mname + " " + account.lname} 
+                        initialValue={`${account.fname  } ${  account.mname  } ${  account.lname}`} 
                         disabled
                       />
                     </label>
@@ -327,7 +327,7 @@ export default function RequestForm({ bookIdPaymentVPAA, account }) {
                     ) : save}
                     {imageURL &&(
                       <div className="text-sm font-medium mt-2 text-gray-500 underline">
-                      {account.fname + " " + account.lname}
+                      {`${account.fname  } ${  account.lname}`}
                      </div>
                     )}
                         

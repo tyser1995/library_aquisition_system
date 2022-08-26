@@ -1,10 +1,25 @@
-import Head from 'next/head';
-import mysql from '../providers/mysql';
-import validateSession from '../lib/session';
-import { useMemo } from 'react';
-import Link from 'next/link';
-import ReactTable from '../components/table';
-import { Form, Field } from 'react-final-form';
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import Head from "next/head";
+import { useMemo } from "react";
+import Link from "next/link";
+import { Form, Field } from "react-final-form";
+import mysql from "../providers/mysql";
+import validateSession from "../lib/session";
+import ReactTable from "../components/table";
 
 export const getServerSideProps = async (context) => {
   try {
@@ -27,67 +42,59 @@ export default function publisherBook({ publisherBook }) {
   const columns = useMemo(
     () => [
       {
-        Header: 'Acquisition #',
-        accessor: 'requestID', // accessor is the "key" in the data
+        Header: "Acquisition #",
+        accessor: "requestID", // accessor is the "key" in the data
       },
-    
-    {
-        Header: 'Publisher Name',
-        accessor: 'pubName', // accessor is the "key" in the data
+
+      {
+        Header: "Publisher Name",
+        accessor: "pubName", // accessor is the "key" in the data
       },
       {
-        Header: 'Publisher Address',
-        accessor: 'pubAddress', // accessor is the "key" in the data
+        Header: "Publisher Address",
+        accessor: "pubAddress", // accessor is the "key" in the data
       },
       {
-        Header: 'Athor Name',
-        accessor: 'authorName',
+        Header: "Athor Name",
+        accessor: "authorName",
       },
       {
-        Header: 'Title',
-        accessor: 'title', // accessor is the "key" in the data
+        Header: "Title",
+        accessor: "title", // accessor is the "key" in the data
       },
       {
-        Header: 'Publish Date',
-        accessor: 'pubdate', // accessor is the "key" in the data
+        Header: "Publish Date",
+        accessor: "pubdate", // accessor is the "key" in the data
         Cell: ({ row: { values } }) => (
-          <div>
-            {new Date(values.pubdate).toDateString()}
-          </div>
-        ),
-
-      },
-      {
-        Header: 'User ID',
-        accessor: 'userID', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Requested By',
-        accessor: 'requestee', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Department',
-        accessor: 'selectDepartment', // accessor is the "key" in the data
-      },
-
-      {
-        Header: 'Status',
-        accessor: 'status', // accessor is the "key" in the data
-        Cell: ({ row: { values } }) => (
-
-          <div>
-
-          {values.status  === 0 && 'Processing'}
-          {values.status  === 4 && 'Posted'}
-
-
-          </div>
-          
+          <div>{new Date(values.pubdate).toDateString()}</div>
         ),
       },
       {
-        Header: () => 'Action',
-        accessor: 'action',
+        Header: "User ID",
+        accessor: "userID", // accessor is the "key" in the data
+      },
+      {
+        Header: "Requested By",
+        accessor: "requestee", // accessor is the "key" in the data
+      },
+      {
+        Header: "Department",
+        accessor: "selectDepartment", // accessor is the "key" in the data
+      },
+
+      {
+        Header: "Status",
+        accessor: "status", // accessor is the "key" in the data
+        Cell: ({ row: { values } }) => (
+          <div>
+            {values.status === 0 && "Processing"}
+            {values.status === 4 && "Posted"}
+          </div>
+        ),
+      },
+      {
+        Header: () => "Action",
+        accessor: "action",
         Cell: ({ row: { values } }) => (
           <Link href={`/updatepublisherbook/${values.requestID}`}>
             <button
@@ -102,7 +109,7 @@ export default function publisherBook({ publisherBook }) {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -115,15 +122,22 @@ export default function publisherBook({ publisherBook }) {
       <section className="max-w-screen from-blue-900 to-yellow-600 bg-base  min-h-screen mx-auto ">
         <form className=" p-14 bg-white rounded-md my-16 w- mx-auto h-auto w-auto shadow-lg ">
           <div className="flex-shrink-0 flex content-around items-center">
-            <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-            <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
+            <img
+              className="hidden lg:block h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="okay"
+            />
+            <img
+              className="block lg:hidden h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="cpu logo"
+            />
             <h1 className="text-xl  text-gray-600 ">Track your book</h1>
           </div>
           <div />
           <div className="text-xs shadow-md w-full mt-10 ">
             <span className="block  text-xs  text-gray-500 "> All Books</span>
 
-        
             <ReactTable data={publisherBook} columns={columns} />
           </div>
         </form>

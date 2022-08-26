@@ -1,9 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState , useMemo } from "react";
 import { Field, Form } from "react-final-form";
+
+import axios from "axios";
 import api from "../lib/api";
 import ReactTable from "../components/table";
-import React, { useMemo } from "react";
-import axios from "axios";
 
 const BudgetForm = ({ selectDepartment }) => {
   const [isModalOpen, setIsModelOpen] = useState(false);
@@ -25,7 +25,7 @@ const BudgetForm = ({ selectDepartment }) => {
       );
 
       // debugger;
-      //console.log(result);
+      // console.log(result);
       const post = JSON.parse(JSON.stringify(result.borrowedAccountbudget));
 
       setDataAccounts(post);
@@ -62,21 +62,21 @@ const BudgetForm = ({ selectDepartment }) => {
           parseInt(budget_subtracted) +
           parseInt(document.getElementById("totalBudget").value),
         remarks:
-          "Borrowed from " +
-          values.selectDepartment +
-          " amounting of " +
-          budget_subtracted,
+          `Borrowed from ${ 
+          values.selectDepartment 
+          } amounting of ${ 
+          budget_subtracted}`,
         selectDepartment: currDept,
         previousBudget: parseInt(document.getElementById("totalBudget").value),
       }
     );
 
-    //console.log([updateBudget, insertBudget]);
+    // console.log([updateBudget, insertBudget]);
 
-    //console.log(deduct_budget,parseInt(document.getElementById('totalBudget').value),);
-    //console.table(values);
-    //console.log(data.totalBudget + "  " + data.totalCost + " = " + (data.totalBudget - data.subtracted.toString().replace('-', '')));
-    //console.log(data.subtracted + " + " + values.budget + " = " + (data.subtracted + values.budget));
+    // console.log(deduct_budget,parseInt(document.getElementById('totalBudget').value),);
+    // console.table(values);
+    // console.log(data.totalBudget + "  " + data.totalCost + " = " + (data.totalBudget - data.subtracted.toString().replace('-', '')));
+    // console.log(data.subtracted + " + " + values.budget + " = " + (data.subtracted + values.budget));
   };
   // Trigger fetch on first load
   useEffect(() => {

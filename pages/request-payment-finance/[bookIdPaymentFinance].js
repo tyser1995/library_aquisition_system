@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-extend-native */
 import { Form, Field } from 'react-final-form';
 import axios from 'axios';
 import Head from 'next/head';
@@ -5,12 +7,12 @@ import { useSession } from 'next-auth/client';
 import Popup from 'reactjs-popup';
 import { useRef, useState } from 'react';
 import SignaturePad from 'react-signature-canvas';
-import dataURItoBlob from '../../lib/date-uri-to-blob';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import validateSession from '../../lib/session';
 import { useRouter } from 'next/router';
+import validateSession from '../../lib/session';
 import api from '../../lib/api';
+import dataURItoBlob from '../../lib/date-uri-to-blob';
 
 
 export const getServerSideProps = async (context) => {
@@ -21,7 +23,9 @@ export const getServerSideProps = async (context) => {
   console.log(data);
 
   return {
-    props: { bookIdPaymentFinance: data, account:account },
+    props: {
+      bookIdPaymentFinance: data, account,
+    },
 
   };
 };
@@ -31,40 +35,42 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
 
 
   const handleOnSubmit = async (payload) => {
-    try { 
+    try {
       const { data } = await axios.post('/api/bookPaymentFinance', {
-      ...payload,
-      imageURL,
-    });
-    toast.success(' Sent Successfully!', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    }, data);
+        ...payload,
+        imageURL,
+      });
+      toast.success(' Sent Successfully!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      }, data);
 
-    router.push('/see-all-books-payment-finance');
-      
+      router.push('/see-all-books-payment-finance');
     } catch (error) {
-  console.log(error);
-      
+      console.log(error);
     }
-   
   };
 
-  const sigCanvas = useRef({});
+  const sigCanvas = useRef({
+  });
   const clear = () => sigCanvas.current.clear();
 
   const save = async () => {
     try {
       const blob = dataURItoBlob(sigCanvas.current.getTrimmedCanvas().toDataURL('image/png'));
-      const img = new File([blob], 'fileName.jpg', { type: 'image/jpeg', lastModified: new Date() });
+      const img = new File([blob], 'fileName.jpg', {
+        type: 'image/jpeg', lastModified: new Date(),
+      });
 
       const config = {
-        headers: { 'content-type': 'multipart/form-data' },
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
       };
 
       const formData = new FormData();
@@ -78,12 +84,14 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
     }
   };
   const [session] = useSession();
-  
-  Date.prototype.toDateInputValue = (function() {
-    var local = new Date(this);
+
+  // eslint-disable-next-line no-restricted-syntax
+  Date.prototype.toDateInputValue = (function () {
+    const local = new Date(this);
+    // eslint-disable-next-line react/no-this-in-sfc
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local.toJSON().slice(0,10);
-});
+    return local.toJSON().slice(0, 10);
+  });
 
   return (
 
@@ -118,16 +126,16 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
                   <h1 className="text-xl   text-gray-600 ">Finance Request Payment Signature</h1>
                 </div>
                 <label htmlFor="edition" className="">
-                      <Field
-                        className="text-gray-500 rounded-md border-gray-300  w-full
+                  <Field
+                    className="text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
-                        component="input"
-                        name="vpaaName"
-                        type="hidden"
-                        initialValue={account.fname + " "+  account.mname + " " + account.lname} 
-                        disabled
-                      />
-                    </label>
+                    component="input"
+                    name="vpaaName"
+                    type="hidden"
+                    initialValue={`${account.fname} ${account.mname} ${account.lname}`}
+                    disabled
+                  />
+                </label>
                 <div className="flex space-x-6 content-around items-center  justify-end">
 
                   <label htmlFor="date" className=" ">
@@ -284,54 +292,54 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
                       />
                     </label>
                     <div className="row-start-4 mt-2 ">
-                    <div className="flex space-x-6 content-around items-center mt-5 justify-start ">
+                      <div className="flex space-x-6 content-around items-center mt-5 justify-start ">
 
-                      <label htmlFor="requesID" className="">
-                        <span className="  text-xs  text-gray-500 p">Dean Signature</span>
-                        <img src={bookIdPaymentFinance.signatureDean} alt="College Dean Signature" width="100" height="100" className=" border border-gray-blue-900" />
-                        <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdPaymentFinance.deanName}
-                        </div>
-                      </label>
-                      <label htmlFor="requesID" className="">
-                        <span className="  text-xs  text-gray-500 p">Acquisition Signature</span>
-                        <img src={bookIdPaymentFinance.signatureAcquisition} alt="College Dean Signature" width="100" height="100" className="  border  border-gray-blue-900" />
-                        <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdPaymentFinance.acquisitionName}
-                        </div>
-                      </label>
-                      <label htmlFor="requesID" className="">
-                        <span className="  text-xs text-gray-500 p">Director Signature</span>
-                        <img src={bookIdPaymentFinance.signtureDirector} alt="College Dean Signature" width="100" height="100" className=" border border-gray-blue-900" />
-                       <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdPaymentFinance.directorName}
-                        </div>
-                      </label>
-                      <label htmlFor="requesID" className="">
-                        <span className="  text-xs text-gray-500 p">VPAA Signature</span>
-                        <img src={bookIdPaymentFinance.signatureVPAA} alt="College Dean Signature" width="100" height="100" className="  border border-gray-blue-900" />
-                        <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdPaymentFinance.vpaaName}
-                        </div>
-                      </label>
+                        <label htmlFor="requesID" className="">
+                          <span className="  text-xs  text-gray-500 p">Dean Signature</span>
+                          <img src={bookIdPaymentFinance.signatureDean} alt="College Dean Signature" width="100" height="100" className=" border border-gray-blue-900" />
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdPaymentFinance.deanName}
+                          </div>
+                        </label>
+                        <label htmlFor="requesID" className="">
+                          <span className="  text-xs  text-gray-500 p">Acquisition Signature</span>
+                          <img src={bookIdPaymentFinance.signatureAcquisition} alt="College Dean Signature" width="100" height="100" className="  border  border-gray-blue-900" />
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdPaymentFinance.acquisitionName}
+                          </div>
+                        </label>
+                        <label htmlFor="requesID" className="">
+                          <span className="  text-xs text-gray-500 p">Director Signature</span>
+                          <img src={bookIdPaymentFinance.signtureDirector} alt="College Dean Signature" width="100" height="100" className=" border border-gray-blue-900" />
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdPaymentFinance.directorName}
+                          </div>
+                        </label>
+                        <label htmlFor="requesID" className="">
+                          <span className="  text-xs text-gray-500 p">VPAA Signature</span>
+                          <img src={bookIdPaymentFinance.signatureVPAA} alt="College Dean Signature" width="100" height="100" className="  border border-gray-blue-900" />
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdPaymentFinance.vpaaName}
+                          </div>
+                        </label>
+                      </div>
+
                     </div>
 
                   </div>
-          
-                  </div>
-            
+
 
                   <label htmlFor="edition" className="">
-                      <Field
-                        className="text-gray-500 rounded-md border-gray-300  w-full
+                    <Field
+                      className="text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
-                        component="input"
-                        name="financeName"
-                        type="hidden"
-                        initialValue={account.fname + " "+  account.mname + " " + account.lname} 
-                        disabled
-                      />
-                    </label>
+                      component="input"
+                      name="financeName"
+                      type="hidden"
+                      initialValue={`${account.fname} ${account.mname} ${account.lname}`}
+                      disabled
+                    />
+                  </label>
 
                   <div className="row-start-6 ">
 
@@ -350,13 +358,13 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
                         }}
                       />
                     ) : save}
-                    {imageURL &&(
-                           <div className="text-sm font-medium mt-2 text-gray-500 underline">
-                           {account.fname + " " + account.lname}
-                          </div>
-                          
+                    {imageURL && (
+                    <div className="text-sm font-medium mt-2 text-gray-500 underline">
+                      {`${account.fname} ${account.lname}`}
+                    </div>
+
                     )}
-                 
+
 
                     <Popup
                       modal
@@ -376,7 +384,12 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
                     >
                       {(close) => (
                         <>
-                          <SignaturePad ref={sigCanvas} canvasProps={{ className: 'signatureCanvas' }} />
+                          <SignaturePad
+                            ref={sigCanvas}
+                            canvasProps={{
+                              className: 'signatureCanvas',
+                            }}
+                          />
                           <div className="space-x-2  justify-items-center ">
                             <button
                               className="mx-auto mt-3 pr-4 text-center py-2 px-4 bg border border-transparent shadow-sm text-sm font-medium rounded-md
@@ -414,10 +427,7 @@ export default function RequestForm({ bookIdPaymentFinance, account }) {
                 </div>
 
 
-                <div className="flex space-x-6 content-around items-center mt-5 justify-start p-8">
-
-
-                </div>
+                <div className="flex space-x-6 content-around items-center mt-5 justify-start p-8" />
 
 
 

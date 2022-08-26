@@ -1,12 +1,13 @@
+/* eslint-disable no-trailing-spaces */
 import Head from 'next/head';
 import { Form, Field } from 'react-final-form';
-import React, { useMemo } from 'react';
+import React, { useMemo , Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import ReactTable from '../components/table';
 import BudgetForm from './budget-form';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Fragment, useEffect, useState } from 'react';
+
 import mysql from '../providers/mysql';
 import api from '../lib/api';
 
@@ -30,7 +31,7 @@ export const getServerSideProps = async () => {
       totalBudget: budget,
       data: refFil,
       totalAddedBud: totalPostAddedBud,
-      totalPostAddedRefFil: totalPostAddedRefFil,
+      totalPostAddedRefFil,
 
     },
   }
@@ -66,9 +67,9 @@ export default function SignIn({ totalCost, totalBudget, data, totalAddedBud, to
 
 
   const handleKeyPressEnrollees = (event) => {
-    var inputTxtBoxLibFee = document.getElementById('textboxLibFee').value;
-    var inputTxtBoxEnrollees = document.getElementById('textboxEnrollees').value;
-    var totalBud = document.getElementById('budget').value;
+    const inputTxtBoxLibFee = document.getElementById('textboxLibFee').value;
+    const inputTxtBoxEnrollees = document.getElementById('textboxEnrollees').value;
+    let totalBud = document.getElementById('budget').value;
 
     if (inputTxtBoxLibFee != "NaN" || inputTxtBoxLibFee != "") {
       totalBud = document.getElementById('textboxEnrollees').value * document.getElementById('textboxLibFee').value;
@@ -80,9 +81,9 @@ export default function SignIn({ totalCost, totalBudget, data, totalAddedBud, to
   }
 
   const handleKeyPress = (event) => {
-    var inputTxtBoxLibFee = document.getElementById('textboxLibFee').value;
-    var inputTxtBoxEnrollees = document.getElementById('textboxEnrollees').value;
-    var totalBud = document.getElementById('budget').value;
+    const inputTxtBoxLibFee = document.getElementById('textboxLibFee').value;
+    const inputTxtBoxEnrollees = document.getElementById('textboxEnrollees').value;
+    let totalBud = document.getElementById('budget').value;
     if (document.getElementById('textboxEnrollees').value == "NaN" || document.getElementById('textboxLibFee').value == "NaN") {
 
     }
@@ -146,7 +147,7 @@ export default function SignIn({ totalCost, totalBudget, data, totalAddedBud, to
       {
         Header: 'Total Budget',
         accessor: 'budget', //
-        Cell: ({ row: { values } }) => `₱${values['budget']}`,// accessor is the "key" in the data
+        Cell: ({ row: { values } }) => `₱${values.budget}`,// accessor is the "key" in the data
         // Footer:()=>{
         //   const totalAdded = 0
         //   return totalAdded;

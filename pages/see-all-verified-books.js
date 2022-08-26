@@ -1,14 +1,28 @@
-import Head from 'next/head';
-import { useMemo } from 'react';
-import Link from 'next/link';
-import mysql from '../providers/mysql';
-import validateSession from '../lib/session';
-import ReactTable from '../components/table';
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import Head from "next/head";
+import { useMemo } from "react";
+import Link from "next/link";
+import mysql from "../providers/mysql";
+import validateSession from "../lib/session";
+import ReactTable from "../components/table";
 
 export const getServerSideProps = async (context) => {
   try {
-    const result = await
-    mysql.query('SELECT * FROM requestform WHERE verified = 1 ');
+    const result = await mysql.query(
+      "SELECT * FROM requestform WHERE verified = 1 "
+    );
     const session = await validateSession(context);
 
     const post = JSON.parse(JSON.stringify(result));
@@ -23,93 +37,81 @@ export default function seeAllVerifiedBooks({ verifiedBooks }) {
   // console.log(verifiedBooks);
   const columns = useMemo(
     () => [
-
       {
-        Header: 'Acquisition #',
-        accessor: 'requestID', // accessor is the "key" in the data
+        Header: "Acquisition #",
+        accessor: "requestID", // accessor is the "key" in the data
       },
 
       {
-        Header: 'Request Date',
-        accessor: 'date',
+        Header: "Request Date",
+        accessor: "date",
         Cell: ({ row: { values } }) => (
-          <div>
-            {new Date(values.date).toDateString()}
-          </div>
+          <div>{new Date(values.date).toDateString()}</div>
         ),
       },
       {
-        Header: 'Athor Name',
-        accessor: 'authorName',
+        Header: "Athor Name",
+        accessor: "authorName",
       },
       {
-        Header: 'Title',
-        accessor: 'title', // accessor is the "key" in the data
+        Header: "Title",
+        accessor: "title", // accessor is the "key" in the data
       },
       {
-        Header: 'Publish Date',
-        accessor: 'pubdate', // accessor is the "key" in the data
+        Header: "Publish Date",
+        accessor: "pubdate", // accessor is the "key" in the data
         Cell: ({ row: { values } }) => (
-          <div>
-            {new Date(values.pubdate).toDateString()}
-          </div>
+          <div>{new Date(values.pubdate).toDateString()}</div>
         ),
       },
       {
-        Header: 'User ID',
-        accessor: 'userID', // accessor is the "key" in the data
+        Header: "User ID",
+        accessor: "userID", // accessor is the "key" in the data
       },
       {
-        Header: 'Requested By',
-        accessor: 'requestee', // accessor is the "key" in the data
+        Header: "Requested By",
+        accessor: "requestee", // accessor is the "key" in the data
       },
       {
-        Header: 'Department',
-        accessor: 'selectDepartment', // accessor is the "key" in the data
+        Header: "Department",
+        accessor: "selectDepartment", // accessor is the "key" in the data
       },
       {
-        Header: 'Is Rush?',
-        accessor: 'rushornrush',
+        Header: "Is Rush?",
+        accessor: "rushornrush",
       },
       {
-        Header: 'Price',
-        accessor: 'price',
+        Header: "Price",
+        accessor: "price",
       },
 
       {
-        Header: 'Approved By Dean',
-        accessor: 'approvalDean', // accessor is the "key" in the data
+        Header: "Approved By Dean",
+        accessor: "approvalDean", // accessor is the "key" in the data
         Cell: ({ row: { values } }) => (
-          <div>
-            {values.approvalDean ? 'Yes' : 'No'}
-          </div>
+          <div>{values.approvalDean ? "Yes" : "No"}</div>
         ),
       },
       {
-        Header: 'Approved By Finance',
-        accessor: 'approvalFinance', // accessor is the "key" in the data
+        Header: "Approved By Finance",
+        accessor: "approvalFinance", // accessor is the "key" in the data
         Cell: ({ row: { values } }) => (
-          <div>
-            {values.approvalFinance ? 'Yes' : 'No'}
-          </div>
+          <div>{values.approvalFinance ? "Yes" : "No"}</div>
         ),
       },
       {
-        Header: 'Verified By Custodian',
-        accessor: 'verified', // accessor is the "key" in the data
+        Header: "Verified By Custodian",
+        accessor: "verified", // accessor is the "key" in the data
         Cell: ({ row: { values } }) => (
-          <div>
-            {values.verified ? 'Yes' : 'No'}
-          </div>
+          <div>{values.verified ? "Yes" : "No"}</div>
         ),
       },
 
       {
-        Header: () => 'Action',
-        accessor: 'action',
+        Header: () => "Action",
+        accessor: "action",
         Cell: ({ row: { values } }) => (
           <Link href={`/books-to-request-payment/${values.requestID}`}>
-
             <button
               type="button"
               className="mx-auto mt-3  text-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md
@@ -122,7 +124,7 @@ export default function seeAllVerifiedBooks({ verifiedBooks }) {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -133,15 +135,19 @@ export default function seeAllVerifiedBooks({ verifiedBooks }) {
         <link rel="icon" href="/icon.ico" />
       </Head>
       <section className="max-w-screen bg-base min-h-screen mx-auto ">
-
         <form className=" p-14 bg-white rounded-md my-16 w- mx-auto h-auto w-auto shadow-lg ">
-
           <div className="flex-shrink-0 flex content-around items-center">
-
-            <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-            <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
+            <img
+              className="hidden lg:block h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="okay"
+            />
+            <img
+              className="block lg:hidden h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="cpu logo"
+            />
             <h1 className="text-xl  text-gray-600 ">All Verified Books </h1>
-
           </div>
 
           <div className="text-xs shadow-md w-full mt-10 ">
@@ -149,7 +155,6 @@ export default function seeAllVerifiedBooks({ verifiedBooks }) {
             <ReactTable data={verifiedBooks} columns={columns} />
           </div>
         </form>
-
       </section>
     </>
   );

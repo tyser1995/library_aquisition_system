@@ -1,8 +1,23 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { useSession } from 'next-auth/client';
-import api from '../../lib/api';
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { useSession } from "next-auth/client";
+import api from "../../lib/api";
 
 export const getServerSideProps = async (context) => {
   const { bookIdTrack } = context.query;
@@ -12,22 +27,19 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: { bookIdTrack: data },
-
   };
 };
 
 export default function RequestForm({ bookIdTrack }) {
   const handleOnSubmit = async (payload) => {
-    const { data } = await axios.post('/api/bookUpdatePresident', payload);
+    const { data } = await axios.post("/api/bookUpdatePresident", payload);
 
     alert(data.message);
   };
 
   const [session] = useSession();
   return (
-
     <section className=" mx-auto bg-base   md:flex min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Entry of Books </title>
         <meta name="keywords" content="someting" />
@@ -36,7 +48,8 @@ export default function RequestForm({ bookIdTrack }) {
       {!session && (
         <>
           <div className=" mx-auto p-10 md:flex bg-gray-500  border-blue-900 border-1 rounded">
-            <span className="
+            <span
+              className="
          text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
             >
               Please Sign In First
@@ -50,19 +63,29 @@ export default function RequestForm({ bookIdTrack }) {
           <Form
             onSubmit={handleOnSubmit}
             render={({ handleSubmit }) => (
-
-              <form onSubmit={handleSubmit} className=" px-8 pt-8 pb-8 bg-white rounded-md my-16 shadow-md w-full mx-auto h-auto  ">
-
+              <form
+                onSubmit={handleSubmit}
+                className=" px-8 pt-8 pb-8 bg-white rounded-md my-16 shadow-md w-full mx-auto h-auto  "
+              >
                 <div className="flex-shrink-0 flex content-around items-center">
-
-                  <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-                  <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
+                  <img
+                    className="hidden lg:block h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="okay"
+                  />
+                  <img
+                    className="block lg:hidden h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="cpu logo"
+                  />
                   <h1 className="text-xl  text-gray-600 ">Track Books</h1>
                 </div>
 
                 <div className="flex space-x-6 content-around items-center mt-10 justify-end p-8">
                   <label htmlFor="date" className="block">
-                    <span className="block  text-xs  text-gray-500">Rush or Not Rush</span>
+                    <span className="block  text-xs  text-gray-500">
+                      Rush or Not Rush
+                    </span>
                     <Field
                       className="text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -75,7 +98,9 @@ export default function RequestForm({ bookIdTrack }) {
                     />
                   </label>
                   <label htmlFor="date" className="block  mr-3">
-                    <span className="block  text-xs text-gray-500 ">Requested Date</span>
+                    <span className="block  text-xs text-gray-500 ">
+                      Requested Date
+                    </span>
                     <Field
                       className="text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500
@@ -88,12 +113,13 @@ export default function RequestForm({ bookIdTrack }) {
                       disabled
                     />
                   </label>
-
                 </div>
                 <div className="grid grid-cols-3 gap-x-4 gap-y-6 p-8 border-1 ">
                   <div className="row-start-1">
                     <label htmlFor="title" className=" ">
-                      <span className=" mt-2 text-xs  text-gray-500 ">User ID</span>
+                      <span className=" mt-2 text-xs  text-gray-500 ">
+                        User ID
+                      </span>
                       <Field
                         className=" block text-gray-500 rounded-md  w-full
                       focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -118,7 +144,9 @@ export default function RequestForm({ bookIdTrack }) {
                       />
                     </label>
                     <label htmlFor="title" className=" ">
-                      <span className="  text-xs  text-gray-500 ">Department</span>
+                      <span className="  text-xs  text-gray-500 ">
+                        Department
+                      </span>
 
                       <Field
                         className=" block text-gray-500 rounded-md  w-full
@@ -132,7 +160,9 @@ export default function RequestForm({ bookIdTrack }) {
                     </label>
 
                     <label htmlFor="title" className=" ">
-                      <span className="  text-xs  text-gray-500 ">Position</span>
+                      <span className="  text-xs  text-gray-500 ">
+                        Position
+                      </span>
 
                       <Field
                         className=" block text-gray-500 rounded-md  w-full
@@ -144,11 +174,12 @@ export default function RequestForm({ bookIdTrack }) {
                         disabled
                       />
                     </label>
-
                   </div>
                   <div className="row-start-1 col-span-2">
                     <label htmlFor="author" className="">
-                      <span className=" hover:textColor-red text-xs  text-gray-500 mb-1">Author</span>
+                      <span className=" hover:textColor-red text-xs  text-gray-500 mb-1">
+                        Author
+                      </span>
                       <Field
                         className=" block text-gray-500 rounded-md  w-2/4
                       focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -175,7 +206,9 @@ export default function RequestForm({ bookIdTrack }) {
                       />
                     </label>
                     <label htmlFor="chargedto" className="">
-                      <span className="  text-xs  text-gray-500 mb-1">Publisher Name</span>
+                      <span className="  text-xs  text-gray-500 mb-1">
+                        Publisher Name
+                      </span>
                       <Field
                         className=" block text-gray-500 rounded-md  w-2/4
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -187,7 +220,9 @@ export default function RequestForm({ bookIdTrack }) {
                       />
                     </label>
                     <label htmlFor="chargedto" className=" ">
-                      <span className="  text-xs  text-gray-500 ">Publisher Address</span>
+                      <span className="  text-xs  text-gray-500 ">
+                        Publisher Address
+                      </span>
                       <Field
                         className=" block text-gray-500 rounded-md  w-2/4
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -199,12 +234,13 @@ export default function RequestForm({ bookIdTrack }) {
                         disabled
                       />
                     </label>
-
                   </div>
 
                   <div className="row-start-2 ">
                     <label htmlFor="copvol" className=" ">
-                      <span className="  text-xs  text-gray-500">Copies/Volumes</span>
+                      <span className="  text-xs  text-gray-500">
+                        Copies/Volumes
+                      </span>
                       <Field
                         className="  block text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -230,7 +266,9 @@ export default function RequestForm({ bookIdTrack }) {
                       />
                     </label>
                     <label htmlFor="dated" className="mb-1">
-                      <span className="  text-xs text-gray-500 mb-">Price </span>
+                      <span className="  text-xs text-gray-500 mb-">
+                        Price{" "}
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -243,7 +281,9 @@ export default function RequestForm({ bookIdTrack }) {
                       />
                     </label>
                     <label htmlFor="chargedto" className=" h-48">
-                      <span className="block  text-xs  text-gray-500 mb-1">Charge to</span>
+                      <span className="block  text-xs  text-gray-500 mb-1">
+                        Charge to
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -258,7 +298,9 @@ export default function RequestForm({ bookIdTrack }) {
                   </div>
                   <div className="row-start-2 col-span-2">
                     <label htmlFor="subjectr" className="">
-                      <span className="  text-xs text-gray-500 mb-1">Subject</span>
+                      <span className="  text-xs text-gray-500 mb-1">
+                        Subject
+                      </span>
                       <Field
                         className=" block text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -271,8 +313,9 @@ export default function RequestForm({ bookIdTrack }) {
                       />
                     </label>
                     <label htmlFor="pdate" className="  ">
-
-                      <span className="  text-xs text-gray-500">Publication Date</span>
+                      <span className="  text-xs text-gray-500">
+                        Publication Date
+                      </span>
                       <Field
                         className="block text-gray-500 rounded-md  w-full
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -280,12 +323,16 @@ export default function RequestForm({ bookIdTrack }) {
                         name="pubdate"
                         type="text"
                         placeholder="#"
-                        initialValue={new Date(bookIdTrack.pubdate).toDateString()}
+                        initialValue={new Date(
+                          bookIdTrack.pubdate
+                        ).toDateString()}
                         disabled
                       />
                     </label>
                     <label htmlFor="notereqform" className="">
-                      <span className="block  text-xs  text-gray-500 mb-1">Note:</span>
+                      <span className="block  text-xs  text-gray-500 mb-1">
+                        Note:
+                      </span>
                       <Field
                         className="resize-none text-gray-500 rounded-md  w-full h-2/4
                         focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50 "
@@ -299,45 +346,36 @@ export default function RequestForm({ bookIdTrack }) {
                     </label>
                   </div>
                   <div className="row-start-3">
-                    <span className="  text-xs  text-gray-500 mb-1">Approved by: </span>
-                    <span className="text-xs block  text-gray-500 mt-2">
-                      Finance:
-                      {' '}
-                      {bookIdTrack.approvalFinance ? '✓' : 'No'}
-
+                    <span className="  text-xs  text-gray-500 mb-1">
+                      Approved by:{" "}
                     </span>
                     <span className="text-xs block  text-gray-500 mt-2">
-                      Dean:
-                      {' '}
-                      {bookIdTrack.approvalDean ? '✓' : 'No'}
-
+                      Finance: {bookIdTrack.approvalFinance ? "✓" : "No"}
                     </span>
                     <span className="text-xs block  text-gray-500 mt-2">
-                      President:
-                      {' '}
-                      {bookIdTrack.approvalPresident ? '✓' : 'No'}
-
+                      Dean: {bookIdTrack.approvalDean ? "✓" : "No"}
                     </span>
                     <span className="text-xs block  text-gray-500 mt-2">
-                      VPAA:
-                      {' '}
-                      {bookIdTrack.approvalVpaa ? '✓' : 'No'}
-
+                      President: {bookIdTrack.approvalPresident ? "✓" : "No"}
                     </span>
                     <span className="text-xs block  text-gray-500 mt-2">
-                      Director:
-                      {' '}
-                      {bookIdTrack.approvalDirector ? '✓' : 'No'}
+                      VPAA: {bookIdTrack.approvalVpaa ? "✓" : "No"}
+                    </span>
+                    <span className="text-xs block  text-gray-500 mt-2">
+                      Director: {bookIdTrack.approvalDirector ? "✓" : "No"}
                     </span>
                   </div>
                   <div className="row-start-3 ">
-                    <span className="  text-xs  text-gray-500 mb-1">Signed by: </span>
+                    <span className="  text-xs  text-gray-500 mb-1">
+                      Signed by:{" "}
+                    </span>
 
                     <div className="flex  space-x-2">
-
                       {bookIdTrack.signatureDean && (
                         <label htmlFor="requesID" className="">
-                          <span className="  text-xs  text-gray-500 p">Dean Signature</span>
+                          <span className="  text-xs  text-gray-500 p">
+                            Dean Signature
+                          </span>
                           <img
                             src={bookIdTrack.signatureDean}
                             alt="College Dean Signature"
@@ -345,15 +383,16 @@ export default function RequestForm({ bookIdTrack }) {
                             height="100"
                             className=" mt-2  border border-1 border-gray-blue-900"
                           />
-                            <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdTrack.deanName}
-                        </div>
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdTrack.deanName}
+                          </div>
                         </label>
                       )}
                       {bookIdTrack.signatureAcquisition && (
-
                         <label htmlFor="requesID" className="">
-                          <span className="  text-xs  text-gray-500 p">Acquisition Signature</span>
+                          <span className="  text-xs  text-gray-500 p">
+                            Acquisition Signature
+                          </span>
                           <img
                             src={bookIdTrack.signatureAcquisition}
                             alt="College Dean Signature"
@@ -361,14 +400,16 @@ export default function RequestForm({ bookIdTrack }) {
                             height="100"
                             className="mt-2  border border-1 border-gray-blue-900"
                           />
-                             <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdTrack.acquisitionName}
-                        </div>
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdTrack.acquisitionName}
+                          </div>
                         </label>
                       )}
                       {bookIdTrack.signatureVPAA && (
                         <label htmlFor="requesID" className="">
-                          <span className="  text-xs text-gray-500 p">VPAA Signature</span>
+                          <span className="  text-xs text-gray-500 p">
+                            VPAA Signature
+                          </span>
                           <img
                             src={bookIdTrack.signatureVPAA}
                             alt="College Dean Signature"
@@ -377,15 +418,16 @@ export default function RequestForm({ bookIdTrack }) {
                             className=" mt-2   border border-1 border-gray-blue-900"
                           />
                           <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdTrack.vpaaName}
-                        </div>
+                            {bookIdTrack.vpaaName}
+                          </div>
                         </label>
                       )}
 
                       {bookIdTrack.signatureFinance && (
-
                         <label htmlFor="requesID" className="">
-                          <span className="  text-xs  text-gray-500 ">Finance Signature</span>
+                          <span className="  text-xs  text-gray-500 ">
+                            Finance Signature
+                          </span>
                           <img
                             src={bookIdTrack.signatureFinance}
                             alt="College Dean Signature"
@@ -393,14 +435,16 @@ export default function RequestForm({ bookIdTrack }) {
                             height="100"
                             className=" mt-2  border border-1 border-gray-blue-900"
                           />
-                              <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdTrack.financeName}
-                        </div>
+                          <div className="text-xs mt-2 text-gray-500 underline">
+                            {bookIdTrack.financeName}
+                          </div>
                         </label>
                       )}
                       {bookIdTrack.signtureDirector && (
                         <label htmlFor="requesID" className="">
-                          <span className="  text-xs  text-gray-500 p">Director Signature</span>
+                          <span className="  text-xs  text-gray-500 p">
+                            Director Signature
+                          </span>
                           <img
                             src={bookIdTrack.signtureDirector}
                             alt="College Dean Signature"
@@ -409,23 +453,18 @@ export default function RequestForm({ bookIdTrack }) {
                             className=" mt-2 mb-2  border border-1 border-gray-blue-900"
                           />
                           <div className="text-xs mt-2 text-gray-500 underline">
-                        {bookIdTrack.directorName}
-                        </div>
+                            {bookIdTrack.directorName}
+                          </div>
                         </label>
                       )}
-
                     </div>
                   </div>
-
                 </div>
-
               </form>
             )}
-
           />
         </>
       )}
-
     </section>
   );
 }

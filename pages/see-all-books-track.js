@@ -1,9 +1,25 @@
-import Head from 'next/head';
-import mysql from '../providers/mysql';
-import validateSession from '../lib/session';
-import { useMemo } from 'react';
-import Link from 'next/link';
-import ReactTable from '../components/table';
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+
+import Head from "next/head";
+import { useMemo } from "react";
+import Link from "next/link";
+import mysql from "../providers/mysql";
+import validateSession from "../lib/session";
+import ReactTable from "../components/table";
 
 export const getServerSideProps = async (context) => {
   try {
@@ -26,72 +42,61 @@ export default function seeAllBooksDean({ bookTrack }) {
   const columns = useMemo(
     () => [
       {
-        Header: 'Acquisition #',
-        accessor: 'requestID', // accessor is the "key" in the data
+        Header: "Acquisition #",
+        accessor: "requestID", // accessor is the "key" in the data
       },
       {
-        Header: 'Request Date',
-        accessor: 'date',
+        Header: "Request Date",
+        accessor: "date",
+        Cell: ({ row: { values } }) => (
+          <div>{new Date(values.date).toDateString()}</div>
+        ),
+      },
+      {
+        Header: "Athor Name",
+        accessor: "authorName",
+      },
+      {
+        Header: "Title",
+        accessor: "title", // accessor is the "key" in the data
+      },
+      {
+        Header: "Publish Date",
+        accessor: "pubdate", // accessor is the "key" in the data
+        Cell: ({ row: { values } }) => (
+          <div>{new Date(values.pubdate).toDateString()}</div>
+        ),
+      },
+      {
+        Header: "User ID",
+        accessor: "userID", // accessor is the "key" in the data
+      },
+      {
+        Header: "Requested By",
+        accessor: "requestee", // accessor is the "key" in the data
+      },
+      {
+        Header: "Department",
+        accessor: "selectDepartment", // accessor is the "key" in the data
+      },
+
+      {
+        Header: "Status",
+        accessor: "status", // accessor is the "key" in the data
         Cell: ({ row: { values } }) => (
           <div>
-            {new Date(values.date).toDateString()}
+            {values.status === 0 && "Processing"}
+            {values.status === 1 && "Arrived"}
+            {values.status === 2 && "Confirmed"}
+            {values.status === 3 && "Published"}
+            {values.status === 4 && "Posted"}
+            {values.status === 5 && "Requested"}
           </div>
         ),
       },
       {
-        Header: 'Athor Name',
-        accessor: 'authorName',
-      },
-      {
-        Header: 'Title',
-        accessor: 'title', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Publish Date',
-        accessor: 'pubdate', // accessor is the "key" in the data
-        Cell: ({ row: { values } }) => (
-          <div>
-            {new Date(values.pubdate).toDateString()}
-          </div>
-        ),
-
-      },
-      {
-        Header: 'User ID',
-        accessor: 'userID', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Requested By',
-        accessor: 'requestee', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Department',
-        accessor: 'selectDepartment', // accessor is the "key" in the data
-      },
-
-      {
-        Header: 'Status',
-        accessor: 'status', // accessor is the "key" in the data
-        Cell: ({ row: { values } }) => (
-
-          <div>
-
-          {values.status  === 0 && 'Processing'}
-          {values.status  === 1 && 'Arrived'}
-          {values.status  === 2 && 'Confirmed'}
-          {values.status  === 3 && 'Published'}
-          {values.status  === 4 && 'Posted'}
-          {values.status  === 5 && 'Requested'}
-
-
-
-          </div>
-          
-        ),
-      },
-      {
-        Header: () => 'Action',
-        accessor: 'action',
+        Header: () => "Action",
+        accessor: "action",
         Cell: ({ row: { values } }) => (
           <Link href={`/track-book/${values.requestID}`}>
             <button
@@ -106,7 +111,7 @@ export default function seeAllBooksDean({ bookTrack }) {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -117,15 +122,19 @@ export default function seeAllBooksDean({ bookTrack }) {
         <link rel="icon" href="/icon.ico" />
       </Head>
       <section className="max-w-screen from-blue-900 to-yellow-600 bg-base  min-h-screen mx-auto ">
-
         <form className=" p-14 bg-white rounded-md my-16 w- mx-auto h-auto w-auto shadow-lg ">
-
           <div className="flex-shrink-0 flex content-around items-center">
-
-            <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-            <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
+            <img
+              className="hidden lg:block h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="okay"
+            />
+            <img
+              className="block lg:hidden h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="cpu logo"
+            />
             <h1 className="text-xl  text-gray-600 ">Track your book</h1>
-
           </div>
           <div />
           <div className="text-xs shadow-md w-full mt-10 ">
