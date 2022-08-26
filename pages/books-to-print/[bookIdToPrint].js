@@ -1,8 +1,29 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { useSession } from 'next-auth/client';
-import api from '../../lib/api';
+
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { useSession } from "next-auth/client";
+import api from "../../lib/api";
 
 export const getServerSideProps = async (context) => {
   const { bookIdToPrint } = context.query;
@@ -12,22 +33,19 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: { bookIdToPrint: data },
-
   };
 };
 
 export default function RequestForm({ bookIdToPrint }) {
   const handleOnSubmit = async (payload) => {
-    const { data } = await axios.post('/api/bookUpdatePresident', payload);
+    const { data } = await axios.post("/api/bookUpdatePresident", payload);
 
     alert(data.message);
   };
 
   const [session] = useSession();
   return (
-
     <section className=" mx-auto bg-base sh   md:flex min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Entry of Books </title>
         <meta name="keywords" content="someting" />
@@ -36,7 +54,8 @@ export default function RequestForm({ bookIdToPrint }) {
       {!session && (
         <>
           <div className=" mx-auto p-10 md:flex bg-gray-500  border-blue-900 border-1 rounded">
-            <span className="
+            <span
+              className="
          text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
             >
               Please Sign In First1
@@ -47,7 +66,6 @@ export default function RequestForm({ bookIdToPrint }) {
 
       {session && (
         <>
-
           <Head>
             <title>Library Acquisition | Request Form </title>
             <meta name="keywords" content="someting" />
@@ -56,19 +74,30 @@ export default function RequestForm({ bookIdToPrint }) {
           <Form
             onSubmit={handleOnSubmit}
             render={({ handleSubmit }) => (
-
-              <form onSubmit={handleSubmit} className=" p-8 bg-white rounded-md my-16  shadow-md w-full mx-auto h-auto  ">
-
+              <form
+                onSubmit={handleSubmit}
+                className=" p-8 bg-white rounded-md my-16  shadow-md w-full mx-auto h-auto  "
+              >
                 <div className="flex-shrink-0 flex content-around items-center p-8">
-                  <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-                  <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
-                  <h1 className="text-xl mt 4  text-gray-600 ">Library Acquisition Request Form</h1>
-
+                  <img
+                    className="hidden lg:block h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="okay"
+                  />
+                  <img
+                    className="block lg:hidden h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="cpu logo"
+                  />
+                  <h1 className="text-xl mt 4  text-gray-600 ">
+                    Library Acquisition Request Form
+                  </h1>
                 </div>
                 <div className="flex space-y-6 justify-end">
-
                   <label htmlFor="date" className="block mt-6 mr-3">
-                    <span className="block  text-xs  text-gray-500 mb-1">Requested Date</span>
+                    <span className="block  text-xs  text-gray-500 mb-1">
+                      Requested Date
+                    </span>
                     <Field
                       className="form-text text-xs  text-gray-500 focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none
@@ -78,11 +107,12 @@ export default function RequestForm({ bookIdToPrint }) {
                       type="text"
                       disabled
                       initialValue={new Date(bookIdToPrint.date).toDateString()}
-
                     />
                   </label>
                   <label htmlFor="date" className="block">
-                    <span className="block  text-xs  text-gray-500 mb-1">Rush or Not Rush</span>
+                    <span className="block  text-xs  text-gray-500 mb-1">
+                      Rush or Not Rush
+                    </span>
                     <Field
                       className="form-text text-xs  text-gray-500 focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none
@@ -95,13 +125,17 @@ export default function RequestForm({ bookIdToPrint }) {
                       disabled
                     />
                   </label>
-
                 </div>
 
-                <span className="blockg hover:textColor-red text-xs  text-gray-500 mb-1"> Requested By</span>
+                <span className="blockg hover:textColor-red text-xs  text-gray-500 mb-1">
+                  {" "}
+                  Requested By
+                </span>
 
                 <label htmlFor="title" className="mt-2 ">
-                  <span className="block mt-2 text-xs  text-gray-500 ">ID#</span>
+                  <span className="block mt-2 text-xs  text-gray-500 ">
+                    ID#
+                  </span>
                   <Field
                     className="form-text text-xs  text-gray-500 focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                           block px-0 mb-2 bg-transparent border-0 border-b-2
@@ -146,7 +180,9 @@ export default function RequestForm({ bookIdToPrint }) {
                 />
                 <br />
                 <label htmlFor="author" className="">
-                  <span className="block hover:textColor-red text-xs  text-gray-500 mb-1">Author</span>
+                  <span className="block hover:textColor-red text-xs  text-gray-500 mb-1">
+                    Author
+                  </span>
                   <Field
                     className="form-text text-xs  text-gray-500 focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -156,7 +192,6 @@ export default function RequestForm({ bookIdToPrint }) {
                     placeholder="Author"
                     initialValue={bookIdToPrint.authorName}
                     disabled
-
                   />
                 </label>
 
@@ -171,13 +206,14 @@ export default function RequestForm({ bookIdToPrint }) {
                     placeholder="Title"
                     initialValue={bookIdToPrint.title}
                     disabled
-
                   />
                 </label>
 
                 <div className="flex flex-row space-x-4">
                   <label htmlFor="edition" className="mt-11">
-                    <span className="block  text-xs  text-gray-500 underline">Edition</span>
+                    <span className="block  text-xs  text-gray-500 underline">
+                      Edition
+                    </span>
                     <Field
                       className=" focus:placeholder-gray-400  md:w-full text-xs  text-gray-500 placeholder-gray-500 placeholder-opacity-25 pt-3 pb-2
                                         block w-36 px-0   mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -191,7 +227,9 @@ export default function RequestForm({ bookIdToPrint }) {
                   </label>
 
                   <label htmlFor="copvol" className="mt-9 ">
-                    <span className="  text-xs  text-gray-500">Copies/Volumes</span>
+                    <span className="  text-xs  text-gray-500">
+                      Copies/Volumes
+                    </span>
                     <Field
                       className="text-xs pt-3 pb-2 block md:w-full  text-gray-500  w-36 px-0 mt-0 focus:placeholder-gray-400  placeholder-gray-500 placeholder-opacity-50   bg-transparent border-0
                                     border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -204,8 +242,13 @@ export default function RequestForm({ bookIdToPrint }) {
                     />
                   </label>
 
-                  <label htmlFor="pdate" className="mt-9 relative z-0 w-36 mb-5 ">
-                    <span className="  text-xs text-gray-500">Publication Date</span>
+                  <label
+                    htmlFor="pdate"
+                    className="mt-9 relative z-0 w-36 mb-5 "
+                  >
+                    <span className="  text-xs text-gray-500">
+                      Publication Date
+                    </span>
                     <Field
                       className="text-xs pt-3 pb-2 block  md:w-full  text-gray-500  w-full px-0 mt-0 bg-transparent border-0
                                      border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -213,15 +256,18 @@ export default function RequestForm({ bookIdToPrint }) {
                       name="pubdate"
                       type="text"
                       placeholder="#"
-                      initialValue={new Date(bookIdToPrint.pubdate).toDateString()}
+                      initialValue={new Date(
+                        bookIdToPrint.pubdate
+                      ).toDateString()}
                       disabled
                     />
                   </label>
                 </div>
                 <div className="flex space-x-20 content-around items-center mx-auto  mt-3">
-
                   <label htmlFor="chargedto" className="">
-                    <span className="block  text-xs text-gray-500 mb-1">Publisher Name</span>
+                    <span className="block  text-xs text-gray-500 mb-1">
+                      Publisher Name
+                    </span>
                     <Field
                       className="text-xs mr-4  md:w-full  w-96 span-12 form-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -233,7 +279,9 @@ export default function RequestForm({ bookIdToPrint }) {
                     />
                   </label>
                   <label htmlFor="chargedto" className=" ">
-                    <span className="block  text-xs text-gray-500 mb-1">Publisher Address</span>
+                    <span className="block  text-xs text-gray-500 mb-1">
+                      Publisher Address
+                    </span>
                     <Field
                       className="text-xs  md:w-full  mr-4 w-96 span-12 form-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -249,7 +297,9 @@ export default function RequestForm({ bookIdToPrint }) {
 
                 <div className="mt-7">
                   <label htmlFor="chargedto" className=" h-48">
-                    <span className="block  text-xs  text-gray-500 mb-1">Charge to</span>
+                    <span className="block  text-xs  text-gray-500 mb-1">
+                      Charge to
+                    </span>
                     <Field
                       className="text-xs mr-4 w-5/12 span-12 form-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -264,9 +314,10 @@ export default function RequestForm({ bookIdToPrint }) {
                 </div>
 
                 <div className="flex space-y-6 space-x-2 justify-start">
-
                   <label htmlFor="requesID" className="mt-6">
-                    <span className="  text-xs  text-gray-500 p">Dean Signature</span>
+                    <span className="  text-xs  text-gray-500 p">
+                      Dean Signature
+                    </span>
                     <img
                       src={bookIdToPrint.signatureDean}
                       alt="College Dean Signature"
@@ -280,7 +331,9 @@ export default function RequestForm({ bookIdToPrint }) {
                   </label>
                   {bookIdToPrint.signatureAcquisition && (
                     <label htmlFor="requesID" className="">
-                      <span className="  text-xs text-gray-500 p">Acquisition Signature</span>
+                      <span className="  text-xs text-gray-500 p">
+                        Acquisition Signature
+                      </span>
                       <img
                         src={bookIdToPrint.signatureAcquisition}
                         alt="College Dean Signature"
@@ -292,11 +345,12 @@ export default function RequestForm({ bookIdToPrint }) {
                         {bookIdToPrint.acquisitionName}
                       </div>
                     </label>
-
                   )}
                   {bookIdToPrint.signatureVPAA && (
                     <label htmlFor="requesID" className="">
-                      <span className="  text-xs text-gray-500 p">VPAA Signature</span>
+                      <span className="  text-xs text-gray-500 p">
+                        VPAA Signature
+                      </span>
                       <img
                         src={bookIdToPrint.signatureVPAA}
                         alt="College Dean Signature"
@@ -308,12 +362,13 @@ export default function RequestForm({ bookIdToPrint }) {
                         {bookIdToPrint.vpaaName}
                       </div>
                     </label>
-
                   )}
 
                   {bookIdToPrint.signatureFinance && (
                     <label htmlFor="requesID" className="">
-                      <span className="  text-xs text-gray-500 p">Finance Signature</span>
+                      <span className="  text-xs text-gray-500 p">
+                        Finance Signature
+                      </span>
                       <img
                         src={bookIdToPrint.signatureFinance}
                         alt="College Dean Signature"
@@ -329,7 +384,9 @@ export default function RequestForm({ bookIdToPrint }) {
 
                   {bookIdToPrint.signtureDirector && (
                     <label htmlFor="requesID" className="">
-                      <span className="  text-xs text-gray-500 p">Director Signature</span>
+                      <span className="  text-xs text-gray-500 p">
+                        Director Signature
+                      </span>
                       <img
                         src={bookIdToPrint.signtureDirector}
                         alt="College Dean Signature"
@@ -341,14 +398,14 @@ export default function RequestForm({ bookIdToPrint }) {
                         {bookIdToPrint.directorName}
                       </div>
                     </label>
-
                   )}
-
                 </div>
 
                 <div className="flex pl-2 justify-end">
                   <label htmlFor="subjectr" className="">
-                    <span className="block  text-xs text-gray-500 mb-1">Subject</span>
+                    <span className="block  text-xs text-gray-500 mb-1">
+                      Subject
+                    </span>
                     <Field
                       className=" mr-8 text-xs  justify-endform-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -361,7 +418,9 @@ export default function RequestForm({ bookIdToPrint }) {
                     />
                   </label>
                   <label htmlFor="subjectr" className="">
-                    <span className="block  text-xs text-gray-500 mb-1">Copies/Number of Volume</span>
+                    <span className="block  text-xs text-gray-500 mb-1">
+                      Copies/Number of Volume
+                    </span>
                     <Field
                       className=" mr-8 text-xs  justify-endform-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                             block px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -377,7 +436,9 @@ export default function RequestForm({ bookIdToPrint }) {
 
                 <div className="flex flex-row space-x-5 content-around items-center">
                   <label htmlFor="notereqform" className="">
-                    <span className="block  text-xs text-gray-500 mb-1">Note:</span>
+                    <span className="block  text-xs text-gray-500 mb-1">
+                      Note:
+                    </span>
                     <Field
                       className="resize-none text-xs  rounded-md focus:placeholder-gray-500
                                  placeholder-gray-500 placeholder-opacity-50  border-0 "
@@ -392,9 +453,10 @@ export default function RequestForm({ bookIdToPrint }) {
                 </div>
 
                 <div className="flex flex-row space-x-3 content-around justify-start">
-
                   <label htmlFor="dealer" className="mt-4">
-                    <span className="  text-xs text-gray-500 mb-1">Dealer :</span>
+                    <span className="  text-xs text-gray-500 mb-1">
+                      Dealer :
+                    </span>
                     <Field
                       className="  text-xs w-1/10 form-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                              px-0 mb-2 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -407,7 +469,9 @@ export default function RequestForm({ bookIdToPrint }) {
                   </label>
 
                   <label htmlFor="dated" className="mt-4">
-                    <span className="  text-xs  text-gray-500 mb-1">Dated: </span>
+                    <span className="  text-xs  text-gray-500 mb-1">
+                      Dated:{" "}
+                    </span>
                     <Field
                       className="  text-xs form-text focus:placeholder-gray-500 placeholder-gray-500 placeholder-opacity-50  pt-3 pb-2
                              mb-2 bg-transparent border-0 px-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -440,18 +504,13 @@ export default function RequestForm({ bookIdToPrint }) {
                     onClick={() => window.print()}
                   >
                     Print this page
-
                   </button>
-
                 </div>
-
               </form>
             )}
           />
-
         </>
       )}
-
     </section>
   );
 }

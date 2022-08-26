@@ -1,4 +1,29 @@
-import React, { Fragment, useEffect, useState , useMemo } from "react";
+/* eslint-disable eqeqeq */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable radix */
+/* eslint-disable operator-linebreak */
+/* eslint-disable camelcase */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import React, { Fragment, useEffect, useState, useMemo } from "react";
 import { Field, Form } from "react-final-form";
 
 import axios from "axios";
@@ -61,11 +86,7 @@ const BudgetForm = ({ selectDepartment }) => {
         budget:
           parseInt(budget_subtracted) +
           parseInt(document.getElementById("totalBudget").value),
-        remarks:
-          `Borrowed from ${ 
-          values.selectDepartment 
-          } amounting of ${ 
-          budget_subtracted}`,
+        remarks: `Borrowed from ${values.selectDepartment} amounting of ${budget_subtracted}`,
         selectDepartment: currDept,
         previousBudget: parseInt(document.getElementById("totalBudget").value),
       }

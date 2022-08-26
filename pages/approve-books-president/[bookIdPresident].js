@@ -1,11 +1,31 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { useSession } from 'next-auth/client';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
-import api from '../../lib/api';
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { useSession } from "next-auth/client";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import api from "../../lib/api";
 
 export const getServerSideProps = async (context) => {
   const { bookIdPresident } = context.query;
@@ -15,7 +35,6 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: { bookIdPresident: data },
-
   };
 };
 
@@ -23,38 +42,34 @@ export default function RequestForm({ bookIdPresident }) {
   const router = useRouter();
 
   const handleOnSubmit = async (payload) => {
+    try {
+      const { data } = await axios.post("/api/bookUpdatePresident", payload);
 
-    try {  
-        const { data } = await axios.post('/api/bookUpdatePresident', payload);
-
-    toast.success('Update Successfully!', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    }, data);
-    router.push('/see-all-books-president');
-
-      
-    } catch (error) {
-      
-    }
-
+      toast.success(
+        "Update Successfully!",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        },
+        data
+      );
+      router.push("/see-all-books-president");
+    } catch (error) {}
   };
-  Date.prototype.toDateInputValue = (function () {
+  Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
-  });
+  };
 
   const [session] = useSession();
   return (
-
     <section className=" mx-auto  md:flex bg-base min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Entry of Books </title>
         <meta name="keywords" content="someting" />
@@ -63,7 +78,8 @@ export default function RequestForm({ bookIdPresident }) {
       {!session && (
         <>
           <div className=" mx-auto p-10 md:flex bg-white  border-blue-900 border-1 rounded">
-            <span className="
+            <span
+              className="
          text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
             >
               Please Sign In First
@@ -77,21 +93,31 @@ export default function RequestForm({ bookIdPresident }) {
           <Form
             onSubmit={handleOnSubmit}
             render={({ handleSubmit }) => (
-
-              <form onSubmit={handleSubmit} className=" p-8 bg-white rounded-md my-16 w-full  shadow-md  mx-auto min-h-screen ">
-
+              <form
+                onSubmit={handleSubmit}
+                className=" p-8 bg-white rounded-md my-16 w-full  shadow-md  mx-auto min-h-screen "
+              >
                 <div className="flex-shrink-0 flex content-around items-center p-8">
-
-                  <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-                  <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
-                  <h1 className="text-xl  text-gray-600 ">Library Acquisition Approval Books</h1>
-
+                  <img
+                    className="hidden lg:block h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="okay"
+                  />
+                  <img
+                    className="block lg:hidden h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="cpu logo"
+                  />
+                  <h1 className="text-xl  text-gray-600 ">
+                    Library Acquisition Approval Books
+                  </h1>
                 </div>
 
                 <div className="flex space-x-6 content-around items-center  justify-end p-8">
-
                   <label htmlFor="date" className="block ">
-                    <span className="block  text-xs   text-gray-500 ">Approved Date</span>
+                    <span className="block  text-xs   text-gray-500 ">
+                      Approved Date
+                    </span>
                     <Field
                       className="text-gray-500 rounded-md border-gray-300  w-full
                       focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -100,17 +126,16 @@ export default function RequestForm({ bookIdPresident }) {
                       type="date"
                       required
                       initialValue={new Date().toDateInputValue()}
-
                     />
                   </label>
-
                 </div>
 
                 <div className="grid grid-cols-3 gap-4  border-1  p-8">
                   <div className="row-start-1 col-span-1">
-
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red  text-xs text-gray-500 ">User ID</span>
+                      <span className="block hover:textColor-red  text-xs text-gray-500 ">
+                        User ID
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -123,7 +148,9 @@ export default function RequestForm({ bookIdPresident }) {
                     </label>
 
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red  text-xs  text-gray-500 ">Name</span>
+                      <span className="block hover:textColor-red  text-xs  text-gray-500 ">
+                        Name
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -138,7 +165,9 @@ export default function RequestForm({ bookIdPresident }) {
 
                   <div className="row-start-1 col-span-2">
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red text-xs  text-gray-500 ">Author</span>
+                      <span className="block hover:textColor-red text-xs  text-gray-500 ">
+                        Author
+                      </span>
                       <Field
                         className=" text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -152,7 +181,9 @@ export default function RequestForm({ bookIdPresident }) {
                     </label>
 
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red text-xs  text-gray-500">Title</span>
+                      <span className="block hover:textColor-red text-xs  text-gray-500">
+                        Title
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -164,11 +195,12 @@ export default function RequestForm({ bookIdPresident }) {
                         disabled
                       />
                     </label>
-
                   </div>
                   <div className="row-start-2">
                     <label htmlFor="edition" className="">
-                      <span className="block  text-xs text-gray-500 ">Number of Copies</span>
+                      <span className="block  text-xs text-gray-500 ">
+                        Number of Copies
+                      </span>
                       <Field
                         className="  text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -180,7 +212,9 @@ export default function RequestForm({ bookIdPresident }) {
                       />
                     </label>
                     <label htmlFor="edition" className=" ">
-                      <span className="block  text-xs  text-gray-500 ">Edition</span>
+                      <span className="block  text-xs  text-gray-500 ">
+                        Edition
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -193,7 +227,9 @@ export default function RequestForm({ bookIdPresident }) {
                     </label>
 
                     <label htmlFor="edition" className="">
-                      <span className="block  text-xs  text-gray-500 ">Price:</span>
+                      <span className="block  text-xs  text-gray-500 ">
+                        Price:
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-auto
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -204,23 +240,28 @@ export default function RequestForm({ bookIdPresident }) {
                         disabled
                       />
                     </label>
-
                   </div>
                   <div className="row-start-2 col-span-2">
                     <label htmlFor="publicationDate" className="">
-                      <span className="block  text-xs text-gray-500 ">Publication Date</span>
+                      <span className="block  text-xs text-gray-500 ">
+                        Publication Date
+                      </span>
                       <Field
                         className="text-s focus:placeholder-gray-400  placeholder-gray-500 placeholder-opacity-25 pt-3 pb-2
                                         block w-36 px-0  text-gray-500  mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
                         component="input"
                         name="publicationDate"
                         type="text"
-                        initialValue={new Date(bookIdPresident.pubdate).toDateString()}
+                        initialValue={new Date(
+                          bookIdPresident.pubdate
+                        ).toDateString()}
                         disabled
                       />
                     </label>
                     <label htmlFor="notereqform" className="">
-                      <span className="block  text-xs  text-gray-500">Note:</span>
+                      <span className="block  text-xs  text-gray-500">
+                        Note:
+                      </span>
                       <Field
                         className=" resize-none text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50 "
@@ -231,13 +272,13 @@ export default function RequestForm({ bookIdPresident }) {
                         disabled
                       />
                     </label>
-
                   </div>
 
                   <div className="col-span-1 row-start-6">
-
                     <label htmlFor="selectDosition" className="block ">
-                      <span className="block  text-xs text-gray-500 ">For Approval</span>
+                      <span className="block  text-xs text-gray-500 ">
+                        For Approval
+                      </span>
                       <Field
                         required
                         name="approvalPresident"
@@ -246,14 +287,21 @@ export default function RequestForm({ bookIdPresident }) {
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-1 bg-gray-50 "
                         required
                       >
-
                         <option value="">Enter Status </option>
-                        <option className="block text-xs  text-gray-500" value="0">On Going</option>
-                        <option className="block text-xs  text-gray-500" value="1">Approved</option>
-
+                        <option
+                          className="block text-xs  text-gray-500"
+                          value="0"
+                        >
+                          On Going
+                        </option>
+                        <option
+                          className="block text-xs  text-gray-500"
+                          value="1"
+                        >
+                          Approved
+                        </option>
                       </Field>
                     </label>
-
                   </div>
                 </div>
 
@@ -274,19 +322,15 @@ export default function RequestForm({ bookIdPresident }) {
                     className=" cursor-pointer  mx-auto text-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white
                     bg-secondary hover:bg-indigo-700
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-
                   >
                     Update Request
-
                   </button>
                 </div>
-
               </form>
             )}
           />
         </>
       )}
-
     </section>
   );
 }

@@ -1,5 +1,26 @@
-import { getCsrfToken } from 'next-auth/client';
-import Head from 'next/head';
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+
+import { getCsrfToken } from "next-auth/client";
+import Head from "next/head";
 
 export async function getServerSideProps(context) {
   return {
@@ -18,13 +39,26 @@ export default function SignIn({ csrfToken }) {
         <link rel="icon" href="/icon.ico" />
       </Head>
       <section className="flex items-center justify-center bg-base min-h-screen">
-
-        <form method="post" action="/api/auth/callback/credentials" className="px-8 py-8 grid grid-cols-1 p-6 bg-white  rounded-md mx-auto  w-1/4 shadow-lg ">
-
+        <form
+          method="post"
+          action="/api/auth/callback/credentials"
+          className="px-8 py-8 grid grid-cols-1 p-6 bg-white  rounded-md mx-auto  w-1/4 shadow-lg "
+        >
           <div className="content-around justify-center mx-auto items-center">
-            <img className="hidden lg:block h-20 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-            <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
-            <h1 className="text-xl mt-1 ml-2 font-bold text-gray-600 ">  Sign In</h1>
+            <img
+              className="hidden lg:block h-20 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="okay"
+            />
+            <img
+              className="block lg:hidden h-14 w-auto  mr-3"
+              src="/cpulogo.png"
+              alt="cpu logo"
+            />
+            <h1 className="text-xl mt-1 ml-2 font-bold text-gray-600 ">
+              {" "}
+              Sign In
+            </h1>
           </div>
 
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
@@ -63,7 +97,6 @@ export default function SignIn({ csrfToken }) {
             </button>
           </div>
         </form>
-
       </section>
     </>
   );

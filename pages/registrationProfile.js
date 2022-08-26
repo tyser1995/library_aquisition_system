@@ -1,9 +1,28 @@
-import { Form, Field } from 'react-final-form';
-import { useSession } from 'next-auth/client';
-import Head from 'next/head';
-import Link from 'next/dist/client/link';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import { Form, Field } from "react-final-form";
+import { useSession } from "next-auth/client";
+import Head from "next/head";
+import Link from "next/dist/client/link";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function RegistrationForm() {
   const handleOnSubmit = async (payload) => {

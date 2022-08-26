@@ -1,9 +1,29 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import validateSession from '../lib/session';
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import validateSession from "../lib/session";
 
 export const getServerSideProps = async (context) => {
   const { account } = await validateSession(context);
@@ -14,31 +34,32 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function RequestForm({ account }) {
-  Date.prototype.toDateInputValue = (function () {
+  Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
-  });
+  };
 
   const handleOnSubmit = async (payload) => {
-    
-    const { data } = await axios.post('/api/saveBooksPublisher', payload);
+    const { data } = await axios.post("/api/saveBooksPublisher", payload);
 
-    toast.success('Save Success!', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    }, data);
+    toast.success(
+      "Save Success!",
+      {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      },
+      data
+    );
   };
 
   return (
-
     <section className=" mx-auto  md:flex bg-base  min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Saving Books </title>
         <meta name="keywords" content="someting" />
@@ -47,9 +68,10 @@ export default function RequestForm({ account }) {
       <Form
         onSubmit={handleOnSubmit}
         render={({ handleSubmit }) => (
-
-          <form onSubmit={handleSubmit} className=" px-8 pt-8 pb-4 bg-white rounded-md my-16 w- mx-auto h-auto w-2/6 shadow-md ">
-
+          <form
+            onSubmit={handleSubmit}
+            className=" px-8 pt-8 pb-4 bg-white rounded-md my-16 w- mx-auto h-auto w-2/6 shadow-md "
+          >
             {/* //hidden stuff starts here */}
 
             <Field
@@ -71,14 +93,20 @@ export default function RequestForm({ account }) {
             {/* Hidden stuff ends here */}
 
             <div className=" flex content-around items-center p-4">
-              <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-              <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
+              <img
+                className="hidden lg:block h-14 w-auto  mr-3"
+                src="/cpulogo.png"
+                alt="okay"
+              />
+              <img
+                className="block lg:hidden h-14 w-auto  mr-3"
+                src="/cpulogo.png"
+                alt="cpu logo"
+              />
               <h1 className="text-xl  text-gray-500 ">Save Books</h1>
-
             </div>
 
             <div className="flex space-y-8 justify-end p-4 ">
-
               <label htmlFor="date" className="block mr-4">
                 <span className="  text-xs  text-gray-500 mb-1 ">Date</span>
                 <Field
@@ -89,16 +117,16 @@ export default function RequestForm({ account }) {
                   type="date"
                   required
                   initialValue={new Date().toDateInputValue()}
-
                 />
               </label>
-     
             </div>
-       
+
             <div className="grid grid-cols-2 gap-2">
-            <div className="row-start-1 ">
+              <div className="row-start-1 ">
                 <label htmlFor="author" className="">
-                  <span className=" hover:textColor-red text-sm   text-gray-500 mb-">Author</span>
+                  <span className=" hover:textColor-red text-sm   text-gray-500 mb-">
+                    Author
+                  </span>
                   <Field
                     className="block rounded-md border-gray-300 shadow-sm full w-full
                 focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 text-gray-500 bg-gray-50"
@@ -109,8 +137,8 @@ export default function RequestForm({ account }) {
                   />
                 </label>
               </div>
-            <div className="row-start-2  col-span-2">
-            <label htmlFor="title" className=" ">
+              <div className="row-start-2  col-span-2">
+                <label htmlFor="title" className=" ">
                   <span className="  text-xs  text-gray-500 ">Title</span>
                   <Field
                     className=" rounded-md border-gray-300 shadow-sm w-full
@@ -121,10 +149,12 @@ export default function RequestForm({ account }) {
                     placeholder="Books' Title"
                   />
                 </label>
-            </div>
-            <div className="row-start-3 ">
-            <label htmlFor="chargedto" className="">
-                  <span className="  text-xs  text-gray-500 ">Publisher Name</span>
+              </div>
+              <div className="row-start-3 ">
+                <label htmlFor="chargedto" className="">
+                  <span className="  text-xs  text-gray-500 ">
+                    Publisher Name
+                  </span>
                   <Field
                     className="block rounded-md border-gray-300 shadow-sm w-full border-0
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-500 placeholder-opacity-50 text-gray-500 bg-gray-50"
@@ -132,12 +162,12 @@ export default function RequestForm({ account }) {
                     name="pubName"
                     type="text"
                     disabled
-                    initialValue = {account.pubName}
+                    initialValue={account.pubName}
                   />
                 </label>
-            </div>
-            <div className="row-start-3 ">
-            <label htmlFor="pdate" className="">
+              </div>
+              <div className="row-start-3 ">
+                <label htmlFor="pdate" className="">
                   <span className="  text-xs text-gray-500">Publish Date</span>
                   <Field
                     className=" block rounded-md border-gray-300  w-full
@@ -148,11 +178,12 @@ export default function RequestForm({ account }) {
                     required
                   />
                 </label>
-       
-            </div>
-            <div className="row-start-4  col-span-2">
-            <label htmlFor="pbadress" className="">
-                  <span className=" hover:textColor-red text-xs  text-gray-500 mb-">Publisher Address</span>
+              </div>
+              <div className="row-start-4  col-span-2">
+                <label htmlFor="pbadress" className="">
+                  <span className=" hover:textColor-red text-xs  text-gray-500 mb-">
+                    Publisher Address
+                  </span>
                   <Field
                     className="block rounded-md  border-0 shadow-sm w-full
                   text-gray-500 bg-gray-50"
@@ -160,14 +191,11 @@ export default function RequestForm({ account }) {
                     name="pubAddress"
                     type="text"
                     disabled
-                    initialValue = {account.pubAddress}
+                    initialValue={account.pubAddress}
                   />
                 </label>
-        
-            </div>
-            <div className="row-start-6 ">
-            
-            
+              </div>
+              <div className="row-start-6 ">
                 <label htmlFor="edition" className="">
                   <span className=" text-xs  text-gray-500 ">Edition</span>
                   <Field
@@ -179,10 +207,12 @@ export default function RequestForm({ account }) {
                     placeholder="Book's Edition"
                   />
                 </label>
-            </div>
-            <div className="row-start-6 ">
+              </div>
+              <div className="row-start-6 ">
                 <label htmlFor="copvol" className="">
-                  <span className="  text-xs  text-gray-500">Copies/Volumes</span>
+                  <span className="  text-xs  text-gray-500">
+                    Copies/Volumes
+                  </span>
                   <Field
                     className="block text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 bg-gray-50"
@@ -192,19 +222,19 @@ export default function RequestForm({ account }) {
                     placeholder="Number of Copies"
                   />
                 </label>
-                </div>
+              </div>
             </div>
             {/* hidden */}
-                  <Field
-                    className="block text-gray-500 rounded-md border-gray-300  w-full
+            <Field
+              className="block text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 bg-gray-50"
-                    component="input"
-                    name="savePub"
-                    type="hidden"
-                    initialValue = "1"
-                  />
+              component="input"
+              name="savePub"
+              type="hidden"
+              initialValue="1"
+            />
             {/* hidden */}
-              
+
             <div className="block text-right mt-4 p-4">
               <button
                 type="submit"
@@ -215,11 +245,9 @@ export default function RequestForm({ account }) {
                 Save Book
               </button>
             </div>
-
           </form>
         )}
       />
-
     </section>
   );
 }
