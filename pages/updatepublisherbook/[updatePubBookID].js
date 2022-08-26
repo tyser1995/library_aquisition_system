@@ -47,6 +47,8 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function EnterBook({ updatePubBookID }) {
+  // eslint-disable-line consistent-return
+  // eslint-disable-next-line consistent-return
   const handleOnSubmit = async (payload) => {
     const { data } = await axios.post("/api/bookPublisherUpdate", payload);
 
@@ -65,7 +67,6 @@ export default function EnterBook({ updatePubBookID }) {
     );
   };
   const [session] = useSession();
-
   Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());

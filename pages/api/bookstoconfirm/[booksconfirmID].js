@@ -1,10 +1,16 @@
-import mysql from '../../../providers/mysql';
+/* eslint-disable consistent-return */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable quotes */
+import mysql from "../../../providers/mysql";
 
 export default async (req, res) => {
   try {
     const { booksconfirmID } = req.query;
 
-    const [result] = await mysql.query(`SELECT * FROM requestform WHERE status = 1  AND requestID='${booksconfirmID}'`);
+    const [result] = await mysql.query(
+      `SELECT * FROM requestform WHERE status = 1  AND requestID='${booksconfirmID}'`
+    );
 
     return res.json(result);
   } catch (error) {

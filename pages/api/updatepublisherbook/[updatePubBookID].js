@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import mysql from '../../../providers/mysql';
 
 export default async (req, res) => {

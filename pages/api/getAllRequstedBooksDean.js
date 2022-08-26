@@ -1,5 +1,9 @@
-import mysql from '../../providers/mysql';
-import validateSession from '../../lib/session';
+/* eslint-disable consistent-return */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable quotes */
+import mysql from "../../providers/mysql";
+import validateSession from "../../lib/session";
 
 export default async (req, res) => {
   try {
@@ -10,6 +14,6 @@ export default async (req, res) => {
 
     return res.json(result);
   } catch (error) {
-    return res.status(400).json({ message: 'Error' });
+    return res.status(400).json({ message: "Error" });
   }
 };

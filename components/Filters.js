@@ -1,4 +1,13 @@
-import { useMemo } from 'react';
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-undef */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable consistent-return */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable quotes */
+
+import { useMemo } from "react";
 
 export const DefaultColumnFilter = ({
   column: { filterValue, preFilteredRows, setFilter },
@@ -8,7 +17,7 @@ export const DefaultColumnFilter = ({
   return (
     <input
       className="text-xs px-2 py-1"
-      value={filterValue || ''}
+      value={filterValue || ""}
       onChange={(e) => {
         setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
       }}
@@ -18,9 +27,7 @@ export const DefaultColumnFilter = ({
 };
 
 export const SelectColumnFilter = ({
-  column: {
-    filterValue, setFilter, preFilteredRows, id,
-  },
+  column: { filterValue, setFilter, preFilteredRows, id },
 }) => {
   // Calculate the options for filtering
   // using the preFilteredRows
@@ -51,9 +58,7 @@ export const SelectColumnFilter = ({
 };
 
 export const SliderColumnFilter = ({
-  column: {
-    filterValue, setFilter, preFilteredRows, id,
-  },
+  column: { filterValue, setFilter, preFilteredRows, id },
 }) => {
   // Calculate the min and max
   // using the preFilteredRows
@@ -79,15 +84,15 @@ export const SliderColumnFilter = ({
           setFilter(parseInt(e.target.value, 10));
         }}
       />
-      <button type="button" onClick={() => setFilter(undefined)}>Off</button>
+      <button type="button" onClick={() => setFilter(undefined)}>
+        Off
+      </button>
     </>
   );
 };
 
 export const NumberRangeColumnFilter = ({
-  column: {
-    filterValue = [], preFilteredRows, setFilter, id,
-  },
+  column: { filterValue = [], preFilteredRows, setFilter, id },
 }) => {
   const [min, max] = React.useMemo(() => {
     let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
@@ -102,34 +107,40 @@ export const NumberRangeColumnFilter = ({
   return (
     <div
       style={{
-        display: 'flex',
+        display: "flex",
       }}
     >
       <input
-        value={filterValue[0] || ''}
+        value={filterValue[0] || ""}
         type="number"
         onChange={(e) => {
           const val = e.target.value;
-          setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]]);
+          setFilter((old = []) => [
+            val ? parseInt(val, 10) : undefined,
+            old[1],
+          ]);
         }}
         placeholder={`Min (${min})`}
         style={{
-          width: '70px',
-          marginRight: '0.5rem',
+          width: "70px",
+          marginRight: "0.5rem",
         }}
       />
       to
       <input
-        value={filterValue[1] || ''}
+        value={filterValue[1] || ""}
         type="number"
         onChange={(e) => {
           const val = e.target.value;
-          setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined]);
+          setFilter((old = []) => [
+            old[0],
+            val ? parseInt(val, 10) : undefined,
+          ]);
         }}
         placeholder={`Max (${max})`}
         style={{
-          width: '70px',
-          marginLeft: '0.5rem',
+          width: "70px",
+          marginLeft: "0.5rem",
         }}
       />
     </div>

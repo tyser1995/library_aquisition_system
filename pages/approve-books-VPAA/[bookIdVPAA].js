@@ -1,3 +1,4 @@
+/* eslint-disable array-bracket-spacing */
 /* eslint-disable consistent-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-expressions */
@@ -74,7 +75,7 @@ export default function RequestForm({ bookVPAAId, account }) {
       console.log(error);
     }
   };
-  const [session] = useSession();
+  const [ session ] = useSession();
 
   Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
