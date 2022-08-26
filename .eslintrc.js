@@ -36,7 +36,7 @@ module.exports = {
     }],
     'no-console': 'off',
     'avoidEscape':0,
-    'allowTemplateLiterals':true,
-    "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"]
+    'allowTemplateLiterals':0,
+    'no-restricted-syntax': ['error', 'FunctionExpression', 'WithStatement', 'BinaryExpression[operator=in]'],
   },
 };
