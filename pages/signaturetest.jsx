@@ -1,9 +1,11 @@
+/* eslint-disable object-curly-newline */
 import Popup from 'reactjs-popup';
 import { useRef, useState } from 'react';
 import SignaturePad from 'react-signature-canvas';
 
 export default function SingnatureTest() {
   const [imageURL, setImageURL] = useState(null);
+  // eslint-disable-next-line object-curly-newline
   const sigCanvas = useRef({});
   const clear = () => sigCanvas.current.clear();
 
