@@ -6,7 +6,6 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
-    'eslint-config-airbnb',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -36,5 +35,11 @@ module.exports = {
       },
     }],
     'no-console': 'off',
+    indent: [
+      {
+        SwitchCase: 1,
+        ignoredNodes: ['ConditionalExpression'],
+      },
+    ],
   },
 };
