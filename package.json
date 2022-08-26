@@ -10,7 +10,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build",
     "heroku-prebuild": "npm install --save --legacy-peer-deps",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install --save --legacy-peer-deps && npm start"
   },
