@@ -1,10 +1,12 @@
-import '../styles/globals.css';
-import Layout from '../components/Layout';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-filename-extension */
 import 'tailwindcss/tailwind.css';
 import { Provider } from 'next-auth/client';
 import { ToastContainer } from 'react-toastify';
 import { SWRConfig } from 'swr';
 import { fetcher } from '../lib/api';
+import '../styles/globals.css';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
   return (

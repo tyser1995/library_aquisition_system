@@ -1,5 +1,4 @@
-
-
+/* eslint-disable consistent-return */
 import mysql from '../../providers/mysql';
 
 export default async (req, res) => {
@@ -17,6 +16,6 @@ export default async (req, res) => {
 
     return res.json(result);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };

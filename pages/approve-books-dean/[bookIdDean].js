@@ -1,16 +1,44 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { useSession } from 'next-auth/client';
-import Popup from 'reactjs-popup';
-import { useRef, useState } from 'react';
-import SignaturePad from 'react-signature-canvas';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
-import api from '../../lib/api';
-import dataURItoBlob from '../../lib/date-uri-to-blob';
-import validateSession from '../../lib/session';
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable consistent-return */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable radix */
+/* eslint-disable operator-linebreak */
+/* eslint-disable camelcase */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable global-require */
+/* eslint-disable quotes */
+/* eslint-disable jsx-a11y/heading-has-content */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-extend-native */
+/* eslint-disable no-unused-vars */
+/* eslint-disable indent */
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { useSession } from "next-auth/client";
+import Popup from "reactjs-popup";
+import { useRef, useState } from "react";
+import SignaturePad from "react-signature-canvas";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import api from "../../lib/api";
+import dataURItoBlob from "../../lib/date-uri-to-blob";
+import validateSession from "../../lib/session";
 
 export const getServerSideProps = async (context) => {
   const { bookIdDean } = context.query;
@@ -21,7 +49,6 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: { bookDean: data, account },
-
   };
 };
 
@@ -29,29 +56,29 @@ export default function RequestForm({ bookDean, account }) {
   const [imageURL, setImageURL] = useState(null);
   const router = useRouter();
 
-  
-
   const handleOnSubmit = async (payload) => {
     try {
-      const { data } = await axios.post('/api/bookUpdateDean', {
+      const { data } = await axios.post("/api/bookUpdateDean", {
         ...payload,
         imageURL,
       });
-  
-      toast.success('Update Successfully!', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      }, data);
-      router.push('/see-all-books-dean');
 
+      toast.success(
+        "Update Successfully!",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        },
+        data
+      );
+      router.push("/see-all-books-dean");
     } catch (error) {
-      
-      toast.error('Error Updating', {
+      toast.error("Error Updating", {
         position: "bottom-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -59,45 +86,47 @@ export default function RequestForm({ bookDean, account }) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
-   
-  }
+  };
 
   const sigCanvas = useRef({});
   const clear = () => sigCanvas.current.clear();
 
   const save = async () => {
     try {
-      const blob = dataURItoBlob(sigCanvas.current.getTrimmedCanvas().toDataURL('image/png'));
-      const img = new File([blob], 'fileName.jpg', { type: 'image/jpeg', lastModified: new Date() });
+      const blob = dataURItoBlob(
+        sigCanvas.current.getTrimmedCanvas().toDataURL("image/png")
+      );
+      const img = new File([blob], "fileName.jpg", {
+        type: "image/jpeg",
+        lastModified: new Date(),
+      });
 
       const config = {
-        headers: { 'content-type': 'multipart/form-data' },
+        headers: { "content-type": "multipart/form-data" },
       };
 
       const formData = new FormData();
-      formData.append('file', img);
+      formData.append("file", img);
 
-      const { data } = await api.post('/api/upload', formData, config);
+      const { data } = await api.post("/api/upload", formData, config);
 
       setImageURL(data.filePath);
     } catch (error) {
-      alert('Error');// eslint-disable-line no-alert
+      alert("Error"); // eslint-disable-line no-alert
     }
   };
   const [session] = useSession();
 
-  Date.prototype.toDateInputValue = (function () {
+  Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
-  });
+  };
 
   return (
-
     <section className=" mx-auto  md:flex bg-base  min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Entry of Books </title>
         <meta name="keywords" content="someting" />
@@ -106,7 +135,8 @@ export default function RequestForm({ bookDean, account }) {
       {!session && (
         <>
           <div className=" mx-auto p-10 md:flex bg-white  border-blue-900 border-1 rounded">
-            <span className="
+            <span
+              className="
          text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
             >
               Please Sign In First
@@ -120,18 +150,29 @@ export default function RequestForm({ bookDean, account }) {
           <Form
             onSubmit={handleOnSubmit}
             render={({ handleSubmit }) => (
-
-              <form onSubmit={handleSubmit} className=" px-8 pt-8 pb-8 bg-white rounded-md my-16  shadow-md mx-auto w-full min-h-screen ">
-
+              <form
+                onSubmit={handleSubmit}
+                className=" px-8 pt-8 pb-8 bg-white rounded-md my-16  shadow-md mx-auto w-full min-h-screen "
+              >
                 <div className="flex-shrink-0 flex content-around items-center p-8">
-                  <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-                  <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
+                  <img
+                    className="hidden lg:block h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="okay"
+                  />
+                  <img
+                    className="block lg:hidden h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="cpu logo"
+                  />
                   <h1 className="text-xl  text-gray-600 ">Dean's Form</h1>
                 </div>
 
                 <div className="flex space-x-6 content-around items-center justify-end p-8">
                   <label htmlFor="date" className="block ">
-                    <span className="block  text-xs  text-gray-500 ">Approved Date</span>
+                    <span className="block  text-xs  text-gray-500 ">
+                      Approved Date
+                    </span>
                     <Field
                       className="text-gray-500 rounded-md  w-full
                       focus:placeholder-gray-700 focus:border-gray-500 cursor-pointer placeholder-gray-700 placeholder-opacity-50 bg-gray-50"
@@ -140,16 +181,16 @@ export default function RequestForm({ bookDean, account }) {
                       type="date"
                       required
                       initialValue={new Date().toDateInputValue()}
-
                     />
                   </label>
                 </div>
 
                 <div className="grid grid-cols-3 gap-x-4 gap-y-6 p-8 border-1 ">
-
                   <div className="row-start-1">
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red  text-xs  text-gray-500 ">User ID</span>
+                      <span className="block hover:textColor-red  text-xs  text-gray-500 ">
+                        User ID
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -161,7 +202,9 @@ export default function RequestForm({ bookDean, account }) {
                       />
                     </label>
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red  text-xs  text-gray-500">Name</span>
+                      <span className="block hover:textColor-red  text-xs  text-gray-500">
+                        Name
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -174,9 +217,10 @@ export default function RequestForm({ bookDean, account }) {
                     </label>
                   </div>
                   <div className="row-start-1 col-span-2">
-
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red text-xs  text-gray-500">Author</span>
+                      <span className="block hover:textColor-red text-xs  text-gray-500">
+                        Author
+                      </span>
                       <Field
                         className=" text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50  border-0 bg-gray-50"
@@ -188,7 +232,9 @@ export default function RequestForm({ bookDean, account }) {
                       />
                     </label>
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red text-xs text-gray-500  ">Title</span>
+                      <span className="block hover:textColor-red text-xs text-gray-500  ">
+                        Title
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50  border-0 bg-gray-50"
@@ -202,7 +248,9 @@ export default function RequestForm({ bookDean, account }) {
                   </div>
                   <div className="row-start-2 gap-y-4">
                     <label htmlFor="edition" className="">
-                      <span className="block  text-xs text-gray-500 ">Number of Copies</span>
+                      <span className="block  text-xs text-gray-500 ">
+                        Number of Copies
+                      </span>
                       <Field
                         className=" text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -215,7 +263,9 @@ export default function RequestForm({ bookDean, account }) {
                     </label>
 
                     <label htmlFor="edition" className="">
-                      <span className="block  text-xs text-gray-500 ">Edition</span>
+                      <span className="block  text-xs text-gray-500 ">
+                        Edition
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md border-gray-300  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50"
@@ -240,7 +290,9 @@ export default function RequestForm({ bookDean, account }) {
                   </div>
                   <div className="row-start-2 col-span-2">
                     <label htmlFor="publicationDate" className="">
-                      <span className="block  text-xs  text-gray-500 ">Publication Date</span>
+                      <span className="block  text-xs  text-gray-500 ">
+                        Publication Date
+                      </span>
                       <Field
                         className="text-s focus:placeholder-gray-400  placeholder-gray-500 placeholder-opacity-25 pt-3 pb-2
                                         block w-36 px-0  text-gray-500  mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-400"
@@ -252,7 +304,9 @@ export default function RequestForm({ bookDean, account }) {
                       />
                     </label>
                     <label htmlFor="notereqform" className="">
-                      <span className="block  text-xs text-gray-500 mb-">Note:</span>
+                      <span className="block  text-xs text-gray-500 mb-">
+                        Note:
+                      </span>
                       <Field
                         className="resize-none  text-gray-500 rounded-md border-gray-300 w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-0 bg-gray-50 "
@@ -265,9 +319,10 @@ export default function RequestForm({ bookDean, account }) {
                     </label>
                   </div>
                   <div className="row-start-3 ">
-
                     <label htmlFor="selectDosition" className=" ">
-                      <span className="block  text-xs text-gray-500 p">Select Status</span>
+                      <span className="block  text-xs text-gray-500 p">
+                        Select Status
+                      </span>
                       <Field
                         name="approvalDean"
                         component="select"
@@ -275,42 +330,50 @@ export default function RequestForm({ bookDean, account }) {
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 bg-gray-50  "
                         required
                       >
-
                         <option value=""> </option>
-                        <option className="block text-xs font-bold text-gray-500" value="0">On Going</option>
-                        <option className="block text-xs font-bold text-gray-500" value="1">Approved</option>
-
+                        <option
+                          className="block text-xs font-bold text-gray-500"
+                          value="0"
+                        >
+                          On Going
+                        </option>
+                        <option
+                          className="block text-xs font-bold text-gray-500"
+                          value="1"
+                        >
+                          Approved
+                        </option>
                       </Field>
                     </label>
                   </div>
 
                   <div className="row-start-4 ">
-
                     {imageURL ? (
                       <img
                         name="signatureImage"
                         src={imageURL}
                         alt="signature"
                         style={{
-                          display: 'block',
-                          margin: '0 right',
-                          border: '1px solid black',
-                          width: '150px',
-                          backgroundColor: 'white',
-                          height: '100px',
+                          display: "block",
+                          margin: "0 right",
+                          border: "1px solid black",
+                          width: "150px",
+                          backgroundColor: "white",
+                          height: "100px",
                         }}
                       />
-                    ) : save}
-                    {imageURL &&(
-                        <div className="text-sm font-medium mt-2 text-gray-500 underline">
+                    ) : (
+                      save
+                    )}
+                    {imageURL && (
+                      <div className="text-sm font-medium mt-2 text-gray-500 underline">
                         {`${account.fname} ${account.lname}`}
                       </div>
                     )}
-                  
 
                     <Popup
                       modal
-                      trigger={(
+                      trigger={
                         <button
                           className=" mx-auto mt-3  text-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md
                 text-white bg-secondary hover:bg-indigo-700
@@ -319,16 +382,18 @@ export default function RequestForm({ bookDean, account }) {
                           type="button"
                           required
                         >
-                          {' '}
+                          {" "}
                           Sign Here
                         </button>
-                  )}
+                      }
                       closeOnDocumentClick={false}
                     >
-
                       {(close) => (
                         <>
-                          <SignaturePad ref={sigCanvas} canvasProps={{ className: 'signatureCanvas' }} />
+                          <SignaturePad
+                            ref={sigCanvas}
+                            canvasProps={{ className: "signatureCanvas" }}
+                          />
                           <div className="space-x-2  justify-items-center ">
                             <button
                               className="mx-auto mt-3 pr-4 text-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md
@@ -361,9 +426,7 @@ export default function RequestForm({ bookDean, account }) {
                         </>
                       )}
                     </Popup>
-
                   </div>
-
                 </div>
 
                 <label htmlFor="requesID" className="">
@@ -385,16 +448,13 @@ export default function RequestForm({ bookDean, account }) {
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Update Request
-
                   </button>
                 </div>
-
               </form>
             )}
           />
         </>
       )}
-
     </section>
   );
 }

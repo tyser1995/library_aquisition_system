@@ -19,6 +19,8 @@
 /* eslint-disable no-extend-native */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
+/* eslint-disable consistent-return */
+
 import { Form, Field } from "react-final-form";
 import axios from "axios";
 import Head from "next/head";

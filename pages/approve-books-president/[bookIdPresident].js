@@ -1,3 +1,10 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable consistent-return */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable radix */
+/* eslint-disable operator-linebreak */
+/* eslint-disable camelcase */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -18,6 +25,7 @@
 /* eslint-disable no-extend-native */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
+
 import { Form, Field } from "react-final-form";
 import axios from "axios";
 import Head from "next/head";
@@ -285,7 +293,6 @@ export default function RequestForm({ bookIdPresident }) {
                         component="select"
                         className="  text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 border-1 bg-gray-50 "
-                        required
                       >
                         <option value="">Enter Status </option>
                         <option

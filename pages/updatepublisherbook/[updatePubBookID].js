@@ -1,3 +1,17 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable consistent-return */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable radix */
+/* eslint-disable operator-linebreak */
+/* eslint-disable camelcase */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable max-len */
 /* eslint-disable comma-dangle */
 /* eslint-disable object-curly-newline */
 /* eslint-disable global-require */
@@ -10,6 +24,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-extend-native */
 /* eslint-disable no-unused-vars */
+/* eslint-disable indent */
 
 import { Form, Field } from "react-final-form";
 import axios from "axios";
