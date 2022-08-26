@@ -1,12 +1,15 @@
-import mysql from '../../providers/mysql';
+/* eslint-disable comma-dangle */
+/* eslint-disable object-curly-newline */
+/* eslint-disable quotes */
+import mysql from "../../providers/mysql";
 
 export default async (req, res) => {
   try {
-    const {
-      approvalDateVPAA, requestID, approvalVpaa, 
-    } = req.body;
+    const { approvalDateVPAA, requestID, approvalVpaa } = req.body;
 
-    await mysql.query(`UPDATE requestform SET approvalVpaa=('${approvalVpaa}'), approvalDateVPAA=('${approvalDateVPAA}')  WHERE requestID=('${requestID}')`);
+    await mysql.query(
+      `UPDATE requestform SET approvalVpaa=('${approvalVpaa}'), approvalDateVPAA=('${approvalDateVPAA}')  WHERE requestID=('${requestID}')`
+    );
 
     await mysql.end();
     console.log();
@@ -14,6 +17,6 @@ export default async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    return res.status(400).json({ message: 'Error' });
+    return res.status(400).json({ message: "Error" });
   }
 };

@@ -1,18 +1,20 @@
-import mysql from '../../providers/mysql';
+/* eslint-disable object-curly-newline */
+/* eslint-disable consistent-return */
+/* eslint-disable comma-dangle */
+/* eslint-disable quotes */
+import mysql from "../../providers/mysql";
 
 export default async (req, res) => {
   try {
-    const {
-        verified,verifiedDate, enumtitle, requestID
-    } = req.body;
+    const { verified, verifiedDate, enumtitle, requestID } = req.body;
 
-    await mysql.query(`UPDATE requestform SET verified=('${verified}'), verifiedDate=('${verifiedDate}'), enumtitle=('${enumtitle}') WHERE requestID=('${requestID}')`);
-   
+    await mysql.query(
+      `UPDATE requestform SET verified=('${verified}'), verifiedDate=('${verifiedDate}'), enumtitle=('${enumtitle}') WHERE requestID=('${requestID}')`
+    );
+
     await mysql.end();
-    return res.status(200).json({ message: 'Succesfully Updated' });
+    return res.status(200).json({ message: "Succesfully Updated" });
   } catch (error) {
-
-    return res.status(400).json({ message: 'Error' });
-
+    return res.status(400).json({ message: "Error" });
   }
 };
