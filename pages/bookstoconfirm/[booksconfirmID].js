@@ -1,11 +1,11 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { useSession } from 'next-auth/client';
-import { toast } from 'react-toastify';
-import api from '../../lib/api';
-import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/router';
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { useSession } from "next-auth/client";
+import { toast } from "react-toastify";
+import api from "../../lib/api";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 export const getServerSideProps = async (context) => {
   const { booksconfirmID } = context.query;
@@ -15,49 +15,44 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: { booksconfirmID: data },
-
   };
 };
 
 export default function EnterBook({ booksconfirmID }) {
   const router = useRouter();
 
-
   const handleOnSubmit = async (payload) => {
-
     try {
-      const { data } = await axios.post('/api/bookentryUpdate', payload);
+      const { data } = await axios.post("/api/bookentryUpdate", payload);
 
-    toast.success(' Update Successfully!', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    }, data);
-    router.push('/see-all-arrived-books');
-
-
+      toast.success(
+        " Update Successfully!",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        },
+        data
+      );
+      router.push("/see-all-arrived-books");
     } catch (error) {
-  console.log(error);
-      
+      console.log(error);
     }
-    
   };
   const [session] = useSession();
 
-  Date.prototype.toDateInputValue = (function () {
+  Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
-  });
+  };
 
   return (
-
     <section className=" mx-auto  md:flex bg-base min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Confirming</title>
         <meta name="keywords" content="someting" />
@@ -66,7 +61,8 @@ export default function EnterBook({ booksconfirmID }) {
       {!session && (
         <>
           <div className=" mx-auto p-10 md:flex bg-white  border-blue-900 border-1 rounded">
-            <span className="
+            <span
+              className="
          text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
             >
               Please Sign In First
@@ -80,21 +76,31 @@ export default function EnterBook({ booksconfirmID }) {
           <Form
             onSubmit={handleOnSubmit}
             render={({ handleSubmit }) => (
-
-              <form onSubmit={handleSubmit} className=" p-8 bg-white rounded-md my-16 shadow-md mx-auto w-full min-h-screen  ">
-
+              <form
+                onSubmit={handleSubmit}
+                className=" p-8 bg-white rounded-md my-16 shadow-md mx-auto w-full min-h-screen  "
+              >
                 <div className="flex-shrink-0 flex content-around items-center">
-
-                  <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-                  <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
-                  <h1 className="text-xl  text-gray-600 ">Library Acquisition Entry of Books</h1>
-
+                  <img
+                    className="hidden lg:block h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="okay"
+                  />
+                  <img
+                    className="block lg:hidden h-14 w-auto  mr-3"
+                    src="/cpulogo.png"
+                    alt="cpu logo"
+                  />
+                  <h1 className="text-xl  text-gray-600 ">
+                    Library Acquisition Entry of Books
+                  </h1>
                 </div>
 
                 <div className="flex space-x-6 content-around items-center  justify-end p-8">
-
                   <label htmlFor="date" className="block ">
-                    <span className="block  text-xs  text-gray-500 mb-1">Book Updated</span>
+                    <span className="block  text-xs  text-gray-500 mb-1">
+                      Book Updated
+                    </span>
                     <Field
                       className="text-gray-500 rounded-md  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 cursor-pointer placeholder-gray-700 placeholder-opacity-50 bg-gray-50"
@@ -105,13 +111,13 @@ export default function EnterBook({ booksconfirmID }) {
                       initialValue={new Date().toDateInputValue()}
                     />
                   </label>
-
                 </div>
                 <div className="grid grid-cols-3 gap-x-4 gap-y-8 ga p-8 border-1">
                   <div className="row-start-1">
-
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red  text-xs  text-gray-500 mb-1">User ID</span>
+                      <span className="block hover:textColor-red  text-xs  text-gray-500 mb-1">
+                        User ID
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -124,7 +130,9 @@ export default function EnterBook({ booksconfirmID }) {
                     </label>
 
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red  text-xs x text-gray-500 mb-1">Name</span>
+                      <span className="block hover:textColor-red  text-xs x text-gray-500 mb-1">
+                        Name
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -137,9 +145,10 @@ export default function EnterBook({ booksconfirmID }) {
                     </label>
                   </div>
                   <div className="row-start-1 col-span-2">
-
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red text-xs  text-gray-500 mb-1">Author</span>
+                      <span className="block hover:textColor-red text-xs  text-gray-500 mb-1">
+                        Author
+                      </span>
                       <Field
                         className=" text-gray-500 rounded-md  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -153,7 +162,9 @@ export default function EnterBook({ booksconfirmID }) {
                     </label>
 
                     <label htmlFor="author" className="">
-                      <span className="block hover:textColor-red text-xs text-gray-500 mb-1">Title</span>
+                      <span className="block hover:textColor-red text-xs text-gray-500 mb-1">
+                        Title
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -167,9 +178,10 @@ export default function EnterBook({ booksconfirmID }) {
                     </label>
                   </div>
                   <div className="row-start-2 gap-y-6 space-y-2">
-
                     <label htmlFor="edition" className="">
-                      <span className="block  text-xs  text-gray-500 ">Number of Copies</span>
+                      <span className="block  text-xs  text-gray-500 ">
+                        Number of Copies
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -182,7 +194,9 @@ export default function EnterBook({ booksconfirmID }) {
                     </label>
 
                     <label htmlFor="edition" className=" ">
-                      <span className="block  text-xs  text-gray-500 ">Edition</span>
+                      <span className="block  text-xs  text-gray-500 ">
+                        Edition
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-full
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -193,34 +207,28 @@ export default function EnterBook({ booksconfirmID }) {
                         disabled
                       />
                     </label>
-                    <small className="  text-xs text-gray-600  mt-4">Approved By:</small>
+                    <small className="  text-xs text-gray-600  mt-4">
+                      Approved By:
+                    </small>
 
                     <span className="font-thin block ">
-                      President:
-                      {' '}
-                      {booksconfirmID.approvalPresident ? '✓' : 'No'}
+                      President: {booksconfirmID.approvalPresident ? "✓" : "No"}
                     </span>
                     <span className="font-thin block ">
-                      Finance:
-                      {' '}
-                      {booksconfirmID.approvalFinance ? '✓' : 'No'}
+                      Finance: {booksconfirmID.approvalFinance ? "✓" : "No"}
                     </span>
                     <span className="font-thin block ">
-                      Director:
-                      {' '}
-                      {booksconfirmID.approvalDirector ? '✓' : 'No'}
+                      Director: {booksconfirmID.approvalDirector ? "✓" : "No"}
                     </span>
                     <span className="font-thin block ">
-                      Acquisition:
-                      {' '}
-                      {booksconfirmID.approvalAcqui ? '✓' : 'No'}
+                      Acquisition: {booksconfirmID.approvalAcqui ? "✓" : "No"}
                     </span>
-
                   </div>
                   <div className="row-start-3 gap-y-2">
-
                     <label htmlFor="selectDosition" className="block">
-                      <span className="block  text-xs  text-gray-500 p">Status</span>
+                      <span className="block  text-xs  text-gray-500 p">
+                        Status
+                      </span>
                       <Field
                         name="status"
                         component="select"
@@ -228,32 +236,39 @@ export default function EnterBook({ booksconfirmID }) {
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700  placeholder-opacity-50 bg-gray-50"
                         required
                       >
-
                         <option value=""> Select Status </option>
-                        <option className=" text-xs text-gray-500" value="1">Arrived</option>
-                        <option className=" text-xs text-gray-500" value="2">Confirmed</option>
-
+                        <option className=" text-xs text-gray-500" value="1">
+                          Arrived
+                        </option>
+                        <option className=" text-xs text-gray-500" value="2">
+                          Confirmed
+                        </option>
                       </Field>
                     </label>
                   </div>
 
                   <div className="row-start-2 col-span-2">
-
                     <label htmlFor="publicationDate" className="mt-6 ml">
-                      <span className="block  text-xs  text-gray-500 ">Publication Date</span>
+                      <span className="block  text-xs  text-gray-500 ">
+                        Publication Date
+                      </span>
                       <Field
                         className="text-gray-500 rounded-md  w-auto
                     focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
                         component="input"
                         name="publicationDate"
                         type="text"
-                        initialValue={new Date(booksconfirmID.pubdate).toDateString()}
+                        initialValue={new Date(
+                          booksconfirmID.pubdate
+                        ).toDateString()}
                         disabled
                       />
                     </label>
 
                     <label htmlFor="notereqform" className="">
-                      <span className="block  text-xs  text-gray-500 mb-1">Note:</span>
+                      <span className="block  text-xs  text-gray-500 mb-1">
+                        Note:
+                      </span>
                       <Field
                         className="resize-none text-gray-500 rounded-md  w-full h-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 border-0 placeholder-opacity-50 bg-gray-50"
@@ -264,7 +279,6 @@ export default function EnterBook({ booksconfirmID }) {
                         disabled
                       />
                     </label>
-
                   </div>
                   <Field
                     className="text-gray-500 rounded-md  w-full h-full
@@ -283,16 +297,13 @@ export default function EnterBook({ booksconfirmID }) {
                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Update
-
                   </button>
                 </div>
-
               </form>
             )}
           />
         </>
       )}
-
     </section>
   );
 }
