@@ -10,12 +10,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "@tailwindcss/forms": "^0.3.2",
     "@tailwindcss/custom-forms": "^0.2.1",
-    "axios": "^0.21.1",
+    "tailwindcss": "^2.2.19",
     "final-form": "^4.20.2",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
@@ -48,7 +50,6 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^8.2.10",
-    "tailwindcss": "^2.1.1",
     "typescript": "^4.3.2"
   }
 }
