@@ -6,11 +6,11 @@ import Popup from 'reactjs-popup';
 import { useRef, useState } from 'react';
 import SignaturePad from 'react-signature-canvas';
 import { toast } from 'react-toastify';
-import api from '../../lib/api';
 import dataURItoBlob from '../../lib/date-uri-to-blob';
 import validateSession from '../../lib/session';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import api from '../../lib/api';
 
 
 export const getServerSideProps = async (context) => {
