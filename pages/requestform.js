@@ -1,10 +1,10 @@
-import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import Head from 'next/head';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
-import 'react-toastify/dist/ReactToastify.css';
-import validateSession from '../lib/session';
+import { Form, Field } from "react-final-form";
+import axios from "axios";
+import Head from "next/head";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import "react-toastify/dist/ReactToastify.css";
+import validateSession from "../lib/session";
 
 export const getServerSideProps = async (context) => {
   const { account } = await validateSession(context);
@@ -17,25 +17,29 @@ export const getServerSideProps = async (context) => {
 export default function RequestForm({ account }) {
   const router = useRouter();
 
-  Date.prototype.toDateInputValue = (function () {
+  Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
-  });
+  };
 
   const handleOnSubmit = async (payload) => {
     try {
-      const { data } = await axios.post('/api/requestform', payload);
+      const { data } = await axios.post("/api/requestform", payload);
 
-      toast.success('Request Sent!', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      }, data);
+      toast.success(
+        "Request Sent!",
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        },
+        data
+      );
 
       // router.push('/');
       location.reload();
@@ -45,9 +49,7 @@ export default function RequestForm({ account }) {
   };
 
   return (
-
     <section className=" mx-auto  md:flex bg-base  min-h-screen ">
-
       <Head>
         <title>Library Acquisition | Request Form </title>
         <meta name="keywords" content="someting" />
@@ -56,9 +58,10 @@ export default function RequestForm({ account }) {
       <Form
         onSubmit={handleOnSubmit}
         render={({ handleSubmit }) => (
-
-          <form onSubmit={handleSubmit} className=" px-8 pt-8 pb-4 bg-white rounded-md my-16 w- mx-auto h-auto w-full shadow-md ">
-
+          <form
+            onSubmit={handleSubmit}
+            className=" px-8 pt-8 pb-4 bg-white rounded-md my-16 w- mx-auto h-auto w-full shadow-md "
+          >
             {/* //hidden stuff starts here */}
 
             <Field
@@ -80,16 +83,26 @@ export default function RequestForm({ account }) {
             {/* Hidden stuff ends here */}
 
             <div className=" flex content-around items-center p-4">
-              <img className="hidden lg:block h-14 w-auto  mr-3" src="/cpulogo.png" alt="okay" />
-              <img className="block lg:hidden h-14 w-auto  mr-3" src="/cpulogo.png" alt="cpu logo" />
-              <h1 className="text-xl  text-gray-500 ">Library Acquisition Request Form</h1>
-
+              <img
+                className="hidden lg:block h-14 w-auto  mr-3"
+                src="/cpulogo.png"
+                alt="okay"
+              />
+              <img
+                className="block lg:hidden h-14 w-auto  mr-3"
+                src="/cpulogo.png"
+                alt="cpu logo"
+              />
+              <h1 className="text-xl  text-gray-500 ">
+                Library Acquisition Request Form
+              </h1>
             </div>
 
             <div className="flex space-y-8 justify-end p-4 ">
-
               <label htmlFor="date" className="block mr-4">
-                <span className="  text-xs  text-gray-500 mb-1 ">Requested Date</span>
+                <span className="  text-xs  text-gray-500 mb-1 ">
+                  Requested Date
+                </span>
                 <Field
                   className="block text-gray-400 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-701 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50  cursor-pointer"
@@ -98,17 +111,29 @@ export default function RequestForm({ account }) {
                   type="date"
                   required
                   initialValue={new Date().toDateInputValue()}
-
                 />
               </label>
 
               <label htmlFor="rush" className="">
-                <Field className="text-gray-500   form-radio h-3 w-3 rounded-sm" name="rushornrush" component="input" type="radio" value="Rush" required />
+                <Field
+                  className="text-gray-500   form-radio h-3 w-3 rounded-sm"
+                  name="rushornrush"
+                  component="input"
+                  type="radio"
+                  value="Rush"
+                  required
+                />
                 <span className="  text-xs  text-gray-500 mb-1">Rush</span>
               </label>
 
               <label htmlFor="nrush">
-                <Field className=" text-xs  text-gray-500 form-radio h-3 w-3 rounded-sm " name="rushornrush" component="input" type="radio" value="Not Rush" />
+                <Field
+                  className=" text-xs  text-gray-500 form-radio h-3 w-3 rounded-sm "
+                  name="rushornrush"
+                  component="input"
+                  type="radio"
+                  value="Not Rush"
+                />
                 <span className="  text-xs   text-gray-500 mb-">Not Rush</span>
               </label>
             </div>
@@ -141,12 +166,13 @@ export default function RequestForm({ account }) {
                     disabled
                   />
                 </label>
-
               </div>
 
               <div className="row-start-2 ">
                 <label htmlFor="author" className="">
-                  <span className=" hover:textColor-red text-sm   text-gray-500 mb-">Author</span>
+                  <span className=" hover:textColor-red text-sm   text-gray-500 mb-">
+                    Author
+                  </span>
                   <Field
                     className="block rounded-md border-gray-300 shadow-sm w-2/4
                 focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 text-gray-500 bg-gray-50"
@@ -169,7 +195,9 @@ export default function RequestForm({ account }) {
                   />
                 </label>
                 <label htmlFor="chargedto" className="">
-                  <span className="  text-xs  text-gray-500 ">Publisher Name</span>
+                  <span className="  text-xs  text-gray-500 ">
+                    Publisher Name
+                  </span>
                   <Field
                     className="block rounded-md border-gray-300 shadow-sm w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-500 placeholder-opacity-50 text-gray-500 bg-gray-50"
@@ -182,7 +210,9 @@ export default function RequestForm({ account }) {
               </div>
               <div className="row-start-2   ">
                 <label htmlFor="pbadress" className="">
-                  <span className=" hover:textColor-red text-xs  text-gray-500 mb-">Publisher Address</span>
+                  <span className=" hover:textColor-red text-xs  text-gray-500 mb-">
+                    Publisher Address
+                  </span>
                   <Field
                     className="block rounded-md border-gray-300 shadow-sm w-full
                 focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 text-gray-500 bg-gray-50"
@@ -213,7 +243,6 @@ export default function RequestForm({ account }) {
                     placeholder="Book's Edition"
                   />
                 </label>
-
               </div>
 
               <div className="row-start-2 ">
@@ -230,7 +259,9 @@ export default function RequestForm({ account }) {
                 </label>
 
                 <label htmlFor="copvol" className="">
-                  <span className=" block text-xs  text-gray-500">Copies/Volumes</span>
+                  <span className=" block text-xs  text-gray-500">
+                    Copies/Volumes
+                  </span>
                   <Field
                     className="text-gray-500 rounded-md border-gray-300  w-full
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 bg-gray-50"
@@ -252,11 +283,12 @@ export default function RequestForm({ account }) {
                     disabled
                   />
                 </label>
-
               </div>
               <div className="row-start-3 ">
                 <label htmlFor="notereqform" className="">
-                  <span className="block  text-xs  text-gray-500 mb-1">Note:</span>
+                  <span className="block  text-xs  text-gray-500 mb-1">
+                    Note:
+                  </span>
                   <Field
                     className=" resize-none h-full w-full  text-sm text-gray-400 rounded-md border-gray-300
                   focus:placeholder-gray-700 focus:border-gray-500 placeholder-gray-700 placeholder-opacity-50 bg-gray-50  "
@@ -266,7 +298,6 @@ export default function RequestForm({ account }) {
                   />
                 </label>
               </div>
-
             </div>
 
             <div className="block text-right mt-5 p-4">
@@ -279,11 +310,9 @@ export default function RequestForm({ account }) {
                 Send Request
               </button>
             </div>
-
           </form>
         )}
       />
-
     </section>
   );
 }

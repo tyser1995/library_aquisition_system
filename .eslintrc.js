@@ -35,5 +35,11 @@ module.exports = {
       },
     }],
     'no-console': 'off',
+    indent: [
+      {
+        SwitchCase: 1,
+        ignoredNodes: ['ConditionalExpression'],
+      },
+    ],
   },
 };
