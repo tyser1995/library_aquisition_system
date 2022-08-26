@@ -1,16 +1,16 @@
-import { Form, Field } from "react-final-form";
-import axios from "axios";
-import Head from "next/head";
-import { useSession } from "next-auth/client";
-import Popup from "reactjs-popup";
-import { useRef, useState } from "react";
-import SignaturePad from "react-signature-canvas";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
-import api from "../../lib/api";
-import dataURItoBlob from "../../lib/date-uri-to-blob";
-import validateSession from "../../lib/session";
+import { Form, Field } from 'react-final-form';
+import axios from 'axios';
+import Head from 'next/head';
+import { useSession } from 'next-auth/client';
+import Popup from 'reactjs-popup';
+import { useRef, useState } from 'react';
+import SignaturePad from 'react-signature-canvas';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
+import api from '../../lib/api';
+import dataURItoBlob from '../../lib/date-uri-to-blob';
+import validateSession from '../../lib/session';
 
 export const getServerSideProps = async (context) => {
   const { bookIdToRequest } = context.query;
@@ -31,15 +31,15 @@ export default function RequestForm({ bookIdToRequest, account }) {
 
   const handleOnSubmit = async (payload) => {
     try {
-      const { data } = await axios.post("/api/booktoDirector", {
+      const { data } = await axios.post('/api/booktoDirector', {
         ...payload,
         imageURL,
       });
 
       toast.success(
-        "Sent Successfully!",
+        'Sent Successfully!',
         {
-          position: "bottom-right",
+          position: 'bottom-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -47,9 +47,9 @@ export default function RequestForm({ bookIdToRequest, account }) {
           draggable: true,
           progress: undefined,
         },
-        data
+        data,
       );
-      router.push("/see-all-verified-books");
+      router.push('/see-all-verified-books');
     } catch (error) {
       console.log(error);
     }
@@ -59,25 +59,25 @@ export default function RequestForm({ bookIdToRequest, account }) {
   const save = async () => {
     try {
       const blob = dataURItoBlob(
-        sigCanvas.current.getTrimmedCanvas().toDataURL("image/png")
+        sigCanvas.current.getTrimmedCanvas().toDataURL('image/png'),
       );
-      const img = new File([blob], "fileName.jpg", {
-        type: "image/jpeg",
+      const img = new File([blob], 'fileName.jpg', {
+        type: 'image/jpeg',
         lastModified: new Date(),
       });
 
       const config = {
-        headers: { "content-type": "multipart/form-data" },
+        headers: { 'content-type': 'multipart/form-data' },
       };
 
       const formData = new FormData();
-      formData.append("file", img);
+      formData.append('file', img);
 
-      const { data } = await api.post("/api/upload", formData, config);
+      const { data } = await api.post('/api/upload', formData, config);
 
       setImageURL(data.filePath);
     } catch (error) {
-      alert("Error"); // eslint-disable-line no-alert
+      alert('Error'); // eslint-disable-line no-alert
     }
   };
   const [session] = useSession();
@@ -89,7 +89,7 @@ export default function RequestForm({ bookIdToRequest, account }) {
   };
 
   return (
-    <section className=" mx-auto  md:flex bg-base min-h-screen ">
+    <section className="mx-auto  md:flex bg-base min-h-screen">
       <Head>
         <title>Library Acquisition | Request Payment </title>
         <meta name="keywords" content="someting" />
@@ -129,7 +129,7 @@ export default function RequestForm({ bookIdToRequest, account }) {
                     alt="cpu logo"
                   />
                   <h1 className="text-xl mt 4  text-gray-600 ">
-                    Library Acqusition Request Payment Signature{" "}
+                    Library Acqusition Request Payment Signature
                   </h1>
                 </div>
                 <label htmlFor="edition" className="">
@@ -140,7 +140,7 @@ export default function RequestForm({ bookIdToRequest, account }) {
                     name="acquisitionName"
                     type="hidden"
                     initialValue={
-                      account.fname + " " + account.mname + " " + account.lname
+                      `${account.fname} + ' ' + ${account.mname} + ' ' + ${account.lname}`
                     }
                     disabled
                   />
@@ -149,7 +149,6 @@ export default function RequestForm({ bookIdToRequest, account }) {
                 <div className="flex space-x-6 content-around items-center mt-10 justify-end">
                   <label htmlFor="date" className="block ">
                     <span className="block  text-xs   text-gray-500 mb-1">
-                      {" "}
                       Date Sent
                     </span>
                     <Field
@@ -366,15 +365,9 @@ export default function RequestForm({ bookIdToRequest, account }) {
                     <Popup
                       modal
                       trigger={
-                        <button
-                          className=" mx-auto mt-3  text-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md
-                text-white bg-indigo-600 hover:bg-indigo-700
-               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                          a
+                        <button className=" mx-auto mt-3  text-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                           type="button"
-                          required
-                        >
-                          {" "}
+                          required>
                           Sign Here
                         </button>
                       }
