@@ -222,9 +222,6 @@ const BudgetForm = ({ selectDepartment }) => {
                          px-6 py-3 rounded shadow-md "
                             type="button"
                             onClick={toggleDept}
-                            style={{
-                              display: data.subtracted < 1 ? "none" : "",
-                            }}
                           >
                             <div className="text-xs shadow-md w-auto">
                               <label
