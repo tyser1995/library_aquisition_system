@@ -19,7 +19,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    <Files ".user.ini"> 
-        Require all denied
-    </Files>
+    # <Files ".user.ini"> 
+    #     Require all denied
+    # </Files>
 </IfModule>
