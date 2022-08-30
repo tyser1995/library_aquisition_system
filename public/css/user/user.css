@@ -1,0 +1,42 @@
+@media (max-width: 425px) {
+    .add-user #add-user {
+        display: none;
+    }
+    .user-font {
+        font-size: 12px;
+    }
+    .create-font {
+        font-size: 12px;
+    }
+    .edit-user-btn #edit-user-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 375px) {
+    .create-font {
+        font-size: 11px;
+    }
+    .edit-user-font {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 320px) {
+    .create-font {
+        font-size: x-small;
+    }
+    .edit-user-font {
+        font-size: x-small;
+    }
+}
+
+@media (min-width: 426px) {
+    .add-user .icon {
+        display: none;
+    }
+
+    .edit-user-btn .icon {
+        display: none;
+    }
+}

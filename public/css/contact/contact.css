@@ -1,0 +1,27 @@
+@media (max-width: 425px) {
+    .add-contact-btn #add-contact-btn {
+        display: none;
+    }
+    .add-contact-btn .icon {
+        display: flex;
+        justify-content: end;
+    }
+    .create-contact #create-contact {
+        display: none;
+    }
+    .edit-contact-btn #edit-contact-btn {
+        display: none;
+    }
+}
+
+@media (min-width: 426px) {
+    .add-contact-btn .icon {
+        display: none;
+    }
+    .create-contact .icon {
+        display: none;
+    }
+    .edit-contact-btn .icon {
+        display: none;
+    }
+}

@@ -1,0 +1,9 @@
+@extends ('layouts.app', [
+    'class' => '',
+    'elementActive' => 'hotels',
+]) 
+
+
+.add-input-room_type .inputs {
+    display: block;
+}

@@ -1,0 +1,21 @@
+@media (max-width: 425px) {
+    .add-hotel-btn #add-hotel-btn {
+        display: none;
+    }
+    .create-hotel-btn #create-hotel-btn {
+        display: none;
+    }
+    .add-hotel-btn .icon {
+        display: flex;
+        justify-content: end;
+    }
+}
+
+@media (min-width: 426px) {
+    .add-hotel-btn .icon {
+        display: none;
+    }
+    .create-hotel-btn .icon {
+        display: none;
+    }
+}

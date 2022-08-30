@@ -1,0 +1,47 @@
+
+  .img-container:hover .img-card-btn{
+    filter: grayscale(0) opacity(1);
+  }
+  .img-container:hover .img-card{
+    -webkit-filter: brightness(60%);
+    filter:brightness(60%);
+  }
+
+  .img-card {
+    transition: all 200ms ease-in;
+    /* min-height: 180px; */
+    vertical-align:middle;
+  }
+
+  .img-card-btn{
+    transition: all 200ms ease-in;
+    filter: grayscale(1) opacity(0);
+  }
+
+  /* .img-card-btn-positioning{
+    display: inline-flex;
+    flex-direction: column;
+  } */
+  
+  /* Taginput */
+  .tags-label-child{
+    position: absolute;
+    right: 30px;
+    top: 40px;
+    color:#c1b3b3;
+  }
+
+  /* Search clear btn */
+  .search-clr-btn{
+    position: absolute;
+    right: 25%;
+    top: 20px;
+    cursor: pointer;
+    z-index: 999;
+    display: none;
+  }
+
+  /* 1920x1200 img */
+  .modal-max-size{
+    max-width: 100%;
+  }

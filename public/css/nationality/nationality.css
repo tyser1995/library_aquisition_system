@@ -1,0 +1,42 @@
+@media (max-width: 425px) {
+    .add-nationality-btn #add-nationality-btn {
+        display: none;
+    }
+    .create-nationality-btn #create-nationality-btn {
+        display: none;
+    }
+    .add-nationality-btn .icon {
+        display: flex;
+        justify-content: end;
+    }
+    .edit-nationality-btn #edit-nationality-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 320px) {
+    .edit-nationality-font {
+        font-size: small;
+    }
+}
+
+@media (max-width: 320px) {
+    .create-nationality-font {
+        font-size: 13px;
+    }
+    .add-nationality-font {
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 426px) {
+    .add-nationality-btn .icon {
+        display: none;
+    }
+    .create-nationality-btn .icon {
+        display: none;
+    }
+    .edit-nationality-btn .icon {
+        display: none;
+    }
+}

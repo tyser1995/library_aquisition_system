@@ -1,0 +1,27 @@
+@media (max-width: 425px) {
+    .add-country-btn #add-country-btn {
+        display: none;
+    }
+    .create-country-btn #create-country-btn {
+        display: none;
+    }
+    .add-country-btn .icon {
+        display: flex;
+        justify-content: end;
+    }
+    .edit-country-btn #edit-country-btn {
+        display: none;
+    }
+}
+
+@media (min-width: 426px) {
+    .add-country-btn .icon {
+        display: none;
+    }
+    .create-country-btn .icon {
+        display: none;
+    }
+    .edit-country-btn .icon {
+        display: none;
+    }
+}

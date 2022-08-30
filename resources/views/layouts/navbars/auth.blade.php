@@ -1,0 +1,100 @@
+<div class="sidebar" data-color="dark" data-active-color="primary">
+    <div class="logo" style="display:grid; justify-content:center;">
+        <a href="{{url('/')}}" class="simple-text">
+            <div class="logo-image-small">
+                <img src="{{ asset('paper') }}/img/cpu-logo.png">
+            </div>
+        </a>
+        <a href="{{url('/')}}" class="simple-text logo-normal text-center">
+            {{ __('Library Aquisition ') }}
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }} ">
+                <a href="{{ route('page.index', 'dashboard') }}">
+                    <i class="fa fa-dashboard"></i>
+                    <p>{{ __('Dashboard') }}</p>
+                </a>
+            </li>
+            @if(Auth::user()->role == 1 || Auth::user()->role == 2)
+            <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" href="#usersmgt">
+                    <i class="fa fa-users"></i>
+                    <p>{{ __('User Management') }} <b class="caret"></b></p>
+                </a>
+                <div class="{{ $elementActive == 'user' || $elementActive == 'roles'? 'collapse show' : 'collapse' }}" id="usersmgt">
+                    <ul class="nav">
+                        @can('user-list')
+                        <li class="{{ $elementActive == 'user' ? 'active' : '' }} ">
+                            <a href="{{ route('users') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __(' Users ') }}</span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('role-list')
+                        <li class="{{ $elementActive == 'roles' ? 'active' : '' }}">
+                            <a href="{{ route('roles') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __(' Roles and Permissions ') }}</span>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
+                </div>
+            </li>
+
+            @endif
+            <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" href="#reqbooks">
+                    <i class="fa fa-book"></i>
+                    <p>{{ __('Request Management')}} <b class="caret"></b></p>
+                </a>
+                <div class="{{ $elementActive == 'request_books' || $elementActive == 'verify_books' ? 'collapse show ' : 'collapse' }}"
+                    id="reqbooks">
+                    <ul class="nav">
+                        <li class="{{ $elementActive == 'request_books' ? 'active' : '' }}">
+                            <a href="{{ route('department_types') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Request Books ') }}</span>
+                            </a>
+                        </li>
+                        <li class="{{ $elementActive == 'verify_books' ? 'active' : '' }}">
+                            <a href="{{ route('department_names') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Verify Books ') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" href="#datamgt">
+                    <i class="fa fa-cog"></i>
+                    <p>{{ __('Data Management') }} <b class="caret"></b></p>
+                </a>
+                <div class="{{ $elementActive == 'department_types' || $elementActive == 'department_names' ? 'collapse show ' : 'collapse' }}"
+                    id="datamgt">
+                    <ul class="nav">
+                        <li class="{{ $elementActive == 'department_types' ? 'active' : '' }}">
+                            <a href="{{ route('department_types') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Department Types ') }}</span>
+                            </a>
+                        </li>
+                        <li class="{{ $elementActive == 'department_names' ? 'active' : '' }}">
+                            <a href="{{ route('department_names') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Department Names ') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</div>

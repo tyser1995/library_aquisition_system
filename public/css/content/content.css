@@ -1,0 +1,25 @@
+@media (max-width: 425px) {
+    .add-content .add-content-btn {
+        display: none;
+    }
+    .create-content #create-content {
+        display: none;
+    }
+    .add-content-font {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .add-content-font {
+        font-size: 11.5px;
+    }
+}
+@media (min-width: 426px) {
+    .add-content .icon {
+        display: none;
+    }
+    .create-content .icon {
+        display: none;
+    }
+}

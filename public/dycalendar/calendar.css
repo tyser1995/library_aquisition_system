@@ -1,0 +1,94 @@
+.calendar_box{
+    position: absolute;
+    z-index : 1000;
+    transform: translate(0, -130px)
+}
+.calendar_container{
+    position: absolute;
+    width: 250px;
+    min-height: 100%;
+    /* background: rgba(255, 255, 255, 0.1); */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #b4b0ac;
+    border-right: 2px solid #66615B;
+    border-bottom: 2px solid #66615B;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+#dycalendar {
+    width: 100%;
+}
+.dycalendar-header {
+    display: flex;
+    justify-content: center;
+}
+#dycalendar table{
+    width: 100%;
+    margin-top: 40px;
+    border-spacing: 15px;
+    display: flex;
+    justify-content: center;
+}
+#dycalendar table tbody{
+    margin-right: 100px;
+}
+#dycalendar table tr:nth-child(1) td{
+    background: #66615B;
+    /* background: #51cbce; */
+    color: #fff;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: x-small;
+    margin: 0 10px;
+}
+#dycalendar table tr:nth-child(1) td:hover{
+    background: #66615B;
+    color: #fff;
+    cursor: not-allowed;
+}
+/* #dycalendar table tr:nth-child(2) td:nth-child(1):hover{
+    background: #fff;
+    cursor: not-allowed;
+}
+#dycalendar table tr:nth-child(2) td:nth-child(2):hover{
+    background: #fff;
+    cursor: not-allowed;
+}
+#dycalendar table tr:nth-child(2) td:nth-child(3):hover{
+    background: #fff;
+    cursor: not-allowed;
+} */
+#dycalendar table tr{
+    border-spacing: 5px;
+}
+#dycalendar table td{
+    /* color: #fff; */
+    padding: 10px;
+    cursor: pointer;
+    font-size: x-small;
+    border: none;
+}
+#dycalendar .dycalendar-target-date {
+    color: #111;
+    background: #fff;
+    border-radius: 5px;
+}
+#dycalendar .dycalendar-prev-next-btn{
+    color: #fff;
+    background: #6bd098;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+#dycalendar .dycalendar-body tr td:hover {
+    color: #fff;
+    background: #51cbce;
+    padding: 10px;
+    border-radius: 4px;
+}
+.dycalendar-span-month-year {
+    /* color: #fff; */
+}

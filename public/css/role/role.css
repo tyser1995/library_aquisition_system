@@ -1,0 +1,23 @@
+@media (max-width: 425px) {
+    .add-role #add-role {
+        display: none;
+    }
+    .create-role #create-role {
+        display: none;
+    }
+    .edit-role-btn #edit-role-btn {
+        display: none;
+    }
+}
+
+@media (min-width: 426px) {
+    .add-role .icon {
+        display: none;
+    }
+    .create-role .icon {
+        display: none;
+    }
+    .edit-role-btn .icon {
+        display: none;
+    }
+}
