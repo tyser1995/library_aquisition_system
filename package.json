@@ -1,5 +1,9 @@
 {
     "private": true,
+    "engines": {
+        "npm": "8.18.0",
+        "node": "16.16.0"
+    },
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
