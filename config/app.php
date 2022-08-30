@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://library-aquisition.herokuapp.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY','base64:4kahIdf9YJGxCelcS0qBP2LR1MGPOG0/tfe/Ds6Dzvc='),
 
     'cipher' => 'AES-256-CBC',
 
