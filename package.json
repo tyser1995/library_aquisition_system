@@ -12,8 +12,7 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "postinstall": "npm run production",
-        "build": "webpack"
+        "postinstall": "npm run production"
     },
     "proxy": "http://localhost:3000",
     "devDependencies": {
