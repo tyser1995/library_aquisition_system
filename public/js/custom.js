@@ -1,1 +1,693 @@
-!function(t){"use strict";var e={tagClass:function(t){return"badge badge-info"},focusClass:"focus",itemValue:function(t){return t?t.toString():t},itemText:function(t){return this.itemValue(t)},itemTitle:function(t){return null},freeInput:!0,addOnBlur:!0,maxTags:void 0,maxChars:void 0,confirmKeys:[13,44],delimiter:",",delimiterRegex:null,cancelConfirmKeysOnEmpty:!1,onTagExists:function(t,e){e.hide().fadeIn()},trimValue:!1,allowDuplicates:!1,triggerChange:!0,editOnBackspace:!1};function n(e,n){this.isInit=!0,this.itemsArray=[],this.$element=t(e),this.$element.addClass("sr-only"),this.isSelect="SELECT"===e.tagName,this.multiple=this.isSelect&&e.hasAttribute("multiple"),this.objectItems=n&&n.itemValue,this.placeholderText=e.hasAttribute("placeholder")?this.$element.attr("placeholder"):"",this.name=e.hasAttribute("name")?this.$element.attr("name"):"",this.type=e.hasAttribute("type")?this.$element.attr("type"):"text",this.inputSize=Math.max(1,this.placeholderText.length),this.$container=t('<div class="bootstrap-tagsinput"></div>'),this.$input=t('<input type="'+this.type+'" name="'+this.name+'" placeholder="'+this.placeholderText+'"/>').appendTo(this.$container),this.$element.before(this.$container),this.build(n),this.isInit=!1}function i(t,e){if("function"!=typeof t[e]){var n=t[e];t[e]=function(t){return t[n]}}}function a(t,e){if("function"!=typeof t[e]){var n=t[e];t[e]=function(){return n}}}n.prototype={constructor:n,add:function(e,n,i){var a=this;if(!(a.options.maxTags&&a.itemsArray.length>=a.options.maxTags)&&(!1===e||e)){if("string"==typeof e&&a.options.trimValue&&(e=t.trim(e)),"object"==typeof e&&!a.objectItems)throw"Can't add objects when itemValue option is not set";if(!e.toString().match(/^\s*$/)){if(a.isSelect&&!a.multiple&&a.itemsArray.length>0&&a.remove(a.itemsArray[0]),"string"==typeof e&&"INPUT"===this.$element[0].tagName){var o=a.options.delimiterRegex?a.options.delimiterRegex:a.options.delimiter,s=e.split(o);if(s.length>1){for(var l=0;l<s.length;l++)this.add(s[l],!0);return void(n||a.pushVal(a.options.triggerChange))}}var p=a.options.itemValue(e),u=a.options.itemText(e),c=a.options.tagClass(e),h=a.options.itemTitle(e),m=t.grep(a.itemsArray,(function(t){return a.options.itemValue(t)===p}))[0];if(!m||a.options.allowDuplicates){if(!(a.items().toString().length+e.length+1>a.options.maxInputLength)){var d=t.Event("beforeItemAdd",{item:e,cancel:!1,options:i});if(a.$element.trigger(d),!d.cancel){a.itemsArray.push(e);var f=t('<span class="'+r(c)+(null!==h?'" title="'+h:"")+'">'+r(u)+'<span data-role="remove"></span></span>');f.data("item",e),a.findInputWrapper().before(f);var g=t('option[value="'+encodeURIComponent(p).replace(/"/g,'\\"')+'"]',a.$element).length||t('option[value="'+r(p).replace(/"/g,'\\"')+'"]',a.$element).length;if(a.isSelect&&!g){var v=t("<option selected>"+r(u)+"</option>");v.data("item",e),v.attr("value",p),a.$element.append(v)}n||a.pushVal(a.options.triggerChange),a.options.maxTags!==a.itemsArray.length&&a.items().toString().length!==a.options.maxInputLength||a.$container.addClass("bootstrap-tagsinput-max"),t(".typeahead, .twitter-typeahead",a.$container).length&&a.$input.typeahead("val",""),this.isInit?a.$element.trigger(t.Event("itemAddedOnInit",{item:e,options:i})):a.$element.trigger(t.Event("itemAdded",{item:e,options:i}))}}}else if(a.options.onTagExists){var y=t(".badge",a.$container).filter((function(){return t(this).data("item")===m}));a.options.onTagExists(e,y)}}}},remove:function(e,n,i){var a=this;if(a.objectItems&&(e=(e="object"==typeof e?t.grep(a.itemsArray,(function(t){return a.options.itemValue(t)==a.options.itemValue(e)})):t.grep(a.itemsArray,(function(t){return a.options.itemValue(t)==e})))[e.length-1]),e){var o=t.Event("beforeItemRemove",{item:e,cancel:!1,options:i});if(a.$element.trigger(o),o.cancel)return;t(".badge",a.$container).filter((function(){return t(this).data("item")===e})).remove(),t("option",a.$element).filter((function(){return t(this).data("item")===e})).remove(),-1!==t.inArray(e,a.itemsArray)&&a.itemsArray.splice(t.inArray(e,a.itemsArray),1)}n||a.pushVal(a.options.triggerChange),a.options.maxTags>a.itemsArray.length&&a.$container.removeClass("bootstrap-tagsinput-max"),a.$element.trigger(t.Event("itemRemoved",{item:e,options:i}))},removeAll:function(){var e=this;for(t(".badge",e.$container).remove(),t("option",e.$element).remove();e.itemsArray.length>0;)e.itemsArray.pop();e.pushVal(e.options.triggerChange)},refresh:function(){var e=this;t(".badge",e.$container).each((function(){var n=t(this),i=n.data("item"),a=e.options.itemValue(i),o=e.options.itemText(i),s=e.options.tagClass(i);(n.attr("class",null),n.addClass("badge "+r(s)),n.contents().filter((function(){return 3==this.nodeType}))[0].nodeValue=r(o),e.isSelect)&&t("option",e.$element).filter((function(){return t(this).data("item")===i})).attr("value",a)}))},items:function(){return this.itemsArray},pushVal:function(){var e=this,n=t.map(e.items(),(function(t){return e.options.itemValue(t).toString()}));e.$element.val(n.join(e.options.delimiter)),e.options.triggerChange&&e.$element.trigger("change")},build:function(n){var o=this;if(o.options=t.extend({},e,n),o.objectItems&&(o.options.freeInput=!1),i(o.options,"itemValue"),i(o.options,"itemText"),a(o.options,"tagClass"),o.options.typeahead){var r=o.options.typeahead||{};a(r,"source"),o.$input.typeahead(t.extend({},r,{source:function(e,n){function i(t){for(var e=[],i=0;i<t.length;i++){var r=o.options.itemText(t[i]);a[r]=t[i],e.push(r)}n(e)}this.map={};var a=this.map,s=r.source(e);t.isFunction(s.success)?s.success(i):t.isFunction(s.then)?s.then(i):t.when(s).then(i)},updater:function(t){return o.add(this.map[t]),this.map[t]},matcher:function(t){return-1!==t.toLowerCase().indexOf(this.query.trim().toLowerCase())},sorter:function(t){return t.sort()},highlighter:function(t){var e=new RegExp("("+this.query+")","gi");return t.replace(e,"<strong>$1</strong>")}}))}if(o.options.typeaheadjs){var l=o.options.typeaheadjs;t.isArray(l)||(l=[null,l]),t.fn.typeahead.apply(o.$input,l).on("typeahead:selected",t.proxy((function(t,e,n){var i=0;l.some((function(t,e){return t.name===n&&(i=e,!0)})),l[i].valueKey?o.add(e[l[i].valueKey]):o.add(e),o.$input.typeahead("val","")}),o))}o.$container.on("click",t.proxy((function(t){o.$element.attr("disabled")||o.$input.removeAttr("disabled"),o.$input.focus()}),o)),o.options.addOnBlur&&o.options.freeInput&&o.$input.on("focusout",t.proxy((function(e){0===t(".typeahead, .twitter-typeahead",o.$container).length&&(o.add(o.$input.val()),o.$input.val(""))}),o)),o.$container.on({focusin:function(){o.$container.addClass(o.options.focusClass)},focusout:function(){o.$container.removeClass(o.options.focusClass)}}),o.$container.on("keydown","input",t.proxy((function(e){var n=t(e.target),i=o.findInputWrapper();if(o.$element.attr("disabled"))o.$input.attr("disabled","disabled");else{switch(e.which){case 8:if(0===s(n[0])){var a=i.prev();a.length&&(!0===o.options.editOnBackspace&&n.val(a.data("item")),o.remove(a.data("item")))}break;case 46:if(0===s(n[0])){var r=i.next();r.length&&o.remove(r.data("item"))}break;case 37:var l=i.prev();0===n.val().length&&l[0]&&(l.before(i),n.focus());break;case 39:var p=i.next();0===n.val().length&&p[0]&&(p.after(i),n.focus())}var u=n.val().length,c=u+Math.ceil(u/5)+1;n.attr("size",Math.max(this.inputSize,c))}}),o)),o.$container.on("keypress","input",t.proxy((function(e){var n=t(e.target);if(o.$element.attr("disabled"))o.$input.attr("disabled","disabled");else{var i,a,r,s=n.val(),l=o.options.maxChars&&s.length>=o.options.maxChars;o.options.freeInput&&(i=e,a=o.options.confirmKeys,r=!1,t.each(a,(function(t,e){if("number"==typeof e&&i.which===e)return r=!0,!1;if(i.which===e.which){var n=!e.hasOwnProperty("altKey")||i.altKey===e.altKey,a=!e.hasOwnProperty("shiftKey")||i.shiftKey===e.shiftKey,o=!e.hasOwnProperty("ctrlKey")||i.ctrlKey===e.ctrlKey;if(n&&a&&o)return r=!0,!1}})),r||l)&&(0!==s.length&&(o.add(l?s.substr(0,o.options.maxChars):s),n.val("")),!1===o.options.cancelConfirmKeysOnEmpty&&e.preventDefault());var p=n.val().length,u=p+Math.ceil(p/5)+1;n.attr("size",Math.max(this.inputSize,u))}}),o)),o.$container.on("click","[data-role=remove]",t.proxy((function(e){o.$element.attr("disabled")||o.remove(t(e.target).closest(".badge").data("item"))}),o)),o.options.itemValue===e.itemValue&&("INPUT"===o.$element[0].tagName?o.add(o.$element.val()):t("option",o.$element).each((function(){o.add(t(this).attr("value"),!0)})))},destroy:function(){var t=this;t.$container.off("keypress","input"),t.$container.off("click","[role=remove]"),t.$container.remove(),t.$element.removeData("tagsinput"),t.$element.show()},focus:function(){this.$input.focus()},input:function(){return this.$input},findInputWrapper:function(){for(var e=this.$input[0],n=this.$container[0];e&&e.parentNode!==n;)e=e.parentNode;return t(e)}},t.fn.tagsinput=function(e,i,a){var o=[];return this.each((function(){var r=t(this).data("tagsinput");if(r)if(e||i){if(void 0!==r[e]){if(3===r[e].length&&void 0!==a)var s=r[e](i,null,a);else s=r[e](i);void 0!==s&&o.push(s)}}else o.push(r);else r=new n(this,e),t(this).data("tagsinput",r),o.push(r),"SELECT"===this.tagName&&t("option",t(this)).attr("selected","selected"),t(this).val(t(this).val())})),"string"==typeof e?o.length>1?o:o[0]:o},t.fn.tagsinput.Constructor=n;var o=t("<div />");function r(t){return t?o.text(t).html():""}function s(t){var e=0;if(document.selection){t.focus();var n=document.selection.createRange();n.moveStart("character",-t.value.length),e=n.text.length}else(t.selectionStart||"0"==t.selectionStart)&&(e=t.selectionStart);return e}t((function(){t("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()}))}(window.jQuery);
+/*
+ * bootstrap-tagsinput v0.8.0
+ * 
+ */
+
+(function ($) {
+  "use strict";
+
+  var defaultOptions = {
+    tagClass: function(item) {
+      return 'badge badge-info';
+    },
+    focusClass: 'focus',
+    itemValue: function(item) {
+      return item ? item.toString() : item;
+    },
+    itemText: function(item) {
+      return this.itemValue(item);
+    },
+    itemTitle: function(item) {
+      return null;
+    },
+    freeInput: true,
+    addOnBlur: true,
+    maxTags: undefined,
+    maxChars: undefined,
+    confirmKeys: [13, 44],
+    delimiter: ',',
+    delimiterRegex: null,
+    cancelConfirmKeysOnEmpty: false,
+    onTagExists: function(item, $tag) {
+      $tag.hide().fadeIn();
+    },
+    trimValue: false,
+    allowDuplicates: false,
+    triggerChange: true,
+    editOnBackspace: false
+  };
+
+  /**
+   * Constructor function
+   */
+  function TagsInput(element, options) {
+    this.isInit = true;
+    this.itemsArray = [];
+
+    this.$element = $(element);
+    this.$element.addClass('sr-only');
+
+    this.isSelect = (element.tagName === 'SELECT');
+    this.multiple = (this.isSelect && element.hasAttribute('multiple'));
+    this.objectItems = options && options.itemValue;
+    this.placeholderText = element.hasAttribute('placeholder') ? this.$element.attr('placeholder') : '';
+    this.name = element.hasAttribute('name') ? this.$element.attr('name') : '';
+    this.type = element.hasAttribute('type') ? this.$element.attr('type') : 'text';
+    this.inputSize = Math.max(1, this.placeholderText.length);
+
+    this.$container = $('<div class="bootstrap-tagsinput"></div>');
+    this.$input = $('<input type="' + this.type + '" name="' + this.name + '" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
+
+    this.$element.before(this.$container);
+
+    this.build(options);
+    this.isInit = false;
+  }
+
+  TagsInput.prototype = {
+    constructor: TagsInput,
+
+    /**
+     * Adds the given item as a new tag. Pass true to dontPushVal to prevent
+     * updating the elements val()
+     */
+    add: function(item, dontPushVal, options) {
+      var self = this;
+
+      if (self.options.maxTags && self.itemsArray.length >= self.options.maxTags)
+        return;
+
+      // Ignore falsey values, except false
+      if (item !== false && !item)
+        return;
+
+      // Trim value
+      if (typeof item === "string" && self.options.trimValue) {
+        item = $.trim(item);
+      }
+
+      // Throw an error when trying to add an object while the itemValue option was not set
+      if (typeof item === "object" && !self.objectItems)
+        throw("Can't add objects when itemValue option is not set");
+
+      // Ignore strings only containg whitespace
+      if (item.toString().match(/^\s*$/))
+        return;
+
+      // If SELECT but not multiple, remove current tag
+      if (self.isSelect && !self.multiple && self.itemsArray.length > 0)
+        self.remove(self.itemsArray[0]);
+
+      if (typeof item === "string" && this.$element[0].tagName === 'INPUT') {
+        var delimiter = (self.options.delimiterRegex) ? self.options.delimiterRegex : self.options.delimiter;
+        var items = item.split(delimiter);
+        if (items.length > 1) {
+          for (var i = 0; i < items.length; i++) {
+            this.add(items[i], true);
+          }
+
+          if (!dontPushVal)
+            self.pushVal(self.options.triggerChange);
+          return;
+        }
+      }
+
+      var itemValue = self.options.itemValue(item),
+          itemText = self.options.itemText(item),
+          tagClass = self.options.tagClass(item),
+          itemTitle = self.options.itemTitle(item);
+
+      // Ignore items allready added
+      var existing = $.grep(self.itemsArray, function(item) { return self.options.itemValue(item) === itemValue; } )[0];
+      if (existing && !self.options.allowDuplicates) {
+        // Invoke onTagExists
+        if (self.options.onTagExists) {
+          var $existingTag = $(".badge", self.$container).filter(function() { return $(this).data("item") === existing; });
+          self.options.onTagExists(item, $existingTag);
+        }
+        return;
+      }
+
+      // if length greater than limit
+      if (self.items().toString().length + item.length + 1 > self.options.maxInputLength)
+        return;
+
+      // raise beforeItemAdd arg
+      var beforeItemAddEvent = $.Event('beforeItemAdd', { item: item, cancel: false, options: options});
+      self.$element.trigger(beforeItemAddEvent);
+      if (beforeItemAddEvent.cancel)
+        return;
+
+      // register item in internal array and map
+      self.itemsArray.push(item);
+
+      // add a tag element
+
+      var $tag = $('<span class="' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></span>');
+      $tag.data('item', item);
+      self.findInputWrapper().before($tag);
+
+      // Check to see if the tag exists in its raw or uri-encoded form
+      var optionExists = (
+        $('option[value="' + encodeURIComponent(itemValue).replace(/"/g, '\\"') + '"]', self.$element).length ||
+        $('option[value="' + htmlEncode(itemValue).replace(/"/g, '\\"') + '"]', self.$element).length
+      );
+
+      // add <option /> if item represents a value not present in one of the <select />'s options
+      if (self.isSelect && !optionExists) {
+        var $option = $('<option selected>' + htmlEncode(itemText) + '</option>');
+        $option.data('item', item);
+        $option.attr('value', itemValue);
+        self.$element.append($option);
+      }
+
+      if (!dontPushVal)
+        self.pushVal(self.options.triggerChange);
+
+      // Add class when reached maxTags
+      if (self.options.maxTags === self.itemsArray.length || self.items().toString().length === self.options.maxInputLength)
+        self.$container.addClass('bootstrap-tagsinput-max');
+
+      // If using typeahead, once the tag has been added, clear the typeahead value so it does not stick around in the input.
+      if ($('.typeahead, .twitter-typeahead', self.$container).length) {
+        self.$input.typeahead('val', '');
+      }
+
+      if (this.isInit) {
+        self.$element.trigger($.Event('itemAddedOnInit', { item: item, options: options }));
+      } else {
+        self.$element.trigger($.Event('itemAdded', { item: item, options: options }));
+      }
+    },
+
+    /**
+     * Removes the given item. Pass true to dontPushVal to prevent updating the
+     * elements val()
+     */
+    remove: function(item, dontPushVal, options) {
+      var self = this;
+
+      if (self.objectItems) {
+        if (typeof item === "object")
+          item = $.grep(self.itemsArray, function(other) { return self.options.itemValue(other) ==  self.options.itemValue(item); } );
+        else
+          item = $.grep(self.itemsArray, function(other) { return self.options.itemValue(other) ==  item; } );
+
+        item = item[item.length-1];
+      }
+
+      if (item) {
+        var beforeItemRemoveEvent = $.Event('beforeItemRemove', { item: item, cancel: false, options: options });
+        self.$element.trigger(beforeItemRemoveEvent);
+        if (beforeItemRemoveEvent.cancel)
+          return;
+
+        $('.badge', self.$container).filter(function() { return $(this).data('item') === item; }).remove();
+        $('option', self.$element).filter(function() { return $(this).data('item') === item; }).remove();
+        if($.inArray(item, self.itemsArray) !== -1)
+          self.itemsArray.splice($.inArray(item, self.itemsArray), 1);
+      }
+
+      if (!dontPushVal)
+        self.pushVal(self.options.triggerChange);
+
+      // Remove class when reached maxTags
+      if (self.options.maxTags > self.itemsArray.length)
+        self.$container.removeClass('bootstrap-tagsinput-max');
+
+      self.$element.trigger($.Event('itemRemoved',  { item: item, options: options }));
+    },
+
+    /**
+     * Removes all items
+     */
+    removeAll: function() {
+      var self = this;
+
+      $('.badge', self.$container).remove();
+      $('option', self.$element).remove();
+
+      while(self.itemsArray.length > 0)
+        self.itemsArray.pop();
+
+      self.pushVal(self.options.triggerChange);
+    },
+
+    /**
+     * Refreshes the tags so they match the text/value of their corresponding
+     * item.
+     */
+    refresh: function() {
+      var self = this;
+      $('.badge', self.$container).each(function() {
+        var $tag = $(this),
+            item = $tag.data('item'),
+            itemValue = self.options.itemValue(item),
+            itemText = self.options.itemText(item),
+            tagClass = self.options.tagClass(item);
+
+          // Update tag's class and inner text
+          $tag.attr('class', null);
+          $tag.addClass('badge ' + htmlEncode(tagClass));
+          $tag.contents().filter(function() {
+            return this.nodeType == 3;
+          })[0].nodeValue = htmlEncode(itemText);
+
+          if (self.isSelect) {
+            var option = $('option', self.$element).filter(function() { return $(this).data('item') === item; });
+            option.attr('value', itemValue);
+          }
+      });
+    },
+
+    /**
+     * Returns the items added as tags
+     */
+    items: function() {
+      return this.itemsArray;
+    },
+
+    /**
+     * Assembly value by retrieving the value of each item, and set it on the
+     * element.
+     */
+    pushVal: function() {
+      var self = this,
+          val = $.map(self.items(), function(item) {
+            return self.options.itemValue(item).toString();
+          });
+
+      self.$element.val( val.join(self.options.delimiter) );
+
+      if (self.options.triggerChange)
+        self.$element.trigger('change');
+    },
+
+    /**
+     * Initializes the tags input behaviour on the element
+     */
+    build: function(options) {
+      var self = this;
+
+      self.options = $.extend({}, defaultOptions, options);
+      // When itemValue is set, freeInput should always be false
+      if (self.objectItems)
+        self.options.freeInput = false;
+
+      makeOptionItemFunction(self.options, 'itemValue');
+      makeOptionItemFunction(self.options, 'itemText');
+      makeOptionFunction(self.options, 'tagClass');
+
+      // Typeahead Bootstrap version 2.3.2
+      if (self.options.typeahead) {
+        var typeahead = self.options.typeahead || {};
+
+        makeOptionFunction(typeahead, 'source');
+
+        self.$input.typeahead($.extend({}, typeahead, {
+          source: function (query, process) {
+            function processItems(items) {
+              var texts = [];
+
+              for (var i = 0; i < items.length; i++) {
+                var text = self.options.itemText(items[i]);
+                map[text] = items[i];
+                texts.push(text);
+              }
+              process(texts);
+            }
+
+            this.map = {};
+            var map = this.map,
+                data = typeahead.source(query);
+
+            if ($.isFunction(data.success)) {
+              // support for Angular callbacks
+              data.success(processItems);
+            } else if ($.isFunction(data.then)) {
+              // support for Angular promises
+              data.then(processItems);
+            } else {
+              // support for functions and jquery promises
+              $.when(data)
+               .then(processItems);
+            }
+          },
+          updater: function (text) {
+            self.add(this.map[text]);
+            return this.map[text];
+          },
+          matcher: function (text) {
+            return (text.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1);
+          },
+          sorter: function (texts) {
+            return texts.sort();
+          },
+          highlighter: function (text) {
+            var regex = new RegExp( '(' + this.query + ')', 'gi' );
+            return text.replace( regex, "<strong>$1</strong>" );
+          }
+        }));
+      }
+
+      // typeahead.js
+      if (self.options.typeaheadjs) {
+        // Determine if main configurations were passed or simply a dataset
+        var typeaheadjs = self.options.typeaheadjs;
+        if (!$.isArray(typeaheadjs)) {
+            typeaheadjs = [null, typeaheadjs];
+        }
+
+        $.fn.typeahead.apply(self.$input, typeaheadjs).on('typeahead:selected', $.proxy(function (obj, datum, name) {
+          var index = 0;
+          typeaheadjs.some(function(dataset, _index) {
+            if (dataset.name === name) {
+              index = _index;
+              return true;
+            }
+            return false;
+          });
+
+          // @TODO Dep: https://github.com/corejavascript/typeahead.js/issues/89
+          if (typeaheadjs[index].valueKey) {
+            self.add(datum[typeaheadjs[index].valueKey]);
+          } else {
+            self.add(datum);
+          }
+
+          self.$input.typeahead('val', '');
+        }, self));
+      }
+
+      self.$container.on('click', $.proxy(function(event) {
+        if (! self.$element.attr('disabled')) {
+          self.$input.removeAttr('disabled');
+        }
+        self.$input.focus();
+      }, self));
+
+        if (self.options.addOnBlur && self.options.freeInput) {
+          self.$input.on('focusout', $.proxy(function(event) {
+              // HACK: only process on focusout when no typeahead opened, to
+              //       avoid adding the typeahead text as tag
+              if ($('.typeahead, .twitter-typeahead', self.$container).length === 0) {
+                self.add(self.$input.val());
+                self.$input.val('');
+              }
+          }, self));
+        }
+
+      // Toggle the 'focus' css class on the container when it has focus
+      self.$container.on({
+        focusin: function() {
+          self.$container.addClass(self.options.focusClass);
+        },
+        focusout: function() {
+          self.$container.removeClass(self.options.focusClass);
+        },
+      });
+
+      self.$container.on('keydown', 'input', $.proxy(function(event) {
+        var $input = $(event.target),
+            $inputWrapper = self.findInputWrapper();
+
+        if (self.$element.attr('disabled')) {
+          self.$input.attr('disabled', 'disabled');
+          return;
+        }
+
+        switch (event.which) {
+          // BACKSPACE
+          case 8:
+            if (doGetCaretPosition($input[0]) === 0) {
+              var prev = $inputWrapper.prev();
+              if (prev.length) {
+                if (self.options.editOnBackspace === true) {
+                  $input.val(prev.data('item'));
+                }
+                self.remove(prev.data('item'));
+              }
+            }
+            break;
+
+          // DELETE
+          case 46:
+            if (doGetCaretPosition($input[0]) === 0) {
+              var next = $inputWrapper.next();
+              if (next.length) {
+                self.remove(next.data('item'));
+              }
+            }
+            break;
+
+          // LEFT ARROW
+          case 37:
+            // Try to move the input before the previous tag
+            var $prevTag = $inputWrapper.prev();
+            if ($input.val().length === 0 && $prevTag[0]) {
+              $prevTag.before($inputWrapper);
+              $input.focus();
+            }
+            break;
+          // RIGHT ARROW
+          case 39:
+            // Try to move the input after the next tag
+            var $nextTag = $inputWrapper.next();
+            if ($input.val().length === 0 && $nextTag[0]) {
+              $nextTag.after($inputWrapper);
+              $input.focus();
+            }
+            break;
+         default:
+             // ignore
+         }
+
+        // Reset internal input's size
+        var textLength = $input.val().length,
+            wordSpace = Math.ceil(textLength / 5),
+            size = textLength + wordSpace + 1;
+        $input.attr('size', Math.max(this.inputSize, size));
+      }, self));
+
+      self.$container.on('keypress', 'input', $.proxy(function(event) {
+         var $input = $(event.target);
+
+         if (self.$element.attr('disabled')) {
+            self.$input.attr('disabled', 'disabled');
+            return;
+         }
+
+         var text = $input.val(),
+         maxLengthReached = self.options.maxChars && text.length >= self.options.maxChars;
+         if (self.options.freeInput && (keyCombinationInList(event, self.options.confirmKeys) || maxLengthReached)) {
+            // Only attempt to add a tag if there is data in the field
+            if (text.length !== 0) {
+               self.add(maxLengthReached ? text.substr(0, self.options.maxChars) : text);
+               $input.val('');
+            }
+
+            // If the field is empty, let the event triggered fire as usual
+            if (self.options.cancelConfirmKeysOnEmpty === false) {
+                event.preventDefault();
+            }
+         }
+
+         // Reset internal input's size
+         var textLength = $input.val().length,
+            wordSpace = Math.ceil(textLength / 5),
+            size = textLength + wordSpace + 1;
+         $input.attr('size', Math.max(this.inputSize, size));
+      }, self));
+
+      // Remove icon clicked
+      self.$container.on('click', '[data-role=remove]', $.proxy(function(event) {
+        if (self.$element.attr('disabled')) {
+          return;
+        }
+        self.remove($(event.target).closest('.badge').data('item'));
+      }, self));
+
+      // Only add existing value as tags when using strings as tags
+      if (self.options.itemValue === defaultOptions.itemValue) {
+        if (self.$element[0].tagName === 'INPUT') {
+            self.add(self.$element.val());
+        } else {
+          $('option', self.$element).each(function() {
+            self.add($(this).attr('value'), true);
+          });
+        }
+      }
+    },
+
+    /**
+     * Removes all tagsinput behaviour and unregsiter all event handlers
+     */
+    destroy: function() {
+      var self = this;
+
+      // Unbind events
+      self.$container.off('keypress', 'input');
+      self.$container.off('click', '[role=remove]');
+
+      self.$container.remove();
+      self.$element.removeData('tagsinput');
+      self.$element.show();
+    },
+
+    /**
+     * Sets focus on the tagsinput
+     */
+    focus: function() {
+      this.$input.focus();
+    },
+
+    /**
+     * Returns the internal input element
+     */
+    input: function() {
+      return this.$input;
+    },
+
+    /**
+     * Returns the element which is wrapped around the internal input. This
+     * is normally the $container, but typeahead.js moves the $input element.
+     */
+    findInputWrapper: function() {
+      var elt = this.$input[0],
+          container = this.$container[0];
+      while(elt && elt.parentNode !== container)
+        elt = elt.parentNode;
+
+      return $(elt);
+    }
+  };
+
+  /**
+   * Register JQuery plugin
+   */
+  $.fn.tagsinput = function(arg1, arg2, arg3) {
+    var results = [];
+
+    this.each(function() {
+      var tagsinput = $(this).data('tagsinput');
+      // Initialize a new tags input
+      if (!tagsinput) {
+          tagsinput = new TagsInput(this, arg1);
+          $(this).data('tagsinput', tagsinput);
+          results.push(tagsinput);
+
+          if (this.tagName === 'SELECT') {
+              $('option', $(this)).attr('selected', 'selected');
+          }
+
+          // Init tags from $(this).val()
+          $(this).val($(this).val());
+      } else if (!arg1 && !arg2) {
+          // tagsinput already exists
+          // no function, trying to init
+          results.push(tagsinput);
+      } else if(tagsinput[arg1] !== undefined) {
+          // Invoke function on existing tags input
+            if(tagsinput[arg1].length === 3 && arg3 !== undefined){
+               var retVal = tagsinput[arg1](arg2, null, arg3);
+            }else{
+               var retVal = tagsinput[arg1](arg2);
+            }
+          if (retVal !== undefined)
+              results.push(retVal);
+      }
+    });
+
+    if ( typeof arg1 == 'string') {
+      // Return the results from the invoked function calls
+      return results.length > 1 ? results : results[0];
+    } else {
+      return results;
+    }
+  };
+
+  $.fn.tagsinput.Constructor = TagsInput;
+
+  /**
+   * Most options support both a string or number as well as a function as
+   * option value. This function makes sure that the option with the given
+   * key in the given options is wrapped in a function
+   */
+  function makeOptionItemFunction(options, key) {
+    if (typeof options[key] !== 'function') {
+      var propertyName = options[key];
+      options[key] = function(item) { return item[propertyName]; };
+    }
+  }
+  function makeOptionFunction(options, key) {
+    if (typeof options[key] !== 'function') {
+      var value = options[key];
+      options[key] = function() { return value; };
+    }
+  }
+  /**
+   * HtmlEncodes the given value
+   */
+  var htmlEncodeContainer = $('<div />');
+  function htmlEncode(value) {
+    if (value) {
+      return htmlEncodeContainer.text(value).html();
+    } else {
+      return '';
+    }
+  }
+
+  /**
+   * Returns the position of the caret in the given input field
+   * http://flightschool.acylt.com/devnotes/caret-position-woes/
+   */
+  function doGetCaretPosition(oField) {
+    var iCaretPos = 0;
+    if (document.selection) {
+      oField.focus ();
+      var oSel = document.selection.createRange();
+      oSel.moveStart ('character', -oField.value.length);
+      iCaretPos = oSel.text.length;
+    } else if (oField.selectionStart || oField.selectionStart == '0') {
+      iCaretPos = oField.selectionStart;
+    }
+    return (iCaretPos);
+  }
+
+  /**
+    * Returns boolean indicates whether user has pressed an expected key combination.
+    * @param object keyPressEvent: JavaScript event object, refer
+    *     http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+    * @param object lookupList: expected key combinations, as in:
+    *     [13, {which: 188, shiftKey: true}]
+    */
+  function keyCombinationInList(keyPressEvent, lookupList) {
+      var found = false;
+      $.each(lookupList, function (index, keyCombination) {
+          if (typeof (keyCombination) === 'number' && keyPressEvent.which === keyCombination) {
+              found = true;
+              return false;
+          }
+
+          if (keyPressEvent.which === keyCombination.which) {
+              var alt = !keyCombination.hasOwnProperty('altKey') || keyPressEvent.altKey === keyCombination.altKey,
+                  shift = !keyCombination.hasOwnProperty('shiftKey') || keyPressEvent.shiftKey === keyCombination.shiftKey,
+                  ctrl = !keyCombination.hasOwnProperty('ctrlKey') || keyPressEvent.ctrlKey === keyCombination.ctrlKey;
+              if (alt && shift && ctrl) {
+                  found = true;
+                  return false;
+              }
+          }
+      });
+
+      return found;
+  }
+
+  /**
+   * Initialize tagsinput behaviour on inputs and selects which have
+   * data-role=tagsinput
+   */
+  $(function() {
+    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
+  });
+})(window.jQuery);
