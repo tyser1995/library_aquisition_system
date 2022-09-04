@@ -51,9 +51,15 @@
                     <i class="fa fa-book"></i>
                     <p>{{ __('Request Management')}} <b class="caret"></b></p>
                 </a>
-                <div class="{{ $elementActive == 'request_books' || $elementActive == 'verify_books' ? 'collapse show ' : 'collapse' }}"
+                <div class="{{ $elementActive == 'purchase_requests' || $elementActive == 'request_books' || $elementActive == 'verify_books' ? 'collapse show ' : 'collapse' }}"
                     id="reqbooks">
                     <ul class="nav">
+                        <li class="{{ $elementActive == 'purchase_requests' ? 'active' : '' }}">
+                            <a href="{{ route('purchase_requests') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Purchase Request ') }}</span>
+                            </a>
+                        </li>
                         <li class="{{ $elementActive == 'request_books' ? 'active' : '' }}">
                             <a href="{{ route('department_types') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>

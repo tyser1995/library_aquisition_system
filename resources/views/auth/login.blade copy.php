@@ -1,6 +1,5 @@
 @extends('layouts.app', [
     'class' => 'main-page',
-    'backgroundImagePath' => 'img/bg/fabio-mangione.jpg'
 ])
 <style>
     html {
@@ -8,12 +7,7 @@
     }
 </style>
 @section('content')
-    <div class="content" style="margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;">
+    <div class="content">
         <div class="container">
             <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                 <form class="form" method="POST" action="{{ route('login') }}">
@@ -56,16 +50,10 @@
                                     </span>
                                 @endif
                             </div>
-
-                            <div class="form-group d-none">
-                                <div class="form-check">
-                                     <label class="form-check-label">
-                                        <input class="form-check-input" name="remember" type="checkbox" value="" {{ old('remember') ? 'checked' : '' }}>
-                                        <span class="form-check-sign"></span>
-                                        {{ __('Remember me') }}
-                                    </label>
-                                </div>
-                            </div>
+                            
+                            <a href="{{ route('password.request') }}" class="">
+                                {{ __('Forgot password') }}
+                            </a>
                         </div>
 
                         <div class="card-footer">
@@ -75,12 +63,6 @@
                         </div>
                     </div>
                 </form>
-                <a href="{{ route('password.request') }}" class="btn btn-link">
-                    {{ __('Forgot password') }}
-                </a>
-                <a href="{{ route('register') }}" class="btn btn-link float-right">
-                    {{ __('Create Account') }}
-                </a>
             </div>
         </div>
     </div>
@@ -88,9 +70,8 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            //demo.checkFullPageBackgroundImage()
-            $('.footer').addClass('d-none');
-        });
+        // $(document).ready(function() {
+        //     demo.checkFullPageBackgroundImage();
+        // });
     </script>
 @endpush

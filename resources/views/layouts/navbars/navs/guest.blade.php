@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent  d-none d-md-block d-lg-block d-xl-block">
     <div class="container">
         <div class="navbar-wrapper">
             <div class="navbar-toggle">

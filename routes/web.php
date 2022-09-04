@@ -30,6 +30,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users', ['as' => 'users', 'uses' => 'App\Http\Controllers\UserController@index']);
 	Route::resource('user', 'App\Http\Controllers\UserController');
 
+    //Request Management
+    //Purchase Request
+    Route::get('purchase_requests', ['as' => 'purchase_requests', 'uses' => 'App\Http\Controllers\PurchaseRequestController@index']);
+    Route::resource('purchase_request','App\Http\Controllers\PurchaseRequestController');
     //Department Type
     Route::get('department_types', ['as' => 'department_types', 'uses' => 'App\Http\Controllers\DepartmentTypeController@index']);
     Route::get('department_types/data', ['as' => 'department_types/data', 'uses' => 'App\Http\Controllers\DepartmentTypeController@data']);
