@@ -15,6 +15,21 @@ class CreatePurchaseRequestTable extends Migration
     {
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->id();
+            $table->integer('rush_type')->default(0);
+            $table->string('author_name');
+            $table->longText('title');
+            $table->string('edition')->nullable();
+            $table->string('copies_vol')->nullable();
+            $table->string('publication_date')->nullable();
+            $table->longText('publisher_name')->nullable();
+            $table->longText('publisher_address')->nullable();
+            $table->integer('recommended_user_id');
+            $table->integer('approver_user_id');
+            $table->string('charge_to')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('existing_no_of_titles')->nullable();
+            $table->longText('note')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

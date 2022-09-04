@@ -46,8 +46,16 @@ class DepartmentTypeController extends Controller
     {
         //
         $department_type = new DepartmentType();
-        $this->save($department_type,$request);
-        return redirect()->route('department_type.index')->withStatus('Created Successfully');
+        $is_exists = $department_type->where('department_type','=',$request->department_type)
+        ->get()
+        ->first();
+        if($is_exists->count() == 0){
+            $this->save($department_type,$request);
+            return redirect()->route('department_type.index')->withStatus('Created Successfully');
+        }else{
+            return redirect()->back()->withError('Data already exists ' .$request->department_type);
+        }
+       
     }
 
     /**

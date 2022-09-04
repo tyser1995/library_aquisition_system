@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call([PermissionTableSeeder::class]);
         $this->call([CreateAdminUserSeeder::class]);
 
+        //Purchase Request User
+        $this->call([PurchaseRequestApproverUserSeeder::class]);
+        $this->call([PurchaseRequestRecommendedUserSeeder::class]);
         // Contents
         // $this->call([RegionsTableSeeder::class]);
         //$this->call([CountriesTableSeeder::class]);

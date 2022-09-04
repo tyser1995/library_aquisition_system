@@ -29,10 +29,11 @@
                             <form method="post" action="{{ route('department_name.store') }}" autocomplete="off">
                                 @csrf
                                 <div class="pl-lg-4">
+                                    <input type="hidden" name="created_by_users_id" value="{{Auth::user()->id}}" class="form-control form-control-alternative">
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Department Type') }}</h5>
                                         <!-- <input type="text" name="department_type" id="department_type" class="form-control form-control-alternative"> -->
-                                        <select id="department_types_id" name="department_types_id" class="form-control">
+                                        <select id="department_types_id" name="department_types_id" class="form-control" required>
                                             <option selected="selected" disabled>Select Department Type</option>
                                             @foreach ($department_type as $department_types)
                                                 <option value="{{$department_types->id}}">{{$department_types->department_type}}</option>

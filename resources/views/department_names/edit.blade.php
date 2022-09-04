@@ -15,9 +15,9 @@
                                     <h3 class="mb-0 h3_title"></h3>
                                 </div>
                                 <div class="col-4 text-right edit-region-btn">
-                                    <a href="{{ route('department_types') }}" class="btn btn-sm btn-primary" id="edit-region-btn">{{ __('Back to list') }}</a>
+                                    <a href="{{ route('department_names') }}" class="btn btn-sm btn-primary" id="edit-region-btn">{{ __('Back to list') }}</a>
                                     <div class="icon">
-                                        <a href="{{ route('department_types') }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('department_names') }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
                                     </div>
@@ -26,13 +26,28 @@
                         </div>
                         <div class="card-body">
                         @include('notification.index')
-                            <form method="post" action="{{ route('department_type.update', $department_type) }}" autocomplete="off">
+                            <form method="post" action="{{ route('department_name.update', $department_name) }}" autocomplete="off">
                                 @csrf
                                 @method('put')
                                 <div class="pl-lg-4">
+                                <input type="hidden" name="created_by_users_id" value="{{Auth::user()->id}}" class="form-control form-control-alternative">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-region-name">{{ __('Department Type') }}</label>
-                                        <input type="text" name="department_type" id="input-region-name" class="form-control form-control-alternative{{ $errors->has('department_type') ? ' is-invalid' : '' }}" placeholder="{{ __('Enter Department Type') }}" value="{{ old('department_type', $department_type->department_type) }}" required autofocus>
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Department Type') }}</h5>
+                                        <!-- <input type="text" name="department_type" id="department_type" class="form-control form-control-alternative"> -->
+                                        <select id="department_types_id" name="department_types_id" class="form-control" required>
+                                            <option value="0" disabled>Select Department Type</option>
+                                            @foreach ($department_type as $department_types)
+                                                <option value="{{$department_types->id}}">{{$department_types->department_type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Department Name') }}</h5>
+                                        <input type="text" name="department_name" class="form-control form-control-alternative" placeholder="{{ __('Enter Department Name') }}" value="{{ old('department_name', $department_name->department_name) }}" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Department Code') }}</h5>
+                                        <input type="text" name="department_code" class="form-control form-control-alternative" placeholder="{{ __('Enter Department Code') }}" value="{{ old('department_code', $department_name->department_code) }}" required autofocus>
                                     </div>
 
                                     <div class="">
@@ -49,4 +64,12 @@
     </div>
 @endsection
 
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            var department_types_id = "{{$department_name_join->department_types_id}}";
+            $('#department_types_id')[0].selectedIndex = department_types_id;
+        });
+    </script>
+@endpush
 @include('department_types.script')

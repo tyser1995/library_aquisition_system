@@ -9,29 +9,29 @@
                 'text-decoration': 'none',
             });
 
-            var data = [
-                {"name": "Afghanistan", "code": "AF"},
-                {"name": "Aland Islands", "code": "AX"},
-                {"name": "Albania", "code": "AL"},
-                {"name": "Algeria", "code": "DZ"},
-                {"name": "American Samoa", "code": "AS"},
-            ];
-            var options = {
+            // var data = [
+            //     {"name": "Afghanistan", "code": "AF"},
+            //     {"name": "Aland Islands", "code": "AX"},
+            //     {"name": "Albania", "code": "AL"},
+            //     {"name": "Algeria", "code": "DZ"},
+            //     {"name": "American Samoa", "code": "AS"},
+            // ];
+            // var options = {
 
-                data: data,
+            //     data: data,
 
-                getValue: "name",
+            //     getValue: "name",
 
-                list: {
-                match: {
-                    enabled: true
-                }
-                },
+            //     list: {
+            //     match: {
+            //         enabled: true
+            //     }
+            //     },
 
-                theme: "square"
-            };
+            //     theme: "square"
+            // };
 
-            $('#department_type').easyAutocomplete(options);
+            // $('#department_type').easyAutocomplete(options);
         });
     </script>
 @endpush

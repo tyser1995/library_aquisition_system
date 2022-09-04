@@ -29,7 +29,7 @@
                     <div class="card-body">
                         @include('notification.index')
                         <div id="app">
-                            <department-type-component route="{{ route('department_name.index') }}"></department-type-component>
+                            <department-name-component route="{{ route('department_name.index') }}"></department-name-component>
                         </div>
                     </div>
                 </div>

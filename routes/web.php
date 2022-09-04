@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Department Name
     Route::get('department_names', ['as' => 'department_names', 'uses' => 'App\Http\Controllers\DepartmentNameController@index']);
     Route::get('department_names/data', ['as' => 'department_names/data', 'uses' => 'App\Http\Controllers\DepartmentNameController@data']);
+    Route::get('department_names/delete/{id}', ['as' => 'department_names/delete/{id}', 'uses' => 'App\Http\Controllers\DepartmentNameController@delete']);
     Route::resource('department_name','App\Http\Controllers\DepartmentNameController');
 
   	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);

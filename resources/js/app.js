@@ -9,6 +9,8 @@ require("select2");
 require("smartwizard/dist/css/smart_wizard_all.css");
 const cors = require("cors");
 // cors({ origin: "http://localhost:8000", optionsSuccessStatus: 200 });
+// CommonJS
+const Swal = require('sweetalert2');
 
 import $ from "jquery";
 window.$ = window.jQuery = $;
@@ -16,13 +18,6 @@ import "jquery-ui/ui/widgets/datepicker.js";
 
 import vuetify from "./vuetify";
 window.Vue = require("vue").default;
-
-//React Components
-// require("./components/Example");
-// require("./components/RichTextEditor");
-// require("./components/EntityEditor");
-// require("./components/LinkEditor");
-// require("./components/PlainTextEditor");
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,6 +32,7 @@ window.Vue = require("vue").default;
 
 //Department Type
 Vue.component('department-type-component', require('./components/DepartmentTypeComponent.vue').default);
+Vue.component('department-name-component', require('./components/DepartmentNameComponent.vue').default);
 // Zoho CRM Live
 Vue.component('zoho-crm-booking-component', require('./components/ZohoCRMBookingComponent.vue').default);
 Vue.component('zoho-crm-invoice-component', require('./components/ZohoCRMInvoiceComponent.vue').default);
