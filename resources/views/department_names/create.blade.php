@@ -49,9 +49,11 @@
                                         <input type="text" name="department_code" class="form-control form-control-alternative" placeholder="{{ __('Enter Department Code') }}" required autofocus>
                                     </div>
 
-                                    <div class="">
-                                        <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                    </div>
+                                    @can('deparment_name-store')
+                                        <div class="">
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                        </div>
+                                    @endcan
                                 </div>
                             </form>
                             <div id="app"></div>

@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\DepartmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentTypeController extends Controller
 {
+    function __construct()
+    {       
+        $this->middleware('permission:department_type-list', ['only' => ['index','data']]);
+        $this->middleware('permission:department_type-create', ['only' => ['create','store']]);
+        $this->middleware('permission:department_type-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:department_type-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +25,13 @@ class DepartmentTypeController extends Controller
     public function index()
     {
         //
+        // $permissions = DB::table('role_has_permissions')
+        // ->join('permissions','permissions.id','role_has_permissions.permission_id')
+        // ->where('role_id',Auth::user()->role)
+        // ->select('permissions.name')
+        // ->get();
+        // $permissions_name = json_decode(json_encode($permissions),true)[0]['name'];
+        
         return view('department_types.index');
     }
 
@@ -46,9 +62,7 @@ class DepartmentTypeController extends Controller
     {
         //
         $department_type = new DepartmentType();
-        $is_exists = $department_type->where('department_type','=',$request->department_type)
-        ->get()
-        ->first();
+        $is_exists = $department_type->where('department_type','=',$request->department_type);
         if($is_exists->count() == 0){
             $this->save($department_type,$request);
             return redirect()->route('department_type.index')->withStatus('Created Successfully');

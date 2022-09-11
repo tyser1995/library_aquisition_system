@@ -46,7 +46,7 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive-sm">
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
@@ -103,6 +103,44 @@
                                 </tbody>
                             </table>
                         </div>
+                        <table id="example" class="table table-responsive-sm table-striped table-bordered d-none" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011-04-25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011-07-25</td>
+                                    <td>$170,750</td>
+                                </tr>
+                                <tr>
+                                    <td>Ashton Cox</td>
+                                    <td>Junior Technical Author</td>
+                                    <td>San Francisco</td>
+                                    <td>66</td>
+                                    <td>2009-01-12</td>
+                                    <td>$86,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -110,3 +148,21 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+$(document).ready(function() {
+    // $('#example').DataTable({
+    //     deferRender: true,
+    //     // "dom": 'rtip',
+    //     paging: true,
+    //     // pageLength: 5,
+    //     lengthChange: true, //show entries
+    //     buttons: ['copy', 'excel', 'pdf', 'colvis']
+    // });
+
+    // $('#example').DataTable().buttons().container()
+    //     .appendTo('#example_wrapper .col-md-6:eq(0)');
+    
+});
+</script>
+@endpush

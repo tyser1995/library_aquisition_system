@@ -14,23 +14,43 @@
                             <div class="col-8">
                                 <h3 class="mb-0 h3_title"></h3>
                             </div>
-                            <div class="col-4 text-right add-region-btn">
-                                <a href="{{ route('department_type.create') }}" class="btn btn-sm btn-primary"
-                                    id="add-region-btn">{{ __('Add Department Type') }}</a>
-                                <div class="input-group-append icon">
-                                    <a href="{{ route('department_type.create') }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus-square"></i>
-                                    </a>
+                            @can('deparment_type-create')
+                                <div class="col-4 text-right add-region-btn">
+                                    <a href="{{ route('department_type.create') }}" class="btn btn-sm btn-primary"
+                                        id="add-region-btn">{{ __('Add Department Type') }}</a>
+                                    <div class="input-group-append icon">
+                                        <a href="{{ route('department_type.create') }}" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-plus-square"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            @endcan
                         </div>
                     </div>
 
                     <div class="card-body">
                         @include('notification.index')
-                        <div id="app">
-                            <department-type-component route="{{ route('department_type.index') }}"></department-type-component>
-                        </div>
+                        <table id="tblDepartmentType" class="table table-responsive-sm table-striped table-bordered"
+                            style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Department Type</th>
+                                    <th>Created date</th>
+                                    @if (Auth::user()->can('department_type-list'))
+                                        @if (Auth::user()->can('department_type-edit') && Auth::user()->can('department_type-delete'))
+                                            <th class="text-center">Action</th>
+                                        @elseif(Auth::user()->can('department_type-edit'))
+                                            <th class="text-center">Action</th>
+                                        @elseif(Auth::user()->can('department_type-delete'))
+                                            <th class="text-center">Action</th>
+                                        @else
+                                            
+                                        @endif
+                                    @endif
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -40,3 +60,16 @@
 @endsection
 
 @include('department_types.script')
+@push('scripts')
+@if (Auth::user()->can('department_type-list'))
+    @if (Auth::user()->can('department_type-edit') && Auth::user()->can('department_type-delete'))
+        @include('department_types.table_view')
+    @elseif(Auth::user()->can('department_type-edit'))
+        @include('department_types.table_edit')
+    @elseif(Auth::user()->can('department_type-delete'))
+        @include('department_types.table_delete') 
+    @else
+        @include('department_types.table_list')   
+    @endif
+@endif
+@endpush

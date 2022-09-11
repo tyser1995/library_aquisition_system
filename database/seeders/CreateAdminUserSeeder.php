@@ -19,10 +19,21 @@ class CreateAdminUserSeeder extends Seeder
     {
         $user = User::create([
             'name' => 'Super Admin', 
+            'email' => 'superadmin@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('super1234'),
+            'role' => 1,
+            'status' => 'Active',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        
+        $user_admin = User::create([
+            'name' => 'Admin', 
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
-            'role' => 1,
+            'role' => 2,
             'status' => 'Active',
             'created_at' => now(),
             'updated_at' => now()
@@ -34,8 +45,10 @@ class CreateAdminUserSeeder extends Seeder
      
         $user->assignRole([$role->id]);
 
-        $role = Role::find(2);     
-        $permissions = Permission::pluck('id','id')->all();   
-        $role->syncPermissions($permissions);
+        $role_admin = Role::find(2);     
+        $permissions_admin = Permission::pluck('id','id')->all();   
+        $role_admin->syncPermissions($permissions_admin);
+
+        $user_admin->assignRole([$role_admin->id]);
     }
 }

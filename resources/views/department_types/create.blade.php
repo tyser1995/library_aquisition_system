@@ -33,10 +33,11 @@
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Department Type') }}</h5>
                                         <input type="text" name="department_type" id="input-region-name" class="form-control form-control-alternative" placeholder="{{ __('Enter Department Type') }}" required autofocus>
                                     </div>
-
-                                    <div class="">
-                                        <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                    </div>
+                                    @can('department_type-store')
+                                        <div class="">
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                        </div>
+                                    @endcan
                                 </div>
                             </form>
                             <div id="app"></div>

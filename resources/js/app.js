@@ -30,6 +30,8 @@ window.Vue = require("vue").default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+//Purchased Request
+Vue.component('purchase-request-component', require('./components/PurchaseRequestComponent.vue').default);
 //Department Type
 Vue.component('department-type-component', require('./components/DepartmentTypeComponent.vue').default);
 Vue.component('department-name-component', require('./components/DepartmentNameComponent.vue').default);

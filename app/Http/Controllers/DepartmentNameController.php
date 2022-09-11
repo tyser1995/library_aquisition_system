@@ -11,6 +11,14 @@ use Illuminate\Database\Query\Builder;
 
 class DepartmentNameController extends Controller
 {
+    function __construct()
+    {       
+        $this->middleware('permission:department_name-list', ['only' => ['index','data']]);
+        $this->middleware('permission:department_name-create', ['only' => ['create','store']]);
+        $this->middleware('permission:department_name-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:department_name-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

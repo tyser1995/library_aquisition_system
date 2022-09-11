@@ -41,10 +41,12 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- CSS Files -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet" /> -->
     <link href="{{ asset('paper') }}/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{{ asset('paper') }}/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="{{ asset('paper') }}/css/hotels/add-room_type.css" rel="stylesheet" />
+
+
     <link href="{{ asset('paper') }}/css/paper-dashboard.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@700&display=swap" rel="stylesheet">
     <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -52,6 +54,12 @@ The above copyright notice and this permission notice shall be included in all c
     <!-- Tags -->
     <!-- <link href="{{ asset('paper') }}/css/tagsinput.css" rel="stylesheet" /> -->
     <!-- Style -->
+
+     <!-- DataTables -->
+     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap5.min.css" />
 
 
     <!-- {{-- <link href="{{ asset('paper') }}/css/style.css" rel="stylesheet" /> --}} -->
@@ -68,12 +76,12 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="{{ asset('css') }}/content_type/content_type.css" rel="stylesheet" />
     <link href="{{ asset('css') }}/hotel/hotel.css" rel="stylesheet" />
     <!-- dycalendar css -->
-    <link href="{{ asset('dycalendar') }}/dycalendar.css" rel="stylesheet" />
-    <link href="{{ asset('dycalendar') }}/calendar.css" rel="stylesheet" />
+    <!-- <link href="{{ asset('dycalendar') }}/dycalendar.css" rel="stylesheet" />
+    <link href="{{ asset('dycalendar') }}/calendar.css" rel="stylesheet" /> -->
     <!-- Fonts Google Icon -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
 
     <!-- bulk image -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
@@ -86,11 +94,12 @@ The above copyright notice and this permission notice shall be included in all c
 
     <!-- Select2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css"> -->
-    
+    <style>
+        .form-group .form-control, .input-group .form-control{
+            height:calc(1.5em + 0.75rem + 2px);
+            padding:0.375rem 0.75rem !important;
+        }
+    </style>
 </head>
 
 <body class="{{ $class }}">
@@ -125,8 +134,19 @@ The above copyright notice and this permission notice shall be included in all c
     <script src="{{ asset('paper') }}/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
 
     <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
+    <!-- <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> -->
     <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.js"></script> -->
 
     <!-- EasyAutocomplete -->

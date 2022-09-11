@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Request Management
     //Purchase Request
     Route::get('purchase_requests', ['as' => 'purchase_requests', 'uses' => 'App\Http\Controllers\PurchaseRequestController@index']);
+    Route::get('purchase_requests/delete/{id}', ['as' => 'purchase_requests/delete/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestController@delete']);
+    Route::get('purchase_requests/data', ['as' => 'purchase_requests/data', 'uses' => 'App\Http\Controllers\PurchaseRequestController@data']);
     Route::resource('purchase_request','App\Http\Controllers\PurchaseRequestController');
     //Department Type
     Route::get('department_types', ['as' => 'department_types', 'uses' => 'App\Http\Controllers\DepartmentTypeController@index']);

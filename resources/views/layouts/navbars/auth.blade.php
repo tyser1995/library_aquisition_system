@@ -54,12 +54,14 @@
                 <div class="{{ $elementActive == 'purchase_requests' || $elementActive == 'request_books' || $elementActive == 'verify_books' ? 'collapse show ' : 'collapse' }}"
                     id="reqbooks">
                     <ul class="nav">
-                        <li class="{{ $elementActive == 'purchase_requests' ? 'active' : '' }}">
-                            <a href="{{ route('purchase_requests') }}">
-                                <span class="sidebar-mini-icon">&nbsp;</span>
-                                <span class="sidebar-normal">{{ __('Purchase Request ') }}</span>
-                            </a>
-                        </li>
+                        @can('purchase_request-list')
+                            <li class="{{ $elementActive == 'purchase_requests' ? 'active' : '' }}">
+                                <a href="{{ route('purchase_requests') }}">
+                                    <span class="sidebar-mini-icon">&nbsp;</span>
+                                    <span class="sidebar-normal">{{ __('Purchase Request ') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                         <li class="{{ $elementActive == 'request_books' ? 'active' : '' }}">
                             <a href="{{ route('department_types') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
@@ -85,18 +87,22 @@
                 <div class="{{ $elementActive == 'department_types' || $elementActive == 'department_names' ? 'collapse show ' : 'collapse' }}"
                     id="datamgt">
                     <ul class="nav">
-                        <li class="{{ $elementActive == 'department_types' ? 'active' : '' }}">
-                            <a href="{{ route('department_types') }}">
-                                <span class="sidebar-mini-icon">&nbsp;</span>
-                                <span class="sidebar-normal">{{ __('Department Types ') }}</span>
-                            </a>
-                        </li>
-                        <li class="{{ $elementActive == 'department_names' ? 'active' : '' }}">
-                            <a href="{{ route('department_names') }}">
-                                <span class="sidebar-mini-icon">&nbsp;</span>
-                                <span class="sidebar-normal">{{ __('Department Names ') }}</span>
-                            </a>
-                        </li>
+                        @can('department_type-list')
+                            <li class="{{ $elementActive == 'department_types' ? 'active' : '' }}">
+                                <a href="{{ route('department_types') }}">
+                                    <span class="sidebar-mini-icon">&nbsp;</span>
+                                    <span class="sidebar-normal">{{ __('Department Types ') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('department_name-list')
+                            <li class="{{ $elementActive == 'department_names' ? 'active' : '' }}">
+                                <a href="{{ route('department_names') }}">
+                                    <span class="sidebar-mini-icon">&nbsp;</span>
+                                    <span class="sidebar-normal">{{ __('Department Names ') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </li>

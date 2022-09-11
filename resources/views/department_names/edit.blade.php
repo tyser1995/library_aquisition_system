@@ -34,7 +34,7 @@
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Department Type') }}</h5>
                                         <!-- <input type="text" name="department_type" id="department_type" class="form-control form-control-alternative"> -->
-                                        <select id="department_types_id" name="department_types_id" class="form-control" required>
+                                        <select id="department_types_id" name="department_types_id" class="form-control nopadding" required>
                                             <option value="0" disabled>Select Department Type</option>
                                             @foreach ($department_type as $department_types)
                                                 <option value="{{$department_types->id}}">{{$department_types->department_type}}</option>

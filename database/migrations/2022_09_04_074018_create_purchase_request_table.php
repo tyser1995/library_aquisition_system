@@ -15,7 +15,8 @@ class CreatePurchaseRequestTable extends Migration
     {
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->id();
-            $table->integer('rush_type')->default(0);
+            $table->integer('created_by_users_id');
+            $table->string('rush_type'); //0 - not rush 1 - rush
             $table->string('author_name');
             $table->longText('title');
             $table->string('edition')->nullable();
