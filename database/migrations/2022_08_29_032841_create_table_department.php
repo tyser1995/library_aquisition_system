@@ -17,6 +17,7 @@ class CreateTableDepartment extends Migration
             $table->id();
             $table->unsignedBigInteger('created_by_users_id')->nullable();
             $table->string('department_type')->nullable();
+            $table->unsignedBigInteger('deleted_flag')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

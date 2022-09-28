@@ -15,7 +15,7 @@ class CreatePurchaseRequestTable extends Migration
     {
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->id();
-            $table->integer('created_by_users_id');
+            $table->unsignedBigInteger('created_by_users_id');
             $table->string('rush_type'); //0 - not rush 1 - rush
             $table->string('author_name');
             $table->longText('title');
@@ -24,12 +24,13 @@ class CreatePurchaseRequestTable extends Migration
             $table->string('publication_date')->nullable();
             $table->longText('publisher_name')->nullable();
             $table->longText('publisher_address')->nullable();
-            $table->integer('recommended_user_id');
-            $table->integer('approver_user_id');
+            $table->unsignedBigInteger('recommended_user_id');
+            $table->unsignedBigInteger('approver_user_id');
             $table->string('charge_to')->nullable();
             $table->string('subject')->nullable();
             $table->string('existing_no_of_titles')->nullable();
             $table->longText('note')->nullable();
+            $table->unsignedBigInteger('deleted_flag')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

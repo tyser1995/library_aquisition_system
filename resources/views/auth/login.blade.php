@@ -53,10 +53,10 @@
                         </div>
                     </div>
                 </form>
-                <a href="{{ route('password.request') }}" class="btn btn-link">
+                <a href="{{ route('password.request') }}" class="btn btn-link d-none">
                     {{ __('Forgot password') }}
                 </a>
-                <a href="{{ route('register') }}" class="btn btn-link float-right">
+                <a href="{{ route('register') }}" class="btn btn-link float-right d-none">
                     {{ __('Create Account') }}
                 </a>
             </div>

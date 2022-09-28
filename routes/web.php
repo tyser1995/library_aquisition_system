@@ -30,11 +30,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users', ['as' => 'users', 'uses' => 'App\Http\Controllers\UserController@index']);
 	Route::resource('user', 'App\Http\Controllers\UserController');
 
+    //User Management
+    Route::get('employees', ['as' => 'employees', 'uses' => 'App\Http\Controllers\EmployeeController@index']);
+    Route::get('employees/delete/{id}', ['as' => 'employees/delete/{id}', 'uses' => 'App\Http\Controllers\EmployeeController@delete']);
+    Route::get('employees/data', ['as' => 'employees/data', 'uses' => 'App\Http\Controllers\EmployeeController@data']);
+    Route::resource('employee','App\Http\Controllers\EmployeeController');
     //Request Management
     //Purchase Request
     Route::get('purchase_requests', ['as' => 'purchase_requests', 'uses' => 'App\Http\Controllers\PurchaseRequestController@index']);
     Route::get('purchase_requests/delete/{id}', ['as' => 'purchase_requests/delete/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestController@delete']);
+    Route::get('purchase_requests/department_data', ['as' => 'purchase_requests/department_data', 'uses' => 'App\Http\Controllers\PurchaseRequestController@department_data']);
     Route::get('purchase_requests/data', ['as' => 'purchase_requests/data', 'uses' => 'App\Http\Controllers\PurchaseRequestController@data']);
+    Route::get('purchase_requests/requested_books/{id}', ['as' => 'purchase_requests/requested_books/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestController@requested_books_edit']);
+    Route::put('purchase_requests/requested_books_put', ['as' => 'purchase_requests/requested_books_put', 'uses' => 'App\Http\Controllers\PurchaseRequestController@requested_books_update']);
     Route::resource('purchase_request','App\Http\Controllers\PurchaseRequestController');
     //Department Type
     Route::get('department_types', ['as' => 'department_types', 'uses' => 'App\Http\Controllers\DepartmentTypeController@index']);
@@ -46,6 +54,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('department_names/data', ['as' => 'department_names/data', 'uses' => 'App\Http\Controllers\DepartmentNameController@data']);
     Route::get('department_names/delete/{id}', ['as' => 'department_names/delete/{id}', 'uses' => 'App\Http\Controllers\DepartmentNameController@delete']);
     Route::resource('department_name','App\Http\Controllers\DepartmentNameController');
+    //Signature Attachments
+    Route::get('signature_attachments', ['as' => 'signature_attachments', 'uses' => 'App\Http\Controllers\SignatureAttachmentController@index']);
+    Route::resource('signature_attachment','App\Http\Controllers\SignatureAttachmentController');
+
+
 
   	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
   	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

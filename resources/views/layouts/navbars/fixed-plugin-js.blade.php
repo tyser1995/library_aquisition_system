@@ -3,7 +3,7 @@
     $(document).ready(function () {
         $('#facebook').sharrre({
             share: {
-                facebook: true
+                facebook: false
             },
             enableHover: false,
             enableTracking: false,
@@ -17,7 +17,7 @@
         });
         $('#google').sharrre({
             share: {
-                googlePlus: true
+                googlePlus: false
             },
             enableCounter: false,
             enableHover: false,
@@ -31,7 +31,7 @@
         });
         $('#twitter').sharrre({
             share: {
-                twitter: true
+                twitter: false
             },
             enableHover: false,
             enableTracking: false,

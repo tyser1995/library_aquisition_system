@@ -31,8 +31,12 @@ class DepartmentTypeController extends Controller
         // ->select('permissions.name')
         // ->get();
         // $permissions_name = json_decode(json_encode($permissions),true)[0]['name'];
-        
-        return view('department_types.index');
+        $department_type = DepartmentType::where('deleted_flag','=',0)
+        ->orderBy('department_type','asc')
+        ->get();
+        return view('department_types.index',[
+            'department_type' => $department_type
+        ]);
     }
 
     public function data(){
@@ -134,13 +138,15 @@ class DepartmentTypeController extends Controller
     {
         //
         $department_type = DepartmentType::findOrfail($id);
-        $department_type->delete();
+        $department_type->deleted_flag = 1;
+        $department_type->update();
         return redirect()->route('department_type.index')->withError('Deleted Successfully ' .$department_type->department_type);
     }
 
     public function delete($id){
         $department_type = DepartmentType::findOrfail($id);
-        $department_type->delete();
+        $department_type->deleted_flag = 1;
+        $department_type->update();
         return redirect()->route('department_type.index')->withError('Deleted Successfully ' .$department_type->department_type);
     }
 }

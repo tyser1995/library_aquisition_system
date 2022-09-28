@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Models\Role;
@@ -31,6 +32,11 @@ class PermissionTableSeeder extends Seeder
            'role-store',
            'role-edit',
            'role-delete',
+           'employee-list',
+           'employee-create',
+           'employee-store',
+           'employee-edit',
+           'employee-delete',
            'department_type-list',
            'department_type-create',
            'department_type-store',
@@ -46,11 +52,19 @@ class PermissionTableSeeder extends Seeder
            'purchase_request-store',
            'purchase_request-edit',
            'purchase_request-delete',
+           'signature-list',
+           'signature-create',
+           'signature-store',
+           'signature-edit',
+           'signature-delete',
         ];
 
-
+        //DB::table('permissions')->truncate();
         foreach ($permissions as $permission) {
              Permission::create(['name' => $permission]);
         }
+        // foreach ($permissions as $permission) {
+        //     Permission::updateOrCreate(['id' => $permission['id']],$permission);
+        // }
     }
 }

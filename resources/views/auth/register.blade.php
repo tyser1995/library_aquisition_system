@@ -12,15 +12,6 @@
                     <div class="card card-signup text-center">
                         <div class="card-header ">
                             <h4 class="card-title">{{ __('Create an Account') }}</h4>
-                            <!-- <div class="social">
-                                <button class="btn btn-icon btn-round btn-google">
-                                    <i class="fa fa-google"></i>
-                                </button>
-                                <button class="btn btn-icon btn-round btn-facebook">
-                                    <i class="fa fa-facebook-f"></i>
-                                </button>
-                                <p class="card-description">{{ __('or be classical') }}</p>
-                            </div> -->
                         </div>
                         <div class="card-body ">
                             <form class="form" method="POST" action="{{ route('register') }}">

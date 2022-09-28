@@ -30,33 +30,44 @@
 
                     <div class="card-body">
                         @include('notification.index')
-                        <table id="tblPurchaseRequest" class="table table-responsive-sm table-striped table-bordered"
+                        <table id="tblPurchaseRequest"class="table table-responsive-sm table-flush display"
                             style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th class="d-none">ID</th>
                                     <th>Requested by</th>
                                     <th>Title</th>
                                     <th>Author</th>
                                     <th>Edition</th>
                                     <th>Created date</th>
-                                    @if (Auth::user()->can('purchase_request-list'))
-                                        @if (Auth::user()->can('purchase_request-edit') && Auth::user()->can('purchase_request-delete'))
-                                            <th class="text-center">Action</th>
-                                        @elseif(Auth::user()->can('purchase_request-edit'))
-                                            <th class="text-center">Action</th>
-                                        @elseif(Auth::user()->can('purchase_request-delete'))
-                                            <th class="text-center">Action</th>
-                                        @else
-                                            
-                                        @endif
-                                    @endif
+                                    <th></th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @foreach ($purchase_request as $purchase_requests)
+                                    <tr>
+                                        <td class="d-none">{{$purchase_requests->id}}</td>
+                                        <td>{{$purchase_requests->name}}</td>
+                                        <td>{{ $purchase_requests->title }}
+                                        </td>
+                                        <td>{{$purchase_requests->author_name}}</td>
+                                        <td>{{$purchase_requests->edition}}</td>
+                                        <td>{{$purchase_requests->created_at}}</td>
+                                        <td class="text-center">
+                                            @if ($purchase_requests->status_id == 1)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                            </span>
+                                            @else
+                                                <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-signature"></i></a>
+                                                <a href="{{route('purchase_request.edit', $purchase_requests->id)}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                                <button type="button" data-id="{{$purchase_requests->id}}" value="{{$purchase_requests->title}}" class="btnCanDestroy {{Auth::user()->can('purchase_request-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
-                        <!-- <div id="app">
-                            <purchase-request-component route="{{ route('purchase_request.index') }}"></purchase-request-component>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -65,18 +76,6 @@
 </div>
 @endsection
 @push('scripts')
-@if (Auth::user()->can('purchase_request-list'))
-    @if (Auth::user()->can('purchase_request-edit') && Auth::user()->can('purchase_request-delete'))
-        @include('purchase_requests.table_view')
-    @elseif(Auth::user()->can('purchase_request-edit'))
-        @include('purchase_requests.table_edit')
-    @elseif(Auth::user()->can('purchase_request-delete'))
-        @include('purchase_requests.table_delete') 
-    @else
-        @include('purchase_requests.table_list')   
-    @endif
-@endif
-
 <script>
 $(function() {
     $('h3.h3_title')[0].innerHTML = $('li.active')[0].innerHTML;
@@ -85,6 +84,33 @@ $(function() {
         'cursor': 'default',
         'text-decoration': 'none',
     });
+
+    $('#tblPurchaseRequest').DataTable({
+        order:[[2,'asc']]
+    });
+
+    $('.btnCanDestroy').click(function() {
+            Swal.fire({
+                // title: 'Error!',
+                text: 'Do you want to remove ' + $(this).val() + ' book title?',
+                icon: 'question',
+                allowOutsideClick:false,
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = base_url + "/purchase_requests/delete/" + $(this).data('id');
+                    Swal.fire({
+                        title: $(this).val() + ' Deleted Successfully',
+                        icon: 'success',
+                        allowOutsideClick:false,
+                        confirmButtonText: 'Close',
+                    }).then(()=>{
+                        $('#tblPurchaseRequest').DataTable().ajax.reload();
+                    });
+                }
+            });
+        });
 });
 </script>
 @endpush

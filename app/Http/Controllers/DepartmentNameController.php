@@ -27,18 +27,27 @@ class DepartmentNameController extends Controller
     public function index()
     {
         //
-        return view('department_names.index');
+        $department_name = DB::table('department_names')
+            ->join('department_types','department_names.department_types_id','=','department_types.id')
+            ->select('department_names.*','department_types.department_type')
+            ->where('department_names.deleted_flag','=',0)
+            ->orderBy('department_names.department_name','asc')
+            ->get();
+        return view('department_names.index',[
+            'department_name' => $department_name,
+        ]);
     }
 
     public function data(){
         $department_name = DB::table('department_names')
             ->join('department_types','department_names.department_types_id','=','department_types.id')
-            ->select('department_names.*','department_types.*')
+            ->select('department_names.*')
+            ->orderBy('department_names.department_name','asc')
             ->get();
-        // return response()->json($department_name);
-        return response()->json([
-            'data' => $department_name,
-        ]);
+        return response()->json($department_name);
+        // return response()->json([
+        //     'data' => $department_name,
+        // ]);
     }
 
     /**
@@ -49,7 +58,9 @@ class DepartmentNameController extends Controller
     public function create()
     {
         //
-        $department_type = DepartmentType::all();
+        $department_type = DepartmentType::where('deleted_flag','=',0)
+        ->orderBy('department_type','asc')
+        ->get();
         return view('department_names.create',[
             'department_type' => $department_type
         ]);
@@ -71,6 +82,12 @@ class DepartmentNameController extends Controller
         if($is_exists->count() == 0){
             $data = $request->except('_token');
             $department_name::create($data);
+            // $department_name->created_by_users_id = Auth::user()->id;
+            // $department_name->department_types_id = $request->department_types_id;
+            // $department_name->department_code = $request->department_code;
+            // $department_name->department_name = $request->department_name;
+            //$department_name->save();
+
             return redirect()->route('department_name.index')->withStatus('Created Successfully');
         }else{
             return redirect()->back()->withError('Data already exists ' .$request->department_name);
@@ -138,13 +155,15 @@ class DepartmentNameController extends Controller
     {
         //
         $department_name = DepartmentName::findOrfail($id);
-        $department_name->delete();
+        $department_name->deleted_flag=1;
+        $department_name->update();
         return redirect()->route('department_name.index')->withError('Deleted Successfully ' .$department_name->department_name);
     }
 
     public function delete($id){
         $department_name = DepartmentName::findOrfail($id);
-        $department_name->delete();
+        $department_name->deleted_flag=1;
+        $department_name->update();
         return redirect()->route('department_name.index')->withError('Deleted Successfully ' .$department_name->department_name);
     }
 }

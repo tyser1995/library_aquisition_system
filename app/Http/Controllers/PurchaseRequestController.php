@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\PurchaseRequest;
 use App\Models\PurchaseRequestApproverUser;
 use App\Models\PurchaseRequestRecommendedUser;
+use App\Models\DepartmentName;
+use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Hash;
 
 class PurchaseRequestController extends Controller
 {
@@ -27,7 +31,49 @@ class PurchaseRequestController extends Controller
     public function index()
     {
         //
-        return view('purchase_requests.index');
+        if(in_array(Auth::user()->role,['1','2','3'])){
+            $purchase_requests = DB::table('purchase_requests')
+            ->join('users','users.id','=','purchase_requests.created_by_users_id')
+            ->select('purchase_requests.*','users.name')
+            ->get();
+
+            return view('purchase_requests.index',[
+                'purchase_request' => $purchase_requests,
+            ]);
+        }else{
+            $dean = User::join('roles','roles.id','=','users.role')
+            ->select('roles.name')
+            ->where('users.id','=',Auth::user()->id)
+            ->get()
+            ->first();
+
+            $department_id = Employee::where('users_id','=',Auth::user()->id)
+            ->get()
+            ->first();
+
+            if(strtoupper($dean->name) =="DEAN"){
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->join('employees','employees.users_id','=','users.id')
+                ->where('employees.department_names_id','=',$department_id->department_names_id)
+                ->select('purchase_requests.*','users.name')
+                ->get();
+
+                return view('purchase_requests.index',[
+                    'purchase_request' => $purchase_requests
+                ]);
+            }else{
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->where('users.id','=',Auth::user()->id)
+                ->select('purchase_requests.*','users.name')
+                ->get();
+
+                return view('purchase_requests.index',[
+                    'purchase_request' => $purchase_requests
+                ]);
+            }
+        }
     }
 
     public function data(){
@@ -40,8 +86,13 @@ class PurchaseRequestController extends Controller
             ->select('purchase_requests.*','users.name')
             ->get();
 
+            $role_name = DB::table('roles')
+            ->where('id',Auth::user()->role)
+            ->get()
+            ->first();
             return response()->json([
                 'data' => $purchase_requests,
+                'role_name' => $role_name->name,
             ]);
         }else{
             $purchase_requests = DB::table('purchase_requests')
@@ -61,6 +112,14 @@ class PurchaseRequestController extends Controller
         // ->get();
     }
 
+    public function department_data(){
+        $department_name = DepartmentName::where('deleted_flag','=',0)
+        ->orderBy('department_name','asc')
+        ->get();
+
+        return response()->json($department_name);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -71,9 +130,27 @@ class PurchaseRequestController extends Controller
         //
         $purchase_request_recommended_users = PurchaseRequestRecommendedUser::all();
         $purchase_request_approver_users = PurchaseRequestApproverUser::all();
+
+        $role_name = DB::table('roles')
+            ->where('id',Auth::user()->role)
+            ->get()
+            ->first();
+
+        $department_name = DepartmentName::join('employees','employees.department_names_id','=','department_names.id')
+        ->select('department_names.department_name')
+        ->where('employees.users_id','=',Auth::user()->id)
+        ->get()
+        ->first();
+
+        $department_name_list = DepartmentName::where('deleted_flag','=',0)
+        ->orderBy('department_name','asc')
+        ->get();
         return view('purchase_requests.create',[
             'purchase_request_recommended_users' => $purchase_request_recommended_users,
             'purchase_request_approver_users' => $purchase_request_approver_users,
+            'role_name' => collect($role_name)['name'],
+            'department_name' => $department_name,
+            'department_name_list' => $department_name_list,
         ]);
     }
 
@@ -125,9 +202,36 @@ class PurchaseRequestController extends Controller
      * @param  \App\Models\PurchaseRequest  $purchaseRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(PurchaseRequest $purchaseRequest)
+    public function edit($id)
     {
         //
+        $purchase_requests = PurchaseRequest::findOrfail($id);
+
+        $purchase_request_recommended_users = PurchaseRequestRecommendedUser::all();
+        $purchase_request_approver_users = PurchaseRequestApproverUser::all();
+
+        $role_name = DB::table('roles')
+            ->where('id',Auth::user()->role)
+            ->get()
+            ->first();
+
+        $department_name = DepartmentName::join('employees','employees.department_names_id','=','department_names.id')
+        ->select('department_names.department_name')
+        ->where('employees.users_id','=',Auth::user()->id)
+        ->get()
+        ->first();
+
+        $department_name_list = DepartmentName::where('deleted_flag','=',0)
+        ->orderBy('department_name','asc')
+        ->get();
+        return view('purchase_requests.edit',[
+            'purchase_request' => $purchase_requests,
+            'purchase_request_recommended_users' => $purchase_request_recommended_users,
+            'purchase_request_approver_users' => $purchase_request_approver_users,
+            'role_name' => collect($role_name)['name'],
+            'department_name' => $department_name,
+            'department_name_list' => $department_name_list,
+        ]);
     }
 
     /**
@@ -157,5 +261,53 @@ class PurchaseRequestController extends Controller
         $purchase_requests = PurchaseRequest::findOrfail($id);
         $purchase_requests->delete();
         return redirect()->route('purchase_request.index')->withError('Deleted Successfully ' .$purchase_requests->title);
+    }
+
+    public function requested_books_edit($id){
+        $purchase_requests = PurchaseRequest::findOrfail($id);
+
+        $purchase_request_recommended_users = PurchaseRequestRecommendedUser::all();
+        $purchase_request_approver_users = PurchaseRequestApproverUser::all();
+
+        $role_name = DB::table('roles')
+            ->where('id',Auth::user()->role)
+            ->get()
+            ->first();
+
+        $department_name = DepartmentName::join('employees','employees.department_names_id','=','department_names.id')
+        ->select('department_names.department_name')
+        ->where('employees.users_id','=',Auth::user()->id)
+        ->get()
+        ->first();
+
+        $department_name_list = DepartmentName::where('deleted_flag','=',0)
+        ->orderBy('department_name','asc')
+        ->get();
+        return view('purchase_requests.requested_books',[
+            'purchase_request' => $purchase_requests,
+            'purchase_request_recommended_users' => $purchase_request_recommended_users,
+            'purchase_request_approver_users' => $purchase_request_approver_users,
+            'role_name' => collect($role_name)['name'],
+            'department_name' => $department_name,
+            'department_name_list' => $department_name_list,
+        ]);
+    }
+
+    public function requested_books_update(Request $request){
+        $purchase_requests = PurchaseRequest::findOrfail($request->purchase_request_id);
+        $purchase_requests->status_id = 1;
+        $purchase_requests->update();
+       
+        return redirect()->route('purchase_request.index')->withStatus('Request Approved.');
+
+        // $password = User::findOrfail(Auth::user()->id);
+        
+        // dd([$request->password,$password->password,Hash::check($request->password, $password->password)]);
+        // if (Hash::check($request->password, $password->password)) {
+        //     // The passwords match...
+        //     dd("match");
+        // }else{
+        //     dd("not match");
+        // }
     }
 }

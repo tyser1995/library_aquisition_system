@@ -16,6 +16,7 @@ class CreatePurchaseRequestRecommendedUserTable extends Migration
         Schema::create('purchase_request_recommended_users', function (Blueprint $table) {
             $table->id();
             $table->string('recommended_user');
+            $table->unsignedBigInteger('deleted_flag')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

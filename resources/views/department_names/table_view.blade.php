@@ -32,8 +32,8 @@ $(document).ready(function() {
             targets: 5,
             data: null,
             className: 'text-center',
-            defaultContent: '<a href="#!" class="btnCanDEdit btn btn-info btn-sm" ><i class="fa fa-pencil"></i></a>' +
-                '<button class="btnCanDestroy btn btn-danger btn-sm"><i class="fa fa-remove"></i></button>'
+            defaultContent: '<a href="#!" class="btn btn-info btn-sm" ><i class="fa fa-pencil"></i></a>' +
+                '<button class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></button>'
         }],
     });
 
@@ -43,28 +43,28 @@ $(document).ready(function() {
             tblDepartmentName.row($(this).parents()).data().id));
     });
     //delete
-    $('#tblDepartmentName tbody').on('click', '.btnCanDestroy', function() {
-        Swal.fire({
-            // title: 'Error!',
-            text: 'Do you want to remove ' + tblDepartmentName.row($(this).parents()).data().department_name + ' department?',
-            icon: 'question',
-            allowOutsideClick:false,
-            confirmButtonText: 'Yes',
-            showCancelButton: true,
-        }).then((result) => {
-            if (result.value) {
-                window.location.href = base_url + "/department_names/delete/" + tblDepartmentName.row($(this).parents()).data().id;
-                Swal.fire({
-                    title: 'Deleted Successfully',
-                    icon: 'success',
-                    allowOutsideClick:false,
-                    confirmButtonText: 'Close',
-                }).then(()=>{
-                    $('#tblDepartmentName').DataTable().ajax.reload();
-                });
-            }
-        });
-    });
+    // $('#tblDepartmentName tbody').on('click', '.btnCanDestroy', function() {
+    //     Swal.fire({
+    //         // title: 'Error!',
+    //         text: 'Do you want to remove ' + tblDepartmentName.row($(this).parents()).data().department_name + ' department?',
+    //         icon: 'question',
+    //         allowOutsideClick:false,
+    //         confirmButtonText: 'Yes',
+    //         showCancelButton: true,
+    //     }).then((result) => {
+    //         if (result.value) {
+    //             window.location.href = base_url + "/department_names/delete/" + tblDepartmentName.row($(this).parents()).data().id;
+    //             Swal.fire({
+    //                 title: 'Deleted Successfully',
+    //                 icon: 'success',
+    //                 allowOutsideClick:false,
+    //                 confirmButtonText: 'Close',
+    //             }).then(()=>{
+    //                 $('#tblDepartmentName').DataTable().ajax.reload();
+    //             });
+    //         }
+    //     });
+    // });
 
     tblDepartmentName.buttons().container().appendTo('#tblDepartmentName_wrapper .col-md-6:eq(0)');
 });

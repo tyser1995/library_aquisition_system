@@ -23,7 +23,7 @@
                     <i class="fa fa-users"></i>
                     <p>{{ __('User Management') }} <b class="caret"></b></p>
                 </a>
-                <div class="{{ $elementActive == 'user' || $elementActive == 'roles'? 'collapse show' : 'collapse' }}" id="usersmgt">
+                <div class="{{ $elementActive == 'user' || $elementActive == 'roles' || $elementActive == 'employees'? 'collapse show' : 'collapse' }}" id="usersmgt">
                     <ul class="nav">
                         @can('user-list')
                         <li class="{{ $elementActive == 'user' ? 'active' : '' }} ">
@@ -41,6 +41,12 @@
                             </a>
                         </li>
                         @endcan
+                        <li class="{{ $elementActive == 'employees' ? 'active' : '' }}">
+                            <a href="{{ route('employees') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __(' Employees ') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -62,13 +68,13 @@
                                 </a>
                             </li>
                         @endcan
-                        <li class="{{ $elementActive == 'request_books' ? 'active' : '' }}">
+                        <li class="{{ $elementActive == 'request_books' ? 'active' : '' }} d-none">
                             <a href="{{ route('department_types') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
                                 <span class="sidebar-normal">{{ __('Request Books ') }}</span>
                             </a>
                         </li>
-                        <li class="{{ $elementActive == 'verify_books' ? 'active' : '' }}">
+                        <li class="{{ $elementActive == 'verify_books' ? 'active' : '' }} d-none">
                             <a href="{{ route('department_names') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
                                 <span class="sidebar-normal">{{ __('Verify Books ') }}</span>
@@ -103,6 +109,12 @@
                                 </a>
                             </li>
                         @endcan
+                        <!-- <li class="{{ $elementActive == 'signature_attachments' ? 'active' : '' }}">
+                            <a href="{{ route('signature_attachments') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Signature Attachment') }}</span>
+                            </a>
+                        </li> -->
                     </ul>
                 </div>
             </li>

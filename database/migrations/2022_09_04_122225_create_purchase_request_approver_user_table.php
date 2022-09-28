@@ -16,6 +16,7 @@ class CreatePurchaseRequestApproverUserTable extends Migration
         Schema::create('purchase_request_approver_users', function (Blueprint $table) {
             $table->id();
             $table->string('approver_user');
+            $table->unsignedBigInteger('deleted_flag')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

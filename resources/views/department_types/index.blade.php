@@ -30,26 +30,29 @@
 
                     <div class="card-body">
                         @include('notification.index')
-                        <table id="tblDepartmentType" class="table table-responsive-sm table-striped table-bordered"
+                        <table id="tblDepartmentType" class="table table-responsive-sm table-flush display"
                             style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th class="d-none">ID</th>
                                     <th>Department Type</th>
                                     <th>Created date</th>
-                                    @if (Auth::user()->can('department_type-list'))
-                                        @if (Auth::user()->can('department_type-edit') && Auth::user()->can('department_type-delete'))
-                                            <th class="text-center">Action</th>
-                                        @elseif(Auth::user()->can('department_type-edit'))
-                                            <th class="text-center">Action</th>
-                                        @elseif(Auth::user()->can('department_type-delete'))
-                                            <th class="text-center">Action</th>
-                                        @else
-                                            
-                                        @endif
-                                    @endif
+                                    <th></th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @foreach ($department_type as $department_types)
+                                    <tr>
+                                        <td class="d-none">{{$department_types->id}}</td>
+                                        <td>{{$department_types->department_type}}</td>
+                                        <td>{{$department_types->created_at}}</td>
+                                        <td class="text-center">
+                                        <a href="{{route('department_type.edit', $department_types->id)}}" class="{{Auth::user()->can('department_type-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                        <button type="button" data-id="{{$department_types->id}}" value="{{$department_types->department_type}}" class="btnCanDestroy {{Auth::user()->can('department_type-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -61,15 +64,33 @@
 
 @include('department_types.script')
 @push('scripts')
-@if (Auth::user()->can('department_type-list'))
-    @if (Auth::user()->can('department_type-edit') && Auth::user()->can('department_type-delete'))
-        @include('department_types.table_view')
-    @elseif(Auth::user()->can('department_type-edit'))
-        @include('department_types.table_edit')
-    @elseif(Auth::user()->can('department_type-delete'))
-        @include('department_types.table_delete') 
-    @else
-        @include('department_types.table_list')   
-    @endif
-@endif
+<script>
+    $(document).ready(function () {
+        $('#tblDepartmentType').DataTable({
+            order:[[1,'asc']]
+        });
+        $('.btnCanDestroy').click(function() {
+            Swal.fire({
+                // title: 'Error!',
+                text: 'Do you want to remove ' + $(this).val() + ' department?',
+                icon: 'question',
+                allowOutsideClick:false,
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = base_url + "/department_types/delete/" + $(this).data('id');
+                    Swal.fire({
+                        title: $(this).val() + ' Deleted Successfully',
+                        icon: 'success',
+                        allowOutsideClick:false,
+                        confirmButtonText: 'Close',
+                    }).then(()=>{
+                        $('#tblDepartmentType').DataTable().ajax.reload();
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endpush

@@ -34,16 +34,16 @@
                 targets:5,
                 data:null,
                 className:'text-center',
-                defaultContent:'<button class="btnCanDEdit btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>'
+                defaultContent:'<button class=" btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>'
             }
         ],
     });
 
     var tblDepartmentName = $('#tblDepartmentName').DataTable();
-    $('#tblDepartmentName tbody').on('click', '.btnCanDEdit', function() {
-        $('.btnCanDEdit').attr('href', '{{route("department_name.edit",":id")}}'.replace(":id",
-            tblDepartmentName.row($(this).parents()).data().id));
-    });
+    // $('#tblDepartmentName tbody').on('click', '.btnCanDEdit', function() {
+    //     $('.btnCanDEdit').attr('href', '{{route("department_name.edit",":id")}}'.replace(":id",
+    //         tblDepartmentName.row($(this).parents()).data().id));
+    // });
     // $('#tblDepartmentName').DataTable().buttons().container()
     //     .appendTo('#example_wrapper .col-md-6:eq(0)');
 

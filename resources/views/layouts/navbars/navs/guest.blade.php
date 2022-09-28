@@ -10,7 +10,6 @@
             </div>
             <a class="navbar-brand" href="{{url('/')}}" style="font-family: 'Poppins', sans-serif;
     color: #303030;
-    margin: 0 0 20px;
     padding: 0;
     line-height: 1.1;">{{ __('Henry Luce III Library')}}</a>
         </div>
