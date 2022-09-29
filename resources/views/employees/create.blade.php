@@ -37,6 +37,14 @@
                                     </h5>
                                     <!-- <input type="text" id="department_type" class="form-control form-control-alternative" placeholder="Select Department Type">
                                     <input type="hidden" name="department_names_id" id="department_names_id" class="form-control form-control-alternative" placeholder="Select Department Type"> -->
+                                    <!-- <select id="department_names_id" name="department_names_id" class="form-control"
+                                        required onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.blur()"  onblur="this.size=0;">
+                                        <option selected="selected" disabled>Select Department Type</option>
+                                        @foreach ($department_names as $department_name)
+                                        <option value="{{$department_name->id}}">{{$department_name->department_name}}
+                                        </option>
+                                        @endforeach
+                                    </select> -->
                                     <select id="department_names_id" name="department_names_id" class="form-control"
                                         required>
                                         <option selected="selected" disabled>Select Department Type</option>

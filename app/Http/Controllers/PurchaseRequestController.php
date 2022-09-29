@@ -35,6 +35,7 @@ class PurchaseRequestController extends Controller
             $purchase_requests = DB::table('purchase_requests')
             ->join('users','users.id','=','purchase_requests.created_by_users_id')
             ->select('purchase_requests.*','users.name')
+            ->where('purchase_requests.deleted_flag','=',0)
             ->get();
 
             return view('purchase_requests.index',[
@@ -56,6 +57,7 @@ class PurchaseRequestController extends Controller
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->join('employees','employees.users_id','=','users.id')
                 ->where('employees.department_names_id','=',$department_id->department_names_id)
+                ->where('purchase_requests.deleted_flag','=',0)
                 ->select('purchase_requests.*','users.name')
                 ->get();
 
@@ -66,6 +68,7 @@ class PurchaseRequestController extends Controller
                 $purchase_requests = DB::table('purchase_requests')
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->where('users.id','=',Auth::user()->id)
+                ->where('purchase_requests.deleted_flag','=',0)
                 ->select('purchase_requests.*','users.name')
                 ->get();
 
@@ -252,14 +255,19 @@ class PurchaseRequestController extends Controller
      * @param  \App\Models\PurchaseRequest  $purchaseRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PurchaseRequest $purchaseRequest)
+    public function destroy($id)
     {
         //
+        $purchase_requests = PurchaseRequest::findOrfail($id);
+        $purchase_requests->deleted_flag = 1;
+        $purchase_requests->update();
+        return redirect()->route('purchase_request.index')->withError('Deleted Successfully ' .$purchase_requests->title);
     }
 
     public function delete($id){
         $purchase_requests = PurchaseRequest::findOrfail($id);
-        $purchase_requests->delete();
+        $purchase_requests->deleted_flag = 1;
+        $purchase_requests->update();
         return redirect()->route('purchase_request.index')->withError('Deleted Successfully ' .$purchase_requests->title);
     }
 
