@@ -35,16 +35,16 @@
                                 <div class="form-group">
                                     <h5 class="form-control-label" for="input-region-name">{{ __('Department Type') }}
                                     </h5>
-                                    <input type="text" id="department_type" class="form-control form-control-alternative" placeholder="Select Department Type">
-                                    <input type="hidden" name="department_names_id" id="department_names_id" class="form-control form-control-alternative" placeholder="Select Department Type">
-                                    <!-- <select id="department_names_id" name="department_names_id" class="form-control"
+                                    <!-- <input type="text" id="department_type" class="form-control form-control-alternative" placeholder="Select Department Type">
+                                    <input type="hidden" name="department_names_id" id="department_names_id" class="form-control form-control-alternative" placeholder="Select Department Type"> -->
+                                    <select id="department_names_id" name="department_names_id" class="form-control"
                                         required>
                                         <option selected="selected" disabled>Select Department Type</option>
                                         @foreach ($department_names as $department_name)
                                         <option value="{{$department_name->id}}">{{$department_name->department_name}}
                                         </option>
                                         @endforeach
-                                    </select> -->
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <h5 class="form-control-label" for="input-region-name">{{ __('User Account') }}</h5>
@@ -114,32 +114,32 @@ $(document).ready(function() {
         'cursor': 'default',
         'text-decoration': 'none',
     });
-    var options = {
+    // var options = {
 
-        url: base_url + '/department_names/data',
+    //     url: base_url + '/department_names/data',
 
-        getValue: "department_name",
-        template: {
-            type: "description",
-                fields: {
-                    description: "department_code"
-                }
-        },
-        list: {
-            onSelectItemEvent: function() {
-                var selectedItemValue = $('#department_type').getSelectedItemData().id;
-                $('#department_names_id').val(selectedItemValue);
-            },
-            maxNumberOfElements: 10,
-            match: {
-                enabled: true
-            }
-        },
+    //     getValue: "department_name",
+    //     template: {
+    //         type: "description",
+    //             fields: {
+    //                 description: "department_code"
+    //             }
+    //     },
+    //     list: {
+    //         onSelectItemEvent: function() {
+    //             var selectedItemValue = $('#department_type').getSelectedItemData().id;
+    //             $('#department_names_id').val(selectedItemValue);
+    //         },
+    //         maxNumberOfElements: 10,
+    //         match: {
+    //             enabled: true
+    //         }
+    //     },
 
-        theme: "plate-dark"
-    };
+    //     theme: "plate-dark"
+    // };
 
-    $('#department_type').easyAutocomplete(options);
+    // $('#department_type').easyAutocomplete(options);
 
     // $('#department_type').easyAutocomplete(options);
     // $('#department_types_id').select2({
