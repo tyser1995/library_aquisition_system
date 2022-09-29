@@ -54,14 +54,14 @@
                                         <td>{{$purchase_requests->edition}}</td>
                                         <td>{{$purchase_requests->created_at}}</td>
                                         <td class="text-center">
-                                            @if ($purchase_requests->status_id == 1)
-                                            <span class="badge badge-info">
-                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
-                                            </span>
-                                            @else
+                                            @if ($purchase_requests->status_id == 0)
                                                 <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-signature"></i></a>
                                                 <a href="{{route('purchase_request.edit', $purchase_requests->id)}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
                                                 <button type="button" data-id="{{$purchase_requests->id}}" value="{{$purchase_requests->title}}" class="btnCanDestroy {{Auth::user()->can('purchase_request-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
+                                            @else
+                                                <span class="badge badge-info <?= $purchase_requests->status_id != 1 ? ' d-none' :'' ?>">
+                                                    <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                                </span>
                                             @endif
                                         </td>
                                     </tr>
