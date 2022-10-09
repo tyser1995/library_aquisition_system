@@ -27,13 +27,26 @@ class SignatureAttachmentController extends Controller
     public function index()
     {
         //
-        $signature = SignatureAttachment::join('users','users.id','=','signature_attachment.users_id')
-        ->select('signature_attachment.*','users.name')
-        ->get();
-
-        return view('signature_attachment.index',[
-            'signature' => $signature
-        ]);
+        if(Auth::user()->role > 3){
+            $signature = SignatureAttachment::join('users','users.id','=','signature_attachment.users_id')
+            ->where('users.id',Auth::user()->id)
+            ->select('signature_attachment.*','users.name')
+            ->get();
+          
+            return view('signature_attachment.index',[
+                'signature' => $signature,
+                'count' => $signature->count()
+            ]);
+        }else{
+            $signature = SignatureAttachment::join('users','users.id','=','signature_attachment.users_id')
+            ->select('signature_attachment.*','users.name')
+            ->get();
+    
+            return view('signature_attachment.index',[
+                'signature' => $signature
+            ]);
+        }
+        
     }
 
     /**
@@ -69,7 +82,7 @@ class SignatureAttachmentController extends Controller
     {
         //
         $signature = new SignatureAttachment();
-        $signature->users_id = $request->users_id;
+        $signature->users_id = Auth::user()->role > 3 ? Auth::user()->id : $request->users_id;
         $signature->password = $request->password;
         $signature->save();
         return redirect()->route('signature_attachment.index')->withStatus('Signature Password Added.'); 

@@ -33,15 +33,17 @@
                         <form method="post" autocomplete="off" action="{{route('signature_attachment.store')}}">
                             @csrf
                             <div class="pl-lg-4">
-                                <div class="form-group">
-                                    <h5 class="form-control-label" for="input-region-name">{{ __('User Account') }}</h5>
-                                    <select id="users_id" name="users_id" class="form-control" required>
-                                        <option selected="selected" disabled>Select User Account</option>
-                                        @foreach ($users as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                @if (Auth::user()->role < 4)
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('User Account') }}</h5>
+                                        <select id="users_id" name="users_id" class="form-control" required>
+                                            <option selected="selected" disabled>Select User Account</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
 
                                 <input type="hidden" name="created_by_users_id" value="{{Auth::user()->id}}"
                                     class="form-control form-control-alternative">
@@ -67,7 +69,7 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-
+    
 });
 </script>
 @endpush
