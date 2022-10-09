@@ -41,7 +41,7 @@
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
-                                        <div class="form-check form-check-inline">
+                                        <div class="form-check form-check-inline d-none">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                     value="1" name="rush_type[]"> Not Rush
@@ -150,7 +150,7 @@
                                     </div>
 
                                     <!-- loop data approved by -->
-                                    <div class="form-group">
+                                    <div class="<?= $role_name == "Dean" || $role_name == "Director of Libraries" || $role_name == "Principal" ? '' : ' d-none' ?> form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
                                         </h5>
                                         <div class="form-row">

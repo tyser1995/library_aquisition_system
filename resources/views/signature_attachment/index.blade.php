@@ -16,10 +16,10 @@
                             </div>
                             @can('signature-create')
                                 <div class="col-4 text-right add-region-btn">
-                                    <a href="{{ route('department_name.create') }}" class="btn btn-sm btn-primary"
+                                    <a href="{{ route('signature_attachment.create') }}" class="btn btn-sm btn-primary"
                                         id="add-region-btn">{{ __('Add Signature') }}</a>
                                     <div class="input-group-append icon">
-                                        <a href="{{ route('department_name.create') }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('signature_attachment.create') }}" class="btn btn-sm btn-primary">
                                             <i class="fa fa-plus-square"></i>
                                         </a>
                                     </div>
@@ -30,29 +30,37 @@
 
                     <div class="card-body">
                         @include('notification.index')
-                        <table id="tblDepartmentName" class="table table-responsive-sm table-flush display"
+                        <table id="tblSignature" class="table table-responsive-sm table-flush display"
                             style="width:100%">
                             <thead>
                                 <tr>
                                     <th class="d-none">ID</th>
-                                    <th>Department Type</th>
-                                    <th>Department Code</th>
-                                    <th>Department</th>
+                                    <th>Name</th>
+                                    <th>Password</th>
                                     <th>Created date</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($department_name as $department_names)
+                                @foreach ($signature as $signatures)
                                     <tr>
-                                        <td class="d-none">{{$department_names->id}}</td>
-                                        <td>{{$department_names->department_type}}</td>
-                                        <td>{{$department_names->department_code}}</td>
-                                        <td>{{$department_names->department_name}}</td>
-                                        <td>{{$department_names->created_at}}</td>
+                                        <td class="d-none">{{$signatures->id}}</td>
+                                        <td>{{$signatures->name}}</td>
+                                        <td>
+                                            <span id="show_password_{{$signatures->id}}" class="d-none">
+                                                {{$signatures->password}}
+                                            </span>
+                                            <span id="hide_password_{{$signatures->id}}" class="font-weight-bold">
+                                                {{__('*****')}}
+                                            </span>
+                                            <a data-name="{{$signatures->name}}" data-id="{{$signatures->id}}" class="active show_hide_password_{{$signatures->id}}" id="show_hide_password" href="javascript:void(0)" data-toggle="tooltip" title="Show Password">
+                                                <i class="icon_{{$signatures->id}} fa fa-eye"></i>
+                                            </a>
+                                        </td>
+                                        <td>{{$signatures->created_at}}</td>
                                         <td class="text-center">
-                                            <a href="{{route('department_name.edit', $department_names->id)}}" class="{{Auth::user()->can('department_name-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
-                                            <button type="button" data-id="{{$department_names->id}}" value="{{$department_names->department_type}}" class="btnCanDestroy {{Auth::user()->can('department_names-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
+                                            <a href="{{route('signature_attachment.edit', $signatures)}}" class="{{Auth::user()->can('signature-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                            <!-- <button type="button" data-id="{{$signatures->id}}" value="{{$signatures->name}}" class="btnCanDestroy {{Auth::user()->can('signature-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button> -->
                                         </td>
                                     </tr>
                                 @endforeach
@@ -73,31 +81,26 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        // $('#tblDepartmentName').DataTable({
-        //     order: [[3, 'asc']],
-        // });
-        // $('.btnCanDestroy').click(function() {
-        //     Swal.fire({
-        //         // title: 'Error!',
-        //         text: 'Do you want to remove ' + $(this).val() + ' department?',
-        //         icon: 'question',
-        //         allowOutsideClick:false,
-        //         confirmButtonText: 'Yes',
-        //         showCancelButton: true,
-        //     }).then((result) => {
-        //         if (result.value) {
-        //             window.location.href = base_url + "/department_names/delete/" + $(this).data('id');
-        //             Swal.fire({
-        //                 title: $(this).val() +' Deleted Successfully',
-        //                 icon: 'success',
-        //                 allowOutsideClick:false,
-        //                 confirmButtonText: 'Close',
-        //             }).then(()=>{
-        //                 $('#tblDepartmentName').DataTable().ajax.reload();
-        //             });
-        //         }
-        //     });
-        // });
+        $('#tblSignature').DataTable({
+            order:[[1,'asc']]
+        });
+        $('#tblSignature tbody').on('click','#show_hide_password',function(){
+            if($('.show_hide_password_'+$(this).data('id')).hasClass('active')){
+                $('.show_hide_password_'+$(this).data('id')).removeClass('active');
+                $('.show_hide_password_'+$(this).data('id')).removeAttr('title');
+                $('.show_hide_password_'+$(this).data('id')).attr('title','Hide Password');
+                $('.icon_'+$(this).data('id')).removeClass('fa-eye').addClass('fa-eye-slash');
+                $('#show_password_'+$(this).data('id')).removeClass('d-none');
+                $('#hide_password_'+$(this).data('id')).addClass('d-none');
+            }else{
+                $('.show_hide_password_'+$(this).data('id')).addClass('active');
+                $('.show_hide_password_'+$(this).data('id')).removeAttr('title');
+                $('.show_hide_password_'+$(this).data('id')).attr('title','Show Password');
+                $('.icon_'+$(this).data('id')).addClass('fa-eye').removeClass('fa-eye-slash');
+                $('#hide_password_'+$(this).data('id')).removeClass('d-none');
+                $('#show_password_'+$(this).data('id')).addClass('d-none');
+            }
+        });
     });
 </script>
 @endpush

@@ -40,6 +40,7 @@
                                     <th>Author</th>
                                     <th>Edition</th>
                                     <th>Created date</th>
+                                    <th>Status</th>                                    
                                     <th></th>
                                 </tr>
                             </thead>
@@ -51,17 +52,25 @@
                                         <td>{{ $purchase_requests->title }}
                                         </td>
                                         <td>{{$purchase_requests->author_name}}</td>
-                                        <td>{{$purchase_requests->edition}}</td>
+                                        <td>{{$purchase_requests->edition}}</td>                                       
                                         <td>{{$purchase_requests->created_at}}</td>
-                                        <td class="text-center">
-                                            @if ($purchase_requests->status_id == 0)
-                                                <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-signature"></i></a>
-                                                <a href="{{route('purchase_request.edit', $purchase_requests->id)}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
-                                                <button type="button" data-id="{{$purchase_requests->id}}" value="{{$purchase_requests->title}}" class="btnCanDestroy {{Auth::user()->can('purchase_request-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
-                                            @else
-                                                <span class="badge badge-info <?= $purchase_requests->status_id != 1 ? ' d-none' :'' ?>">
+                                        <td>@if ($purchase_requests->status_id == 0)
+                                        <span class="badge badge-warning">
+                                                    <i class="fa fa-signature"></i> {{__('Waiting for Approval')}}
+                                                </span>
+                                        @else
+                                        <span class="badge badge-info">
                                                     <i class="fa fa-check-circle"></i> {{__('Approved')}}
                                                 </span>
+                                        @endif
+                                         </td>
+                                        <td class="text-center">
+                                            @if ($purchase_requests->status_id == 0)
+                                                @can('signature-create')
+                                                    <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-signature"></i></a>
+                                                @endcan                                               
+                                                <a href="{{route('purchase_request.edit', $purchase_requests->id)}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                                <button type="button" data-id="{{$purchase_requests->id}}" value="{{$purchase_requests->title}}" class="btnCanDestroy {{Auth::user()->can('purchase_request-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
                                             @endif
                                         </td>
                                     </tr>
@@ -99,7 +108,7 @@ $(function() {
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/purchase_requests/delete/" + $(this).data('id');
+                    window.location.href = base_url + "/users/delete/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Deleted Successfully',
                         icon: 'success',

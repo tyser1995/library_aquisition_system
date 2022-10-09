@@ -28,6 +28,7 @@ Route::get('user/{id}/avatar', function ($id) {
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('users', ['as' => 'users', 'uses' => 'App\Http\Controllers\UserController@index']);
+    Route::get('users/delete/{id}', ['as' => 'users/delete/{id}', 'uses' => 'App\Http\Controllers\UserController@delete']);
 	Route::resource('user', 'App\Http\Controllers\UserController');
 
     //User Management

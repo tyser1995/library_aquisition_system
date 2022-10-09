@@ -52,6 +52,8 @@
             </li>
 
             @endif
+
+            @if (Auth::user()->can('purchase_request-list'))
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#reqbooks">
                     <i class="fa fa-book"></i>
@@ -83,41 +85,46 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
-
-            <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
-                <a data-toggle="collapse" aria-expanded="false" href="#datamgt">
-                    <i class="fa fa-cog"></i>
-                    <p>{{ __('Data Management') }} <b class="caret"></b></p>
-                </a>
-                <div class="{{ $elementActive == 'department_types' || $elementActive == 'department_names' ? 'collapse show ' : 'collapse' }}"
-                    id="datamgt">
-                    <ul class="nav">
-                        @can('department_type-list')
-                            <li class="{{ $elementActive == 'department_types' ? 'active' : '' }}">
-                                <a href="{{ route('department_types') }}">
-                                    <span class="sidebar-mini-icon">&nbsp;</span>
-                                    <span class="sidebar-normal">{{ __('Department Types ') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('department_name-list')
-                            <li class="{{ $elementActive == 'department_names' ? 'active' : '' }}">
-                                <a href="{{ route('department_names') }}">
-                                    <span class="sidebar-mini-icon">&nbsp;</span>
-                                    <span class="sidebar-normal">{{ __('Department Names ') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        <!-- <li class="{{ $elementActive == 'signature_attachments' ? 'active' : '' }}">
-                            <a href="{{ route('signature_attachments') }}">
-                                <span class="sidebar-mini-icon">&nbsp;</span>
-                                <span class="sidebar-normal">{{ __('Signature Attachment') }}</span>
-                            </a>
-                        </li> -->
-                    </ul>
-                </div>
-            </li>
+            @if (Auth::user()->can('department_type-list') || Auth::user()->can('department_type-list') || Auth::user()->can('signature-list'))
+                <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
+                    <a data-toggle="collapse" aria-expanded="false" href="#datamgt">
+                        <i class="fa fa-cog"></i>
+                        <p>{{ __('Data Management') }} <b class="caret"></b></p>
+                    </a>
+                    <div class="{{ $elementActive == 'department_types' || $elementActive == 'department_names' ? 'collapse show ' : 'collapse' }}"
+                        id="datamgt">
+                        <ul class="nav">
+                            @can('department_type-list')
+                                <li class="{{ $elementActive == 'department_types' ? 'active' : '' }}">
+                                    <a href="{{ route('department_types') }}">
+                                        <span class="sidebar-mini-icon">&nbsp;</span>
+                                        <span class="sidebar-normal">{{ __('Department Types ') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('department_name-list')
+                                <li class="{{ $elementActive == 'department_names' ? 'active' : '' }}">
+                                    <a href="{{ route('department_names') }}">
+                                        <span class="sidebar-mini-icon">&nbsp;</span>
+                                        <span class="sidebar-normal">{{ __('Department Names ') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('signature-list')
+                                <li class="{{ $elementActive == 'signature_attachments' ? 'active' : '' }}">
+                                    <a href="{{ route('signature_attachments') }}">
+                                        <span class="sidebar-mini-icon">&nbsp;</span>
+                                        <span class="sidebar-normal">{{ __('Signature Attachment') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
+                        
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
         </ul>
     </div>

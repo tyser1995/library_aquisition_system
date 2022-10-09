@@ -8,10 +8,11 @@ use App\Models\PurchaseRequestRecommendedUser;
 use App\Models\DepartmentName;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\SignatureAttachment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class PurchaseRequestController extends Controller
 {
@@ -272,6 +273,10 @@ class PurchaseRequestController extends Controller
     }
 
     public function requested_books_edit($id){
+        $signature = SignatureAttachment::where('users_id','=',Auth::user()->id)
+        ->get()
+        ->first();
+
         $purchase_requests = PurchaseRequest::findOrfail($id);
 
         $purchase_request_recommended_users = PurchaseRequestRecommendedUser::all();
@@ -298,6 +303,7 @@ class PurchaseRequestController extends Controller
             'role_name' => collect($role_name)['name'],
             'department_name' => $department_name,
             'department_name_list' => $department_name_list,
+            'signature' => $signature,
         ]);
     }
 

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SignatureAttachment extends Model
 {
     use HasFactory;
+
+    protected $table = 'signature_attachment';
+    protected $fillable = ['password'];
 }

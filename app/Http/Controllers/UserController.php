@@ -143,4 +143,11 @@ class UserController extends Controller
         }
         return response()->json($result);
     }
+
+    public function delete($id){
+        $user = User::findOrfail($id);
+        //$user->deleted_flag = 1;
+        $user->delete();
+        return redirect()->route('user.index')->withError('Deleted Successfully ' .$user->name);
+    }
 }

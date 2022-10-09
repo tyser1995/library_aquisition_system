@@ -57,8 +57,11 @@
                         <form class="dropdown-item" action="{{ route('logout') }}" id="formLogOut" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <a class="dropdown-item" onclick="document.getElementById('formLogOut').submit();">{{ __('Log out') }}</a>
+                        <a class="dropdown-item">{{ __('Welcome!') }}  <?php 
+                                    echo Auth::user()->name;
+                                ?></a>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('My profile') }}</a>
+                            <a class="dropdown-item" onclick="document.getElementById('formLogOut').submit();">{{ __('Log out') }}</a>
                     </div>
                 </li>
             </ul>

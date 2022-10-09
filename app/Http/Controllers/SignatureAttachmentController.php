@@ -27,7 +27,13 @@ class SignatureAttachmentController extends Controller
     public function index()
     {
         //
-        return view('signature_attachment.index');
+        $signature = SignatureAttachment::join('users','users.id','=','signature_attachment.users_id')
+        ->select('signature_attachment.*','users.name')
+        ->get();
+
+        return view('signature_attachment.index',[
+            'signature' => $signature
+        ]);
     }
 
     /**
@@ -38,7 +44,19 @@ class SignatureAttachmentController extends Controller
     public function create()
     {
         //
-        return view('signature_attachment.create');
+        $users = User::where('role','>',3)
+        ->whereNotExists(function($query) {
+            $query->select('sa.users_id')
+                  ->from('signature_attachment AS sa')
+                  //->where('sa.users_id','=','users.id');
+                  ->whereColumn('sa.users_id','users.id');
+           })
+           ->select('users.*')
+           ->get();
+       
+        return view('signature_attachment.create',[
+            'users' => $users
+        ]);
     }
 
     /**
@@ -50,6 +68,11 @@ class SignatureAttachmentController extends Controller
     public function store(Request $request)
     {
         //
+        $signature = new SignatureAttachment();
+        $signature->users_id = $request->users_id;
+        $signature->password = $request->password;
+        $signature->save();
+        return redirect()->route('signature_attachment.index')->withStatus('Signature Password Added.'); 
     }
 
     /**
@@ -72,7 +95,14 @@ class SignatureAttachmentController extends Controller
     public function edit(SignatureAttachment $signatureAttachment)
     {
         //
-        return view('signature_attachment.edit');
+        // $signature = SignatureAttachment::join('users','users.id','=','signature_attachment.users_id')
+        // ->where('signature_attachment.id','=',$signatureAttachment->id)
+        // ->select('signature_attachment.*','users.name')
+        // ->get();
+
+        return view('signature_attachment.edit',[
+            'signature' => $signatureAttachment
+        ]);
     }
 
     /**
@@ -82,9 +112,13 @@ class SignatureAttachmentController extends Controller
      * @param  \App\Models\SignatureAttachment  $signatureAttachment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SignatureAttachment $signatureAttachment)
+    public function update(Request $request,SignatureAttachment $signatureAttachment)
     {
         //
+        $signature = SignatureAttachment::findOrfail($signatureAttachment->id);
+        $signature->password = $request->password;
+        $signature->save();
+        return redirect()->route('signature_attachment.index')->withStatus('Signature Password Updated.');
     }
 
     /**

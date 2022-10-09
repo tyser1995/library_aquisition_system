@@ -115,6 +115,7 @@ The above copyright notice and this permission notice shall be included in all c
     <script>
         var base_url = "{{ url('/') }}";
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!--   Core JS Files   -->
     <script src="{{ asset('js/manifest.js') }}"></script>
     <script src="{{ asset('js/vendor.js') }}"></script>
@@ -134,7 +135,7 @@ The above copyright notice and this permission notice shall be included in all c
     <script src="{{ asset('paper') }}/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
 
     <!-- DataTables -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
@@ -176,7 +177,7 @@ The above copyright notice and this permission notice shall be included in all c
     <script>
         var PRELOADING = "<div class='text-center'><i class='fa fa-spin fa-spinner' style='font-size: 30px'></i></div>";
     $(function() {
-        // $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
         //autoclose alert
         $('div.alert').delay(3000).slideUp(300);
     })

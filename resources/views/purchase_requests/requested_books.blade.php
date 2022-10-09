@@ -32,12 +32,12 @@
                             @method('put')
                             <input type="hidden" name="approved" value="approved"/>
                             <input type="hidden" name="purchase_request_id" value="{{$purchase_request->id}}"/>
+                            <input type="hidden" id="password" name="password" value="{{$signature->password}}" />
                             <div class="pl-lg-4">
                                 <div class="container-request-form">
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Request Type') }}
                                         </h5>
-                                        @if (explode(',',$purchase_request->title)[0] == 0)
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
@@ -45,29 +45,6 @@
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                    value="1" name="rush_type[]"> Not Rush
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        @else
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
-                                                    value="0" name="rush_type[]" > Rush
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4"
-                                                    value="1" name="rush_type[]" checked> Not Rush
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        @endif
                                     </div>
 
                                     <div class="form-group">
@@ -229,7 +206,6 @@ function retrieveRequest(wrapper) {
         <div>
             <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Request Type') }}</h5>
-                                        @if (explode(',',$purchase_request->title)[0] == 0)
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
@@ -237,29 +213,6 @@ function retrieveRequest(wrapper) {
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                    value="1" name="rush_type[]"> Not Rush
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        @else
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
-                                                    value="0" name="rush_type[]" > Rush
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4"
-                                                    value="1" name="rush_type[]" checked> Not Rush
-                                                <span class="form-check-sign"></span>
-                                            </label>
-                                        </div>
-                                        @endif
 
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Author') }}
@@ -369,6 +322,7 @@ $(function() {
         Swal.fire({
                 // title: 'Error!',
                 title: 'Enter your password',
+                //html:`<input type="password" placeholder="Enter your password" id="password" class="swal2-input">`,
                 icon: 'question',
                 allowOutsideClick:false,
                 confirmButtonText: 'Yes',
@@ -377,7 +331,6 @@ $(function() {
                 inputLabel: 'Password',
                 inputPlaceholder: 'Enter your password',
                 inputAttributes: {
-                    maxlength: 10,
                     autocapitalize: 'off',
                     autocorrect: 'off'
                 },
@@ -388,7 +341,7 @@ $(function() {
                 }
             }).then((result) => {
                 if(result.value){
-                    if (result.value == "admin") {
+                    if (result.value == $('#password').val()) {
                     Swal.fire({
                         title: 'Enter password correct',
                         icon: 'success',

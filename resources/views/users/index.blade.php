@@ -47,7 +47,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive-sm">
-                            <table class="table">
+                            <table id="tblUser" class="table">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">{{ __('Name') }}</th>
@@ -68,30 +68,11 @@
                                         <td>{{ $user->role_name ? $user->role_name : '' }}</td>
                                         <td>{{ $user->created_at->format('M d, Y h:i a') }}</td>
                                         <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only" href="#" role="button"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="nc-align-left-2 nc-icon"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    @if ($user->id != auth()->id())
-                                                    <form action="{{ route('user.destroy', $user) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-
-                                                        <a class="dropdown-item" href="{{ route('user.edit', $user) }}">{{
-                                                            __('Edit') }}</a>
-                                                        <button type="button" class="dropdown-item" id="delete"
-                                                            onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                            {{ __('Delete') }}
-                                                        </button>
-                                                    </form>
-                                                    @else
-                                                    <a class=" dropdown-item" href="{{ route('user.edit', $user) }}">{{
-                                                            __('Edit') }}</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                            <a href="{{ route('user.edit', $user) }}" class="{{Auth::user()->can('user-edit') ? 'btn btn-info btn-sm ' : 'btn btn-info btn-sm d-none'}}"><i class="fa fa-pencil"></i></a>
+                                            <button type="button" data-id="{{$user->id}}"
+                                                value="{{$user->name}}"
+                                                class="btnCanDestroy {{Auth::user()->can('user-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i
+                                                    class="fa fa-remove"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -103,7 +84,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <table id="example" class="table table-responsive-sm table-striped table-bordered d-none" style="width:100%">
+                        <table id="example" class="table table-responsive-sm table-striped table-bordered d-none"
+                            style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -151,6 +133,36 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    $('#tblUser').DataTable({
+        order: [
+            [0, 'asc']
+        ]
+    });
+
+
+    $('.btnCanDestroy').click(function() {
+            Swal.fire({
+                // title: 'Error!',
+                text: 'Do you want to remove ' + $(this).val() + ' user?',
+                icon: 'question',
+                allowOutsideClick:false,
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = base_url + "/purchase_requests/delete/" + $(this).data('id');
+                    Swal.fire({
+                        title: $(this).val() + ' Deleted Successfully',
+                        icon: 'success',
+                        allowOutsideClick:false,
+                        confirmButtonText: 'Close',
+                    }).then(()=>{
+                        $('#tblUser').DataTable().ajax.reload();
+                    });
+                }
+            });
+        });
+
     // $('#example').DataTable({
     //     deferRender: true,
     //     // "dom": 'rtip',
@@ -162,7 +174,7 @@ $(document).ready(function() {
 
     // $('#example').DataTable().buttons().container()
     //     .appendTo('#example_wrapper .col-md-6:eq(0)');
-    
+
 });
 </script>
 @endpush
