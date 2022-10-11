@@ -16,7 +16,7 @@ class DepartmentNameController extends Controller
         $this->middleware('permission:department_name-list', ['only' => ['index','data']]);
         $this->middleware('permission:department_name-create', ['only' => ['create','store']]);
         $this->middleware('permission:department_name-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:department_name-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:department_name-delete', ['only' => ['destroy','delete']]);
     }
 
     /**

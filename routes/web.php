@@ -55,6 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('department_names/data', ['as' => 'department_names/data', 'uses' => 'App\Http\Controllers\DepartmentNameController@data']);
     Route::get('department_names/delete/{id}', ['as' => 'department_names/delete/{id}', 'uses' => 'App\Http\Controllers\DepartmentNameController@delete']);
     Route::resource('department_name','App\Http\Controllers\DepartmentNameController');
+    //Department Budget
+    Route::get('department_budgets', ['as' => 'department_budgets', 'uses' => 'App\Http\Controllers\DepartmentBudgetController@index']);
+    Route::get('department_budgets/delete/{id}', ['as' => 'department_budgets/delete/{id}', 'uses' => 'App\Http\Controllers\DepartmentBudgetController@delete']);
+    Route::resource('department_budget','App\Http\Controllers\DepartmentBudgetController');
     //Signature Attachments
     Route::get('signature_attachments', ['as' => 'signature_attachments', 'uses' => 'App\Http\Controllers\SignatureAttachmentController@index']);
     Route::resource('signature_attachment','App\Http\Controllers\SignatureAttachmentController');

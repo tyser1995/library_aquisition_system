@@ -21,7 +21,7 @@ class PurchaseRequestController extends Controller
         $this->middleware('permission:purchase_request-list', ['only' => ['index','data']]);
         $this->middleware('permission:purchase_request-create', ['only' => ['create','store']]);
         $this->middleware('permission:purchase_request-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:purchase_request-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:purchase_request-delete', ['only' => ['destroy','delete']]);
     }
 
     /**

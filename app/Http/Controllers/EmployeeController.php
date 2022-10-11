@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
+    function __construct()
+    {       
+        $this->middleware('permission:employee-list', ['only' => ['index','data']]);
+        $this->middleware('permission:employee-create', ['only' => ['create','store']]);
+        $this->middleware('permission:employee-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:employee-delete', ['only' => ['destroy','delete']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

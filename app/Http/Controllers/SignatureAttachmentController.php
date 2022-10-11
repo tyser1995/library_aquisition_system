@@ -16,7 +16,7 @@ class SignatureAttachmentController extends Controller
         $this->middleware('permission:signature-list', ['only' => ['index','data']]);
         $this->middleware('permission:signature-create', ['only' => ['create','store']]);
         $this->middleware('permission:signature-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:signature-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:signature-delete', ['only' => ['destroy','delete']]);
     }
 
     /**

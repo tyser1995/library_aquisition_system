@@ -87,7 +87,7 @@
             </li>
             @endif
 
-            @if (Auth::user()->can('department_type-list') || Auth::user()->can('department_type-list') || Auth::user()->can('signature-list'))
+            @if (Auth::user()->can('department_type-list') || Auth::user()->can('department_type-list') || Auth::user()->can('signature-list') || Auth::user()->can('department_budget-list'))
                 <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                     <a data-toggle="collapse" aria-expanded="false" href="#datamgt">
                         <i class="fa fa-cog"></i>
@@ -109,6 +109,14 @@
                                     <a href="{{ route('department_names') }}">
                                         <span class="sidebar-mini-icon">&nbsp;</span>
                                         <span class="sidebar-normal">{{ __('Department Names ') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('department_budget-list')
+                                <li class="{{ $elementActive == 'department_budgets' ? 'active' : '' }}">
+                                    <a href="{{ route('department_budgets') }}">
+                                        <span class="sidebar-mini-icon">&nbsp;</span>
+                                        <span class="sidebar-normal">{{ __('Department Budgets ') }}</span>
                                     </a>
                                 </li>
                             @endcan

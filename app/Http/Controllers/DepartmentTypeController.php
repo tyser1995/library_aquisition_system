@@ -14,7 +14,7 @@ class DepartmentTypeController extends Controller
         $this->middleware('permission:department_type-list', ['only' => ['index','data']]);
         $this->middleware('permission:department_type-create', ['only' => ['create','store']]);
         $this->middleware('permission:department_type-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:department_type-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:department_type-delete', ['only' => ['destroy','delete']]);
     }
 
     /**
