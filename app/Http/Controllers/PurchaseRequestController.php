@@ -179,7 +179,7 @@ class PurchaseRequestController extends Controller
         $purchase_requests -> publisher_name = implode(',',$request->input('publisher_name'));
         $purchase_requests -> publisher_address = implode(',',$request->input('publisher_address'));
         $purchase_requests -> recommended_user_id = implode(',',$request->input('recommended_user_id'));
-        $purchase_requests -> approver_user_id = implode(',',$request->input('approver_user_id'));
+        // $purchase_requests -> approver_user_id = implode(',',$request->input('approver_user_id'));
         $purchase_requests -> charge_to = implode(',',$request->input('charge_to'));
         $purchase_requests -> subject = implode(',',$request->input('subject'));
         $purchase_requests -> existing_no_of_titles = implode(',',$request->input('existing_no_of_titles'));
