@@ -281,7 +281,18 @@ $(function() {
     });
 
     checkboxCheckOnlyOneByGroup();
+ 
 
+//     var publisher = "<?php
+//         foreach($publisher as $publishers){
+//             echo $publishers->publisher_name;
+//         }
+//     ?>";
+
+// console.log(publisher);
+//     for (var i = 1; i < publisher.split(',').length; i++) {
+//         console.log(i);
+//     }
     // var data = [{
     //         "name": "Afghanistan",
     //         "code": "AF"

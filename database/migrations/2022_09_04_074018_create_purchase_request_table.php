@@ -30,6 +30,7 @@ class CreatePurchaseRequestTable extends Migration
             $table->string('subject')->nullable();
             $table->string('existing_no_of_titles')->nullable();
             $table->longText('note')->nullable();
+            $table->decimal('amount', 8, 2)->default(0);
             $table->unsignedBigInteger('deleted_flag')->default(0);
             $table->softDeletes();
             $table->timestamps();

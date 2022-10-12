@@ -57,7 +57,7 @@ class SignatureAttachmentController extends Controller
     public function create()
     {
         //
-        $users = User::where('role','>',3)
+        $users = User::where('role','>',2)
         ->whereNotExists(function($query) {
             $query->select('sa.users_id')
                   ->from('signature_attachment AS sa')
@@ -82,7 +82,7 @@ class SignatureAttachmentController extends Controller
     {
         //
         $signature = new SignatureAttachment();
-        $signature->users_id = Auth::user()->role > 3 ? Auth::user()->id : $request->users_id;
+        $signature->users_id = Auth::user()->role > 2 ? Auth::user()->id : $request->users_id;
         $signature->password = $request->password;
         $signature->save();
         return redirect()->route('signature_attachment.index')->withStatus('Signature Password Added.'); 

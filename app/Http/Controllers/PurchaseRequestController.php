@@ -32,12 +32,29 @@ class PurchaseRequestController extends Controller
     public function index()
     {
         //
+        $roles = DB::table('roles')
+        ->select('name')
+        ->get()
+        ->toArray();
+
+        
+
         if(in_array(Auth::user()->role,['1','2','3'])){
-            $purchase_requests = DB::table('purchase_requests')
-            ->join('users','users.id','=','purchase_requests.created_by_users_id')
-            ->select('purchase_requests.*','users.name')
-            ->where('purchase_requests.deleted_flag','=',0)
-            ->get();
+            if(Auth::user()->role == 3){
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->select('purchase_requests.*','users.name')
+                ->where('purchase_requests.deleted_flag','=',0)
+                ->where('purchase_requests.status_id','=',2)
+                ->get();
+            }else{
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->select('purchase_requests.*','users.name')
+                ->where('purchase_requests.deleted_flag','=',0)
+                ->get();
+            }
+          
 
             return view('purchase_requests.index',[
                 'purchase_request' => $purchase_requests,
@@ -53,18 +70,46 @@ class PurchaseRequestController extends Controller
             ->get()
             ->first();
 
-            if(strtoupper($dean->name) =="DEAN"){
-                $purchase_requests = DB::table('purchase_requests')
-                ->join('users','users.id','=','purchase_requests.created_by_users_id')
-                ->join('employees','employees.users_id','=','users.id')
-                ->where('employees.department_names_id','=',$department_id->department_names_id)
-                ->where('purchase_requests.deleted_flag','=',0)
-                ->select('purchase_requests.*','users.name')
-                ->get();
-
-                return view('purchase_requests.index',[
-                    'purchase_request' => $purchase_requests
-                ]);
+            if(strtoupper($dean->name) =="DEAN" || strtoupper($dean->name) == "VPAA" || strtoupper($dean->name) == "PRESIDENT" || strtoupper($dean->name) == "VPFA" || strtoupper($dean->name) == "DIRECTOR OF LIBRARY" ){
+                if(strtoupper($dean->name) =="DEAN"){
+                    $purchase_requests = DB::table('purchase_requests')
+                    ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                    ->join('employees','employees.users_id','=','users.id')
+                    ->where('employees.department_names_id','=',$department_id->department_names_id)
+                    ->where('purchase_requests.deleted_flag','=',0)
+                    ->select('purchase_requests.*','users.name')
+                    ->get();
+    
+                    return view('purchase_requests.index',[
+                        'purchase_request' => $purchase_requests
+                    ]);
+                }else{
+                    if(strtoupper($dean->name) =="VPAA"){
+                        $purchase_requests = DB::table('purchase_requests')
+                        ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                        ->select('purchase_requests.*','users.name')
+                        ->where('purchase_requests.deleted_flag','=',0)
+                        ->where('purchase_requests.status_id','=',1)
+                        ->get();
+            
+                        return view('purchase_requests.index',[
+                            'purchase_request' => $purchase_requests,
+                        ]);
+                    }else if(strtoupper($dean->name) =="VPFA"){
+                        $purchase_requests = DB::table('purchase_requests')
+                        ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                        ->select('purchase_requests.*','users.name')
+                        ->where('purchase_requests.deleted_flag','=',0)
+                        ->where('purchase_requests.status_id','=',3)
+                        ->get();
+            
+                        return view('purchase_requests.index',[
+                            'purchase_request' => $purchase_requests,
+                        ]);
+                    }
+                    
+                }
+                
             }else{
                 $purchase_requests = DB::table('purchase_requests')
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
@@ -149,12 +194,17 @@ class PurchaseRequestController extends Controller
         $department_name_list = DepartmentName::where('deleted_flag','=',0)
         ->orderBy('department_name','asc')
         ->get();
+
+        $publisher = PurchaseRequest::where('publisher_name','!=','')
+        ->get();
+        
         return view('purchase_requests.create',[
             'purchase_request_recommended_users' => $purchase_request_recommended_users,
             'purchase_request_approver_users' => $purchase_request_approver_users,
             'role_name' => collect($role_name)['name'],
             'department_name' => $department_name,
             'department_name_list' => $department_name_list,
+            'publisher' => $publisher
         ]);
     }
 
@@ -309,7 +359,17 @@ class PurchaseRequestController extends Controller
 
     public function requested_books_update(Request $request){
         $purchase_requests = PurchaseRequest::findOrfail($request->purchase_request_id);
-        $purchase_requests->status_id = 1;
+        if($purchase_requests->status_id == 0)
+            $purchase_requests->status_id = 1;
+        else if($purchase_requests->status_id == 1)
+            $purchase_requests->status_id = 2;
+        else if($purchase_requests->status_id == 2){
+            $purchase_requests->amount = $request->amount;
+            $purchase_requests->status_id = 3;
+        }
+        else
+            $purchase_requests->status_id = 4;
+
         $purchase_requests->update();
        
         return redirect()->route('purchase_request.index')->withStatus('Request Approved.');

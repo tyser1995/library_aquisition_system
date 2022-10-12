@@ -58,19 +58,64 @@
                                         <span class="badge badge-warning">
                                                     <i class="fa fa-signature"></i> {{__('Waiting for Approval')}}
                                                 </span>
-                                        @else
-                                        <span class="badge badge-info">
-                                                    <i class="fa fa-check-circle"></i> {{__('Approved')}}
-                                                </span>
+                                        @elseif ($purchase_requests->status_id == 1)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
+                                            </span>
+                                        @elseif ($purchase_requests->status_id == 2)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPAA"></i>
+                                            </span>
+                                        @elseif ($purchase_requests->status_id == 3)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPAA"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
+                                            </span>
+                                        @elseif ($purchase_requests->status_id == 4)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPAA"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPFA"></i>
+                                            </span>
                                         @endif
                                          </td>
                                         <td class="text-center">
                                             @if ($purchase_requests->status_id == 0)
                                                 @can('signature-create')
-                                                    <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-signature"></i></a>
+                                                    <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-check-circle"></i></a>
                                                 @endcan                                               
                                                 <a href="{{route('purchase_request.edit', $purchase_requests->id)}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
                                                 <button type="button" data-id="{{$purchase_requests->id}}" value="{{$purchase_requests->title}}" class="btnCanDestroy {{Auth::user()->can('purchase_request-delete') ? 'btn btn-danger btn-sm' : 'btn btn-danger btn-sm d-none'}} "><i class="fa fa-remove"></i></button>
+                                            @elseif ($purchase_requests->status_id >= 1)
+                                                <!-- to approved by vpaa -->
+                                                <a href="{{route('purchase_requests/requested_books/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-check-circle"></i></a>
                                             @endif
                                         </td>
                                     </tr>

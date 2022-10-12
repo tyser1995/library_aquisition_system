@@ -32,7 +32,7 @@
                             @method('put')
                             <input type="hidden" name="approved" value="approved"/>
                             <input type="hidden" name="purchase_request_id" value="{{$purchase_request->id}}"/>
-                            <input type="hidden" id="password" name="password" value="{{$signature->password}}" />
+                            <input type="hidden" id="password" name="password" value="{{!empty($signature->password) ? $signature->password : ''}}" />
                             <div class="pl-lg-4">
                                 <div class="container-request-form">
                                     <div class="form-group">
@@ -104,7 +104,7 @@
                                             placeholder="{{ __('Enter Publisher Name') }}" required autofocus value="{{old('publisher_name',explode(',',$purchase_request->publisher_name)[0])}}">
                                     </div>
                                     <!-- loop data approved by -->
-                                    <div class="form-group">
+                                    <div class="<?= $purchase_request->status_id == 2 ? 'd-none': '' ?> form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
                                         </h5>
                                         <div class="form-row">
@@ -151,7 +151,14 @@
                                         src="{{asset('/gallery/img/no-image1.jpg')}}" alt="Browse image" width="100%"
                                         height="150px" />
                                     </div>
-                                    <button type="button" class="btn btn-success mt-4 btnAttachedESign">{{ __('Attached e-Signature') }}</button>
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
+                                        </h5>
+                                        <input type="text" name="amount" id="amount"
+                                            class="form-control form-control-alternative"
+                                            placeholder="{{ __('Enter Book Price') }}" required autofocus>
+                                    </div>
+                                    <button type="button" class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
                                     <button type="submit" class="btn btn-success mt-4 btnApproved" disabled>{{ __('Approved') }}</button>
                                 </div>
                                 @endcan
@@ -270,7 +277,7 @@ function retrieveRequest(wrapper) {
                                             placeholder="{{ __('Enter Publisher Name') }}" required autofocus value="`+publisher_name.split(',')[i]+`">
                                     </div>
                                     <!-- loop data approved by -->
-                                    <div class="form-group">
+                                    <div class="<?= $purchase_request->status_id == 2 ? 'd-none': '' ?> form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
                                         </h5>
                                         <div class="form-row">
@@ -300,7 +307,7 @@ function retrieveRequest(wrapper) {
                                         </div>
                                     </div>
                                     
-            <div class="delete d-flex justify-content-center"><button type="button" class="add_form_field-request-form btn btn-danger mt-4"><span style="font-size:16px; font-weight:bold;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span> Remove Form Request</button></div><hr/>
+            <div class="delete d-flex justify-content-center "><button type="button" class="d-none add_form_field-request-form btn btn-danger mt-4"><span style="font-size:16px; font-weight:bold;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span> Remove Form Request</button></div><hr/>
             </div>`);
     }
 }
@@ -348,7 +355,8 @@ $(function() {
                         allowOutsideClick:false,
                         confirmButtonText: 'Close',
                     }).then(()=>{
-                        $('.attached_signature').removeClass('d-none');
+                        // $('.attached_signature').removeClass('d-none');
+                        $('.btnApproved').removeAttr('disabled');
                     });
                     }else{
                         Swal.fire({
@@ -384,6 +392,34 @@ $(function() {
     setTimeout(() => {
         retrieveRequest(wrapper);
     }, 250);
+
+    $('#amount').keydown(function(e) {
+            if (e.shiftKet)
+                e.preventDefault();
+
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) ||
+                e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode ==
+                46 ||
+                e.keyCode == 190) {
+
+            } else
+                e.preventDefault();
+
+            if ($(this).val().indexOf('.') !== -1 && e.keyCode == 190)
+                e.preventDefault();
+        }).keyup(function(e) {
+            if ($(this).val().charAt(0) == ".") {
+                e.preventDefault();
+                $(this).val(' ');
+            }
+
+            if ($(this).val().split('.').length > 1) {
+                if ($(this).val().split('.')[1].length > 2) {
+                    e.preventDefault();
+                    $(this).val((Math.round($(this).val() * 100) / 100).toFixed(2));
+                }
+            }
+        });
 });
 </script>
 @endpush

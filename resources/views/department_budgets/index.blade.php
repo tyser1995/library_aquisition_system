@@ -36,7 +36,7 @@
                                 <tr>
                                     <th class="d-none">ID</th>
                                     <th>Department Name</th>
-                                    <th>Amount</th>
+                                    <th>Budget</th>
                                     <th>Semester</th>
                                     <th>School Year</th>
                                     <th>Created date</th>
@@ -48,7 +48,11 @@
                                    <tr>
                                     <td class="d-none">{{$budgets->id}}</td>
                                     <td>{{$budgets->department_name}}</td>
-                                    <td>{{$budgets->amount}}</td>
+                                    @if ($budgets->no_of_students == 0)
+                                        <td>{{$budgets->amount}}</td>
+                                    @else
+                                        <td>{{($budgets->amount * $budgets->no_of_students)}}</td>
+                                    @endif
                                     @if ($budgets->semester == 1)
                                         <td>{{__('First Semester')}}</td>
                                     @elseif ($budgets->semester == 2)
@@ -58,7 +62,11 @@
                                     @endif
                                     <td>{{$budgets->school_year}}</td>
                                     <td>{{$budgets->created_at}}</td>
-                                    <td></td>
+                                    <td>
+                                        <td class="text-center">
+                                            <a href="{{route('department_budget.edit', $budgets)}}" class="{{Auth::user()->can('department_budget-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                        </td>
+                                    </td>
                                    </tr>
                                @endforeach
                             </tbody>

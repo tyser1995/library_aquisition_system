@@ -54,15 +54,15 @@
                                 <div class="form-group">
                                     <h5 class="form-control-label" for="input-region-name">{{ __('No. of Students') }}
                                     </h5>
-                                    <input type="text" name="no_of_students"
+                                    <input type="text" name="no_of_students" id="no_of_students"
                                         class="form-control form-control-alternative"
                                         placeholder="{{ __('Enter No. of Students') }}" required autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <h5 class="form-control-label" for="input-region-name">{{ __('Amount') }}</h5>
-                                    <input type="text" name="amount"
+                                    <h5 class="form-control-label" for="input-region-name">{{ __('Library Fee') }}</h5>
+                                    <input type="text" name="amount" id="amount"
                                         class="form-control form-control-alternative"
-                                        placeholder="{{ __('Enter Amount') }}" required autofocus>
+                                        placeholder="{{ __('Library Fee') }}" required autofocus>
                                 </div>
                                 <div class="form-group">
                                     <h5 class="form-control-label" for="input-region-name">{{ __('School Semester') }}
@@ -100,6 +100,7 @@
 </div>
 @endsection
 
+@include('department_budgets.script')
 @push('scripts')
 <script>
 $(function() {
@@ -109,6 +110,10 @@ $(function() {
         'cursor': 'default',
         'text-decoration': 'none',
     });
+
+    // $("input[name=department_name_id]").focusout(function(){
+    //     alert($(this).val());
+    // });
     // var options = {
 
     //     url: base_url+'/department_names/data',

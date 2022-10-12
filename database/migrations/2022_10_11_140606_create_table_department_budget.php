@@ -18,7 +18,7 @@ class CreateTableDepartmentBudget extends Migration
             $table->unsignedBigInteger('created_by_users_id')->nullable();
             $table->unsignedBigInteger('department_name_id')->nullable();
             $table->unsignedBigInteger('no_of_students')->default(0);
-            $table->unsignedBigInteger('amount')->default(0);
+            $table->decimal('amount', 8, 2)->default(0);
             $table->unsignedBigInteger('total')->default(0);
             $table->unsignedBigInteger('semester')->default(1);
             $table->string('school_year')->nullable();

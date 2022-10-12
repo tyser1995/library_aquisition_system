@@ -47,6 +47,11 @@ class DepartmentBudgetController extends Controller
             ->join('department_types','department_names.department_types_id','=','department_types.id')
             ->select('department_names.*','department_types.department_type')
             ->where('department_names.deleted_flag','=',0)
+            ->whereNotExists(function($query){
+                $query->select('db.department_name_id')
+                ->from('department_budgets AS db')
+                ->whereColumn('db.department_name_id','department_names.id');
+            })
             ->orderBy('department_names.department_name','asc')
             ->get();
 
@@ -97,6 +102,9 @@ class DepartmentBudgetController extends Controller
     public function edit(DepartmentBudget $departmentBudget)
     {
         //
+        return view('department_budgets.edit',[
+            'budget' => $departmentBudget
+        ]);
     }
 
     /**
@@ -109,6 +117,17 @@ class DepartmentBudgetController extends Controller
     public function update(Request $request, DepartmentBudget $departmentBudget)
     {
         //
+        $budget = DepartmentBudget::findOrfail($departmentBudget->id);
+        // $department_name = DepartmentName::where('id','=',$departmentBudget->department_name_id)
+        // ->select('id')
+        // ->get()
+        // ->first();
+        
+        $data = $request->except(['_token','_method']);
+        //$data['department_name_id'] = $department_name->id;
+        //dd($data);
+        $budget->update($data);
+        return redirect()->route('department_budget.index')->withStatus('Budget Updated.');
     }
 
     /**

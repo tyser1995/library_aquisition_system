@@ -17,5 +17,10 @@ class RoleTableSeeder extends Seeder
         Role::create(['name' => 'Super Admin']);
         Role::create(['name' => 'Admin']);
         Role::create(['name' => 'Library Aquisition']);
+        Role::create(['name' => 'President']);
+        Role::create(['name' => 'VPAA']);
+        Role::create(['name' => 'VPFA']);
+        Role::create(['name' => 'Director of Library']);
+        Role::create(['name' => 'Custodian']);
     }
 }
