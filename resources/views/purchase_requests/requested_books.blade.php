@@ -151,13 +151,15 @@
                                         src="{{asset('/gallery/img/no-image1.jpg')}}" alt="Browse image" width="100%"
                                         height="150px" />
                                     </div>
-                                    <div class="form-group">
-                                        <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
-                                        </h5>
-                                        <input type="text" name="amount" id="amount"
-                                            class="form-control form-control-alternative"
-                                            placeholder="{{ __('Enter Book Price') }}" required autofocus>
-                                    </div>
+                                    @if ($purchase_request->status_id == 3)
+                                        <div class="form-group">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
+                                            </h5>
+                                            <input type="text" name="amount" id="amount"
+                                                class="form-control form-control-alternative"
+                                                placeholder="{{ __('Enter Book Price') }}" required autofocus>
+                                        </div>
+                                    @endif
                                     <button type="button" class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
                                     <button type="submit" class="btn btn-success mt-4 btnApproved" disabled>{{ __('Approved') }}</button>
                                 </div>

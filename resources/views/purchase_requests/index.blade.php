@@ -55,7 +55,7 @@
                                         <td>{{$purchase_requests->edition}}</td>                                       
                                         <td>{{$purchase_requests->created_at}}</td>
                                         <td>@if ($purchase_requests->status_id == 0)
-                                        <span class="badge badge-warning">
+                                            <span class="badge badge-warning">
                                                     <i class="fa fa-signature"></i> {{__('Waiting for Approval')}}
                                                 </span>
                                         @elseif ($purchase_requests->status_id == 1)
