@@ -151,7 +151,7 @@
                                         src="{{asset('/gallery/img/no-image1.jpg')}}" alt="Browse image" width="100%"
                                         height="150px" />
                                     </div>
-                                    @if ($purchase_request->status_id == 3)
+                                    @if ($purchase_request->status_id == 2)
                                         <div class="form-group">
                                             <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                             </h5>
