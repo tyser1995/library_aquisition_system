@@ -93,7 +93,7 @@
                     <i class="fa fa-book"></i>
                     <p>{{ __('Request Management')}} <b class="caret"></b></p>
                 </a>
-                <div class="{{ $elementActive == 'purchase_requests' || $elementActive == 'request_books' || $elementActive == 'verify_books' ? 'collapse show ' : 'collapse' }}"
+                <div class="{{ $elementActive == 'purchase_requests' || $elementActive == 'request_books' || $elementActive == 'purchase_approved' ? 'collapse show ' : 'collapse' }}"
                     id="reqbooks">
                     <ul class="nav">
                         @can('purchase_request-list')
@@ -104,7 +104,7 @@
                             </a>
                         </li>
                         @endcan
-                        <li class="{{ $elementActive == 'sign_requests' ? 'active' : '' }}">
+                        <li class="d-none {{ $elementActive == 'sign_requests' ? 'active' : '' }}">
                             <a href="{{ route('purchase_requests') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
                                 <span class="sidebar-normal">{{ __('Sign Request ') }}</span>
@@ -116,10 +116,10 @@
                                 <span class="sidebar-normal">{{ __('Request Books ') }}</span>
                             </a>
                         </li>
-                        <li class="{{ $elementActive == 'verify_books' ? 'active' : '' }} d-none">
-                            <a href="{{ route('department_names') }}">
+                        <li class="{{ $elementActive == 'purchase_approved' ? 'active' : '' }}">
+                            <a href="{{ route('purchase_approves') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
-                                <span class="sidebar-normal">{{ __('Verify Books ') }}</span>
+                                <span class="sidebar-normal">{{ __('Approved Request ') }}</span>
                             </a>
                         </li>
                     </ul>

@@ -16,7 +16,7 @@
     width: 100%;">
         <div class="container">
             <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                <form class="form" method="POST" action="{{ route('login') }}">
+                <form class="form" method="POST" action="{{ route('login') }}" autocomplete="off">
                     @csrf
                     <div class="card card-login">
                         <div class="card-header no-padding" style="display:grid;justify-content:center">

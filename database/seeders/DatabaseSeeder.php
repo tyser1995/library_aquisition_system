@@ -20,11 +20,9 @@ class DatabaseSeeder extends Seeder
         //Purchase Request User
         $this->call([PurchaseRequestApproverUserSeeder::class]);
         $this->call([PurchaseRequestRecommendedUserSeeder::class]);
-        // Contents
-        // $this->call([RegionsTableSeeder::class]);
-        //$this->call([CountriesTableSeeder::class]);
-        //$this->call([NationalitiesTableSeeder::class]);
-        //$this->call([ContentTypesTableSeeder::class]);
+       
+        //Department Type
+        $this->call([DepartmentTypeSeeder::class]);
 
         //Itinaray
         //$this->call([ItineraryTypesSeeder::class]);

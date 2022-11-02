@@ -160,8 +160,19 @@
                                                 placeholder="{{ __('Enter Book Price') }}" required autofocus>
                                         </div>
                                     @endif
-                                    <button type="button" class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
-                                    <button type="submit" class="btn btn-success mt-4 btnApproved" disabled>{{ __('Approved') }}</button>
+                                    <div style="display:flex;justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <button type="button" class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
+                                            <button type="submit" class="btn btn-success mt-4 btnApproved" disabled>{{ __('Approved') }}</button>
+                                        </div>
+                                        <div>
+                                            @if ($purchase_request->status_id == 2)
+                                            <span>Budget:₱</span>
+                                            <span id="span_budget">{{number_format($budget->no_of_students * $budget->amount,2)}}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 @endcan
                             </div>

@@ -22,5 +22,7 @@ class RoleTableSeeder extends Seeder
         Role::create(['name' => 'VPFA']);
         Role::create(['name' => 'Director of Library']);
         Role::create(['name' => 'Custodian']);
+        Role::create(['name' => 'Dean']);
+        Role::create(['name' => 'Faculty']);
     }
 }

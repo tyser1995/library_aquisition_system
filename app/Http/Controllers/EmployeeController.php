@@ -52,10 +52,19 @@ class EmployeeController extends Controller
         ->orderBy('department_name','asc')
         ->get();
         $users = User::where('role','>',3)
+        ->select('users.*')
+        ->whereNotExists(function($query){
+            $query->select('emp.users_id')
+            ->from('employees AS emp')
+            ->whereColumn('emp.users_id','users.id');
+        })
         ->get();
+        $user_faculty_and_admin = User::whereIn('role', [9, 10])->get();
+       
         return view('employees.create',[
             'department_names' => $department_names,
             'users' => $users,
+            'user_faculty_and_admin' => count($user_faculty_and_admin),
         ]);
     }
 

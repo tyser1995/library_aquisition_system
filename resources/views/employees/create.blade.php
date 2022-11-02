@@ -58,17 +58,23 @@
                                     <h5 class="form-control-label" for="input-region-name">{{ __('User Account') }}</h5>
                                     <!-- <input type="text" name="department_type" id="department_type"
                                         class="form-control form-control-alternative" /> -->
-                                    <select id="users_id" name="users_id" class="form-control" required>
-                                            <option selected="selected" disabled>Select User Account</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        @if (empty($user_faculty_and_admin))
+                                            <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">
+                                                {{__('Add User Faculty and Dean')}}
+                                            </a>
+                                        @else
+                                            <select id="users_id" name="users_id" class="form-control" required>
+                                                <option selected="selected" disabled>Select User Account</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
                                 </div>
                                 <div class="form-group">
                                     <h5 class="form-control-label" for="input-region-name">{{ __('ID Number') }}</h5>
-                                    <input type="text" name="emp_idnum" class="form-control form-control-alternative"
-                                        placeholder="{{ __('Enter Employee ID Number') }}" required autofocus>
+                                    <input type="text" name="emp_idnum" id="emp_idnum" class="form-control form-control-alternative"
+                                        placeholder="{{ __('Enter Employee ID Number') }}" required autofocus maxlength="10">
                                 </div>
                                 <div class="form-group">
                                     <h5 class="form-control-label" for="input-region-name">{{ __('Last Name') }}</h5>

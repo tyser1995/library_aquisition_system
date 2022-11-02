@@ -37,14 +37,14 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                    value="0" name="rush_type[]"> Rush
+                                                    value="1" name="rush_type[]"> Rush
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
-                                        <div class="form-check form-check-inline d-none">
+                                        <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                    value="1" name="rush_type[]"> Not Rush
+                                                    value="0" name="rush_type[]" checked> Not Rush
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
@@ -70,8 +70,8 @@
                                         <div class="form-group col-md-4 col-xs-12">
                                             <h5 class="form-control-label" for="input-region-name">{{ __('Edition') }}
                                             </h5>
-                                            <input type="text" name="edition[]" id="edition[]"
-                                                class="form-control form-control-alternative"
+                                            <input type="text" name="edition[]" id="edition"
+                                                class="form-control form-control-alternative is_num_edition"
                                                 placeholder="{{ __('Enter Book Edition') }}" required autofocus>
                                         </div>
 
@@ -79,8 +79,8 @@
                                             <h5 class="form-control-label" for="input-region-name">
                                                 {{ __('Copies/Volume') }}
                                             </h5>
-                                            <input type="text" name="copies_vol[]" id="copies_vol[]"
-                                                class="form-control form-control-alternative"
+                                            <input type="text" name="copies_vol[]" id="copies_vol"
+                                                class="form-control form-control-alternative is_num_copies_vol"
                                                 placeholder="{{ __('Enter Book Copies/Volume') }}" required autofocus>
                                         </div>
 
@@ -89,7 +89,7 @@
                                                 {{ __('Publication Date') }}
                                             </h5>
                                             <input list="publication-date" name="publication_date[]"
-                                                id="publication_date[]" class="form-control form-control-alternative"
+                                                id="publication_date" minlength="4" maxlength="4" class="form-control form-control-alternative is_num_publication_date"
                                                 placeholder="{{ __('Enter Publication Date') }}" required autofocus>
                                             <datalist id="publication-date">
                                                 @for ($year = date('Y'); $year > (date('Y') - 99); $year--)
@@ -211,7 +211,7 @@
                                                 {{ __('Existing No of Titles') }}
                                             </h5>
                                             <input type="text" name="existing_no_of_titles[]" id="existing_no_of_titles"
-                                                class="form-control form-control-alternative"
+                                                class="form-control form-control-alternative is_num_existing_no_of_titles"
                                                 placeholder="{{ __('Existing No of Titles') }}">
                                         </div>
                                     </div>

@@ -133,7 +133,6 @@
                                 <p class="card-title">
                                     @if (Auth::user()->role >= 4)
                                         <?php 
-
                                             $dean = \App\Models\User::join('roles','roles.id','=','users.role')
                                             ->select('roles.name')
                                             ->where('users.id','=',Auth::user()->id)
@@ -143,19 +142,23 @@
                                             $department_id = \App\Models\Employee::where('users_id','=',Auth::user()->id)
                                             ->get()
                                             ->first();
-                                            if(strtoupper($dean->name) =="DEAN"){
-                                                $count = DB::table('purchase_requests')
-                                                ->join('users','users.id','=','purchase_requests.created_by_users_id')
-                                                ->join('employees','employees.users_id','=','users.id')
-                                                ->where('employees.department_names_id','=',$department_id->department_names_id)
-                                                ->select('purchase_requests.*','users.name')
-                                                ->get();
 
-                                                echo count($count);
-                                            }else{
-                                                $count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get();
-                                                echo count($count);
+                                            if(!empty($department_id)){
+                                                if(strtoupper($dean->name) =="DEAN"){
+                                                    $count = DB::table('purchase_requests')
+                                                    ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                                                    ->join('employees','employees.users_id','=','users.id')
+                                                    ->where('employees.department_names_id','=',$department_id->department_names_id)
+                                                    ->select('purchase_requests.*','users.name')
+                                                    ->get();
+    
+                                                    echo count($count);
+                                                }else{
+                                                    $count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get();
+                                                    echo count($count);
+                                                }
                                             }
+                                            
                                         ?>
                                     @else
                                         <?php 
@@ -174,19 +177,46 @@
                     <div class="stats">
                         @if (Auth::user()->role >= 4)
                             <?php 
-                                    $count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get()->last();
+                                     $dean = \App\Models\User::join('roles','roles.id','=','users.role')
+                                     ->select('roles.name')
+                                     ->where('users.id','=',Auth::user()->id)
+                                     ->get()
+                                     ->first();
+
+                                     $department_id = \App\Models\Employee::where('users_id','=',Auth::user()->id)
+                                     ->get()
+                                     ->first();
+
+                                     if(strtoupper($dean->name) =="DEAN"){
+                                        if(!empty($department_id)){
+                                            $count = \App\Models\PurchaseRequest::
+                                            join('users','users.id','=','purchase_requests.created_by_users_id')
+                                            ->join('employees','employees.users_id','=','users.id')
+                                            ->where('employees.department_names_id','=',$department_id->department_names_id)
+                                            ->select('purchase_requests.*')
+                                            ->get()
+                                            ->last();
+
+                                            //echo count($count);
+                                        }
+                                     }else{
+                                        $count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get()->last();
+                                        //echo count($count);
+                                     }
+
+                                    //$count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get()->last();
                                 ?>
                             @if (!empty($count))
-                            <i class="fa fa-calendar-o"></i> Update Since {{$count->created_at->diffForHumans()}}
+                                <i class="fa fa-calendar-o"></i> Update Since {{$count->created_at->diffForHumans()}}
                             @else
-                            {{__('No Records found')}}
+                                {{__('No Records found')}}
                             @endif
                         @else
                             <?php 
                                     $count = \App\Models\PurchaseRequest::get()->last();
                                 ?>
                             @if (!empty($count))
-                            <i class="fa fa-calendar-o"></i> Update Since {{$count->created_at->diffForHumans()}}
+                                <i class="fa fa-calendar-o"></i> Update Since {{$count->created_at->diffForHumans()}}
                             @else
                             {{__('No Records found')}}
                             @endif

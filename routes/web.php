@@ -45,6 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('purchase_requests/requested_books/{id}', ['as' => 'purchase_requests/requested_books/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestController@requested_books_edit']);
     Route::put('purchase_requests/requested_books_put', ['as' => 'purchase_requests/requested_books_put', 'uses' => 'App\Http\Controllers\PurchaseRequestController@requested_books_update']);
     Route::resource('purchase_request','App\Http\Controllers\PurchaseRequestController');
+    //Approved Request
+    Route::get('purchase_approves',['as' => 'purchase_approves', 'uses' => 'App\Http\Controllers\PurchaseRequestApprovedController@index']);
+    Route::get('purchase_approves/preview/{id}',['as' => 'purchase_approves/preview/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestApprovedController@print_preview']);
+    Route::resource('purchase_approve','App\Http\Controllers\PurchaseRequestApprovedController');
     //Department Type
     Route::get('department_types', ['as' => 'department_types', 'uses' => 'App\Http\Controllers\DepartmentTypeController@index']);
     Route::get('department_types/data', ['as' => 'department_types/data', 'uses' => 'App\Http\Controllers\DepartmentTypeController@data']);

@@ -18,14 +18,14 @@ $(document).ready(function() {
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                    value="0" name="rush_type[]"> Rush
+                                                    value="1" name="rush_type[]"> Rush
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
-                                        <div class="form-check form-check-inline d-none">
+                                        <div class="form-check form-check-inline">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                    value="1" name="rush_type[]"> Not Rush
+                                                    value="0" name="rush_type[]" checked> Not Rush
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
@@ -51,16 +51,16 @@ $(document).ready(function() {
                                         <div class="form-group col-md-4 col-xs-12">
                                             <h5 class="form-control-label" for="input-region-name">{{ __('Edition') }}
                                             </h5>
-                                            <input type="text" name="edition[]" id="edition[]"
-                                                class="form-control form-control-alternative"
+                                            <input type="text" name="edition[]" id="edition"
+                                                class="form-control form-control-alternative is_num_edition"
                                                 placeholder="{{ __('Enter Book Edition') }}" required autofocus>
                                         </div>
 
                                         <div class="form-group col-md-4 col-xs-12">
                                             <h5 class="form-control-label" for="input-region-name">{{ __('Copies/Volume') }}
                                             </h5>
-                                            <input type="text" name="copies_vol[]" id="copies_vol[]"
-                                                class="form-control form-control-alternative"
+                                            <input type="text" name="copies_vol[]" id="copies_vol"
+                                                class="form-control form-control-alternative is_num_copies_vol"
                                                 placeholder="{{ __('Enter Book Copies/Volume') }}" required autofocus>
                                         </div>
 
@@ -68,8 +68,8 @@ $(document).ready(function() {
                                             <h5 class="form-control-label" for="input-region-name">
                                                 {{ __('Publication Date') }}
                                             </h5>
-                                            <input list="publication-date" name="publication_date[]" id="publication_date[]"
-                                                class="form-control form-control-alternative"
+                                            <input list="publication-date" name="publication_date[]" id="publication_date"
+                                                class="form-control form-control-alternative is_num_publication_date"
                                                 placeholder="{{ __('Enter Publication Date') }}" required autofocus>
                                             <datalist id="publication-date">
                                                 @for ($year = date('Y'); $year > (date('Y') - 99); $year--)
@@ -178,7 +178,7 @@ $(document).ready(function() {
                                                 {{ __('Existing No of Titles') }}
                                             </h5>
                                             <input type="text" name="existing_no_of_titles[]" id="existing_no_of_titles"
-                                                class="form-control form-control-alternative"
+                                                class="form-control form-control-alternative is_num_existing_no_of_titles"
                                                 placeholder="{{ __('Existing No of Titles') }}">
                                         </div>
                                     </div>
@@ -196,6 +196,22 @@ $(document).ready(function() {
 
             if (x == 10)
                 add_button.css('display', 'none');
+
+            
+            $('.is_num_publication_date, .is_num_copies_vol, .is_num_edition, .is_num_existing_no_of_titles').keydown(function(e) {
+                if (e.shiftKet)
+                    e.preventDefault();
+
+                if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) ||
+                    e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode ==
+                    46) {
+
+                } else
+                    e.preventDefault();
+
+                // if ($(this).val().indexOf('e') !== -1 && e.keyCode == 189)
+                //     e.preventDefault();
+            });
         } else {
             add_button.css('display', 'none');
         }
@@ -209,5 +225,20 @@ $(document).ready(function() {
         if (x < 10)
             add_button.css('display', 'block');
     });
+
+    $('.is_num_publication_date, .is_num_copies_vol, .is_num_edition, .is_num_existing_no_of_titles').keydown(function(e) {
+            if (e.shiftKet)
+                e.preventDefault();
+
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) ||
+                e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode ==
+                46) {
+
+            } else
+                e.preventDefault();
+
+            // if ($(this).val().indexOf('e') !== -1 && e.keyCode == 189)
+            //     e.preventDefault();
+        });
 });
 </script>

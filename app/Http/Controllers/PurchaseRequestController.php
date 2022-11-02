@@ -9,6 +9,8 @@ use App\Models\DepartmentName;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\SignatureAttachment;
+use App\Models\Publisher;
+use App\Models\DepartmentBudget;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +38,6 @@ class PurchaseRequestController extends Controller
         ->select('name')
         ->get()
         ->toArray();
-
-        
 
         if(in_array(Auth::user()->role,['1','2','3'])){
             if(Auth::user()->role == 3){
@@ -77,6 +77,7 @@ class PurchaseRequestController extends Controller
                     ->join('employees','employees.users_id','=','users.id')
                     ->where('employees.department_names_id','=',$department_id->department_names_id)
                     ->where('purchase_requests.deleted_flag','=',0)
+                    ->where('purchase_requests.status_id','=',0)
                     ->select('purchase_requests.*','users.name')
                     ->get();
     
@@ -220,22 +221,37 @@ class PurchaseRequestController extends Controller
         $purchase_requests = new PurchaseRequest();
         //dynamic fields <starts>
         $purchase_requests -> created_by_users_id = Auth::user()->id;
-        $purchase_requests -> rush_type = implode(',',$request->input('rush_type'));
+        $purchase_requests -> rush_type =implode(',',$request->input('rush_type'));
         $purchase_requests -> author_name = implode(',',$request->input('author_name'));
-        $purchase_requests -> title = implode(',',$request->input('title'));
+        $purchase_requests -> title = implode(',',str_replace(",",";",$request->input('title')));
         $purchase_requests -> edition = implode(',',$request->input('edition'));
         $purchase_requests -> copies_vol = implode(',',$request->input('copies_vol'));
         $purchase_requests -> publication_date = implode(',',$request->input('publication_date'));
-        $purchase_requests -> publisher_name = implode(',',$request->input('publisher_name'));
-        $purchase_requests -> publisher_address = implode(',',$request->input('publisher_address'));
+        $purchase_requests -> publisher_name = implode(',',str_replace(",",";",$request->input('publisher_name')));
+        $purchase_requests -> publisher_address = implode(',',str_replace(",",";",$request->input('publisher_address')));
         $purchase_requests -> recommended_user_id = implode(',',$request->input('recommended_user_id'));
         // $purchase_requests -> approver_user_id = implode(',',$request->input('approver_user_id'));
         $purchase_requests -> charge_to = implode(',',$request->input('charge_to'));
-        $purchase_requests -> subject = implode(',',$request->input('subject'));
+        $purchase_requests -> subject = implode(',',str_replace(",",";",$request->input('subject')));
         $purchase_requests -> existing_no_of_titles = implode(',',$request->input('existing_no_of_titles'));
         $purchase_requests -> note = implode(',',$request->input('note'));
         //dynamic fields <ends>
         $purchase_requests->save();
+
+        $publisher = new Publisher();
+        foreach($request->input('title') as $key => $title_val){
+            //echo $key. ' ' . $title_val. '-'.$request->input('author_name')[$key] .'<br>';
+            $publisher_exists = Publisher::where('publisher_name',$request->input('publisher_name')[$key])
+            ->get();
+           
+            if(isset($publisher_exists)){
+                $publisher->publisher_name = $request->input('publisher_name')[$key];
+                $publisher->publisher_add = $request->input('publisher_address')[$key];
+                $publisher->save();
+                
+            }
+        }
+
         return redirect()->route('purchase_request.index')->withStatus('Successfully Added.');
     }
 
@@ -346,6 +362,21 @@ class PurchaseRequestController extends Controller
         $department_name_list = DepartmentName::where('deleted_flag','=',0)
         ->orderBy('department_name','asc')
         ->get();
+
+        // $purchase_by_department = User::join('purchase_requests','purchase_requests.created_by_users_id','=','users.id')
+        // ->select('purchase_requests.created_at')
+        // ->where('year(purchase_requests.created_at)','=',date('Y'))
+        // ->get();
+        // dd($purchase_by_department);
+
+        $budget = DepartmentBudget::join('department_names','department_names.id','=','department_budgets.department_name_id')
+        ->select('department_budgets.no_of_students','department_budgets.amount')
+        ->where('department_budgets.deleted_flag','=',0)
+        ->where('department_names.department_name','=',explode(",",$purchase_requests->charge_to)[0])
+        ->where('department_budgets.school_year','=',date('Y').'-'.(date('Y')+1))
+        ->get()
+        ->last();
+
         return view('purchase_requests.requested_books',[
             'purchase_request' => $purchase_requests,
             'purchase_request_recommended_users' => $purchase_request_recommended_users,
@@ -354,6 +385,7 @@ class PurchaseRequestController extends Controller
             'department_name' => $department_name,
             'department_name_list' => $department_name_list,
             'signature' => $signature,
+            'budget' => $budget
         ]);
     }
 

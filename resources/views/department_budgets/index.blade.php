@@ -51,7 +51,7 @@
                                     @if ($budgets->no_of_students == 0)
                                         <td>{{$budgets->amount}}</td>
                                     @else
-                                        <td>{{($budgets->amount * $budgets->no_of_students)}}</td>
+                                        <td>₱{{number_format($budgets->amount * $budgets->no_of_students,2)}}</td>
                                     @endif
                                     @if ($budgets->semester == 1)
                                         <td>{{__('First Semester')}}</td>
