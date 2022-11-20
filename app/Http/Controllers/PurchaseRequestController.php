@@ -377,6 +377,13 @@ class PurchaseRequestController extends Controller
         ->get()
         ->last();
 
+        $budgetAll = DepartmentBudget::join('department_names','department_names.id','=','department_budgets.department_name_id')
+        ->select('department_budgets.*','department_names.department_name')
+        ->where('department_budgets.deleted_flag','=',0)
+        ->where('department_names.department_name','!=',explode(",",$purchase_requests->charge_to)[0])
+        ->where('department_budgets.school_year','=',date('Y').'-'.(date('Y')+1))
+        ->get();
+
         return view('purchase_requests.requested_books',[
             'purchase_request' => $purchase_requests,
             'purchase_request_recommended_users' => $purchase_request_recommended_users,
@@ -385,7 +392,8 @@ class PurchaseRequestController extends Controller
             'department_name' => $department_name,
             'department_name_list' => $department_name_list,
             'signature' => $signature,
-            'budget' => $budget
+            'budget' => $budget,
+            'budget_all' => $budgetAll,
         ]);
     }
 
