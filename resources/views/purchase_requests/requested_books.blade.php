@@ -479,7 +479,7 @@ $(function() {
         $('#totalBookPrice').val(sum);
         sum = (Math.round($('#totalBookPrice').val() * 100) / 100).toFixed(2);
         $('#totalBookPrice').val("₱ " + (Math.round($('#totalBookPrice').val() * 100) / 100).toFixed(2));
-        console.log(sum);               
+          
         if(sum > $('#span_budget').val())
             $('#modalBudgetNotEnough').modal('show');
     });
