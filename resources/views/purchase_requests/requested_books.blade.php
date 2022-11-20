@@ -133,6 +133,15 @@
                                             @endforeach
                                         </div>
                                     </div>
+                                    @if ($purchase_request->status_id == 2)
+                                        <div class="form-group">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
+                                            </h5>
+                                            <input type="text" name="amount"
+                                                class="form-control form-control-alternative book_price"
+                                                placeholder="{{ __('Enter Book Price') }}" required autofocus>
+                                        </div>
+                                    @endif
                                     <hr />
                                 </div>
                                 <div class="d-flex justify-content-center d-none">
@@ -144,6 +153,10 @@
                                 </div>
                                 @can('purchase_request-store')
                                 <div class="">
+                                <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Total Book Price') }}
+                                        <input type="text" id="totalBookPrice" class="form-control form-control-alternative"  placeholder="0" disabled/>
+                                    </div>
                                     <div class="form-group media-single-upload attached_signature d-none">
                                         <span>Attached Signature</span>
                                         <input type="file" class="file-upload" name="image" id="e_signature" onchange="readURL(this);" style="cursor:pointer">
@@ -151,19 +164,11 @@
                                         src="{{asset('/gallery/img/no-image1.jpg')}}" alt="Browse image" width="100%"
                                         height="150px" />
                                     </div>
-                                    @if ($purchase_request->status_id == 2)
-                                        <div class="form-group">
-                                            <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
-                                            </h5>
-                                            <input type="text" name="amount" id="amount"
-                                                class="form-control form-control-alternative"
-                                                placeholder="{{ __('Enter Book Price') }}" required autofocus>
-                                        </div>
-                                    @endif
                                     <div style="display:flex;justify-content: space-between; align-items: center;">
                                         <div>
                                             <button type="button" class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
                                             <button type="submit" class="btn btn-success mt-4 btnApproved" disabled>{{ __('Approved') }}</button>
+                                            <button type="button" class="btn btn-success mt-4 btnComputePrice">{{ __('Compute Price') }}</button>
                                         </div>
                                         <div>
                                             @if ($purchase_request->status_id == 2)
@@ -183,6 +188,27 @@
             </div>
         </div>
     </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalBudgetNotEnough" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Warning Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="text-danger">Budget not enough!</h5>
+        <br>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 @endsection
@@ -289,6 +315,15 @@ function retrieveRequest(wrapper) {
                                             class="form-control form-control-alternative"
                                             placeholder="{{ __('Enter Publisher Name') }}" required autofocus value="`+publisher_name.split(',')[i]+`">
                                     </div>
+                                    @if ($purchase_request->status_id == 2)
+                                        <div class="form-group">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
+                                            </h5>
+                                            <input type="text" name="amount"
+                                                class="form-control form-control-alternative book_price"
+                                                placeholder="{{ __('Enter Book Price') }}" required autofocus>
+                                        </div>
+                                    @endif
                                     <!-- loop data approved by -->
                                     <div class="<?= $purchase_request->status_id == 2 ? 'd-none': '' ?> form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
@@ -323,6 +358,34 @@ function retrieveRequest(wrapper) {
             <div class="delete d-flex justify-content-center "><button type="button" class="d-none add_form_field-request-form btn btn-danger mt-4"><span style="font-size:16px; font-weight:bold;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span> Remove Form Request</button></div><hr/>
             </div>`);
     }
+
+    $('.book_price').keydown(function(e) {
+            if (e.shiftKet)
+                e.preventDefault();
+
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) ||
+                e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode ==
+                46 ||
+                e.keyCode == 190) {
+
+            } else
+                e.preventDefault();
+
+            if ($(this).val().indexOf('.') !== -1 && e.keyCode == 190)
+                e.preventDefault();
+        }).keyup(function(e) {
+            if ($(this).val().charAt(0) == ".") {
+                e.preventDefault();
+                $(this).val(' ');
+            }
+
+            if ($(this).val().split('.').length > 1) {
+                if ($(this).val().split('.')[1].length > 2) {
+                    e.preventDefault();
+                    $(this).val((Math.round($(this).val() * 100) / 100).toFixed(2));
+                }
+            }
+        });
 }
 
 //drag and drop image
@@ -406,33 +469,20 @@ $(function() {
         retrieveRequest(wrapper);
     }, 250);
 
-    $('#amount').keydown(function(e) {
-            if (e.shiftKet)
-                e.preventDefault();
 
-            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) ||
-                e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 37 || e.keyCode == 39 || e.keyCode ==
-                46 ||
-                e.keyCode == 190) {
-
-            } else
-                e.preventDefault();
-
-            if ($(this).val().indexOf('.') !== -1 && e.keyCode == 190)
-                e.preventDefault();
-        }).keyup(function(e) {
-            if ($(this).val().charAt(0) == ".") {
-                e.preventDefault();
-                $(this).val(' ');
-            }
-
-            if ($(this).val().split('.').length > 1) {
-                if ($(this).val().split('.')[1].length > 2) {
-                    e.preventDefault();
-                    $(this).val((Math.round($(this).val() * 100) / 100).toFixed(2));
-                }
-            }
+    $('.btnComputePrice').click(function (e) { 
+        var sum = 0;
+        $.each($('input[name="amount"]'), function (indexInArray, valueOfElement) { 
+            sum += Number(valueOfElement.value);
         });
+
+        $('#totalBookPrice').val(sum);
+        sum = (Math.round($('#totalBookPrice').val() * 100) / 100).toFixed(2);
+        $('#totalBookPrice').val("₱ " + (Math.round($('#totalBookPrice').val() * 100) / 100).toFixed(2));
+        console.log(sum);               
+        if(sum > $('#span_budget').val())
+            $('#modalBudgetNotEnough').modal('show');
+    });
 });
 </script>
 @endpush
