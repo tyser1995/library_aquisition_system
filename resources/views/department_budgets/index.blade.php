@@ -45,13 +45,17 @@
                             </thead>
                             <tbody>
                                @foreach ($budget as $budgets)
+                               <?php 
+                                $budget_deduct = \App\Models\PurchaseRequest::where('department_names_id','=',$budgets->deptid)
+                                ->where('deleted_flag','=',0)->sum('amount');
+                               ?>
                                    <tr>
                                     <td class="d-none">{{$budgets->id}}</td>
                                     <td>{{$budgets->department_name}}</td>
                                     @if ($budgets->no_of_students == 0)
                                         <td>{{$budgets->amount}}</td>
                                     @else
-                                        <td>₱{{number_format($budgets->amount * $budgets->no_of_students,2)}}</td>
+                                        <td>₱{{number_format((($budgets->amount * $budgets->no_of_students)-$budget_deduct),2)}}</td>
                                     @endif
                                     @if ($budgets->semester == 1)
                                         <td>{{__('First Semester')}}</td>

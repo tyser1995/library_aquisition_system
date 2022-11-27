@@ -27,10 +27,12 @@ class CreatePurchaseRequestTable extends Migration
             $table->unsignedBigInteger('recommended_user_id');
             $table->unsignedBigInteger('approver_user_id');
             $table->string('charge_to')->nullable();
+            $table->unsignedBigInteger('department_names_id');
             $table->string('subject')->nullable();
             $table->string('existing_no_of_titles')->nullable();
             $table->longText('note')->nullable();
             $table->decimal('amount', 8, 2)->default(0);
+            $table->string('book_price')->nullable();
             $table->unsignedBigInteger('deleted_flag')->default(0);
             $table->softDeletes();
             $table->timestamps();

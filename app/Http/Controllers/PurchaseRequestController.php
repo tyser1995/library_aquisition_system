@@ -219,6 +219,10 @@ class PurchaseRequestController extends Controller
     {
         //
         $purchase_requests = new PurchaseRequest();
+        $department_names_id = DepartmentName::where('department_name',$request->input('charge_to')[0])
+        ->get()
+        ->first();
+       
         //dynamic fields <starts>
         $purchase_requests -> created_by_users_id = Auth::user()->id;
         $purchase_requests -> rush_type =implode(',',$request->input('rush_type'));
@@ -232,6 +236,7 @@ class PurchaseRequestController extends Controller
         $purchase_requests -> recommended_user_id = implode(',',$request->input('recommended_user_id'));
         // $purchase_requests -> approver_user_id = implode(',',$request->input('approver_user_id'));
         $purchase_requests -> charge_to = implode(',',$request->input('charge_to'));
+        $purchase_requests -> department_names_id = $department_names_id->id;
         $purchase_requests -> subject = implode(',',str_replace(",",";",$request->input('subject')));
         $purchase_requests -> existing_no_of_titles = implode(',',$request->input('existing_no_of_titles'));
         $purchase_requests -> note = implode(',',$request->input('note'));
@@ -384,6 +389,12 @@ class PurchaseRequestController extends Controller
         ->where('department_budgets.school_year','=',date('Y').'-'.(date('Y')+1))
         ->get();
 
+        $department_budget_left = PurchaseRequest::where('department_names_id',$purchase_requests->department_names_id)
+        ->where('deleted_flag','=',0)
+        ->sum('amount');
+
+        // dd(floatval($budget->no_of_students * $budget->amount)-floatval($department_budget_left));
+
         return view('purchase_requests.requested_books',[
             'purchase_request' => $purchase_requests,
             'purchase_request_recommended_users' => $purchase_request_recommended_users,
@@ -394,6 +405,7 @@ class PurchaseRequestController extends Controller
             'signature' => $signature,
             'budget' => $budget,
             'budget_all' => $budgetAll,
+            'department_budget_left' => floatval($department_budget_left)
         ]);
     }
 
@@ -404,24 +416,14 @@ class PurchaseRequestController extends Controller
         else if($purchase_requests->status_id == 1)
             $purchase_requests->status_id = 2;
         else if($purchase_requests->status_id == 2){
-            $purchase_requests->amount = $request->amount;
+            $purchase_requests->book_price = implode(',',$request->input('amount'));
+            $purchase_requests->amount = $request->input('totalBookPrice_amount');
             $purchase_requests->status_id = 3;
         }
         else
             $purchase_requests->status_id = 4;
 
         $purchase_requests->update();
-       
         return redirect()->route('purchase_request.index')->withStatus('Request Approved.');
-
-        // $password = User::findOrfail(Auth::user()->id);
-        
-        // dd([$request->password,$password->password,Hash::check($request->password, $password->password)]);
-        // if (Hash::check($request->password, $password->password)) {
-        //     // The passwords match...
-        //     dd("match");
-        // }else{
-        //     dd("not match");
-        // }
     }
 }

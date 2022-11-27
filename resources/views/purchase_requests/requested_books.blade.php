@@ -146,7 +146,7 @@
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                         </h5>
-                                        <input type="text" name="amount"
+                                        <input type="text" name="amount[]"
                                             class="form-control form-control-alternative book_price"
                                             placeholder="{{ __('Enter Book Price') }}" required autofocus>
                                     </div>
@@ -169,6 +169,8 @@
                                             <input type="text" id="totalBookPrice"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00"
                                                 disabled />
+                                            <input type="hidden" name="totalBookPrice_amount" id="totalBookPrice_amount"
+                                                class="form-control form-control-alternative" placeholder="₱ 0.00" />
                                     </div>
                                     <div class="form-group media-single-upload attached_signature d-none">
                                         <span>Attached Signature</span>
@@ -192,7 +194,7 @@
                                             @if ($purchase_request->status_id == 2)
                                             <span>Budget:₱</span>
                                             <span
-                                                id="span_budget">{{number_format($budget->no_of_students * $budget->amount,2)}}</span>
+                                                id="span_budget">{{number_format((($budget->no_of_students * $budget->amount)-$department_budget_left),2)}}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -376,7 +378,7 @@ function retrieveRequest(wrapper) {
                                         <div class="form-group">
                                             <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                             </h5>
-                                            <input type="text" name="amount"
+                                            <input type="text" name="amount[]"
                                                 class="form-control form-control-alternative book_price"
                                                 placeholder="{{ __('Enter Book Price') }}" required autofocus>
                                         </div>
@@ -529,17 +531,26 @@ $(function() {
 
     $('.btnComputePrice').click(function(e) {
         var sum = 0;
-        $.each($('input[name="amount"]'), function(indexInArray, valueOfElement) {
+        $.each($('input[name="amount[]"]'), function(indexInArray, valueOfElement) {
             sum += Number(valueOfElement.value);
         });
 
         $('#totalBookPrice').val(sum);
         sum = (Math.round($('#totalBookPrice').val() * 100) / 100).toFixed(2);
+        $('#totalBookPrice_amount').val(sum);
         $('#totalBookPrice').val("₱ " + (Math.round($('#totalBookPrice').val() * 100) / 100).toFixed(
         2));
+        
+        //console.log(sum + " " + $('#span_budget')[0].innerHTML);
 
-        if (sum > $('#span_budget')[0].innerHTML)
+
+        var budget = "{{($budget->no_of_students * $budget->amount)-$department_budget_left}}"
+        var diff = budget - sum;
+
+        if (Number(sum) > Number($('#span_budget')[0].innerHTML)){
             $('#modalBudgetNotEnough').modal('show');
+        }
+        $('#span_budget')[0].innerHTML = (Math.round(diff * 100) / 100).toFixed(2);
         //$('#modalBudgetNotEnough').modal('show');
     });
 
@@ -556,6 +567,7 @@ $(function() {
     // });
     $('#tblDepartmentBudget tbody').on('click', '#btnBorrowedAmount', function () {
         //console.log($('#tblDepartmentBudget').DataTable().row($(this).data()).data()[1]);   //full row of array data
+        //$('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data().Field_name); //single data
         //console.log(row[1]);   //EmployeeId
     });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DepartmentBudget;
 use App\Models\DepartmentName;
+use App\Models\PurchaseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -27,9 +28,10 @@ class DepartmentBudgetController extends Controller
     {
         //
         $budget = DepartmentBudget::join('department_names','department_names.id','=','department_budgets.department_name_id')
-        ->select('department_budgets.*','department_names.department_name')
+        ->select('department_budgets.*','department_names.department_name','department_names.id as deptid')
         ->where('department_budgets.deleted_flag','=',0)
         ->get();
+
         return view('department_budgets.index',[
             'budget' => $budget
         ]);
