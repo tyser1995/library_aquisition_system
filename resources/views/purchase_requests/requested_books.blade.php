@@ -142,13 +142,15 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                    @if ($purchase_request->status_id == 2)
+                                    @if ($purchase_request->status_id == 2 || $purchase_request->status_id == 3)
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                         </h5>
                                         <input type="text" name="amount[]"
                                             class="form-control form-control-alternative book_price"
-                                            placeholder="{{ __('Enter Book Price') }}" required autofocus>
+                                            placeholder="{{ __('Enter Book Price') }}" required autofocus 
+                                            value="{{$purchase_request->status_id == 3 ? old('book_price',explode(',',$purchase_request->book_price)[0]) : ''}}"
+                                            {{$purchase_request->status_id == 3 ? 'disabled' : ''}}>
                                     </div>
                                     @endif
                                     <hr />
@@ -168,7 +170,7 @@
                                             {{ __('Total Book Price') }}
                                             <input type="text" id="totalBookPrice"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00"
-                                                disabled />
+                                                disabled value="{{$purchase_request->status_id == 3 ? old('amount',$purchase_request->amount) : '₱ 0.00'}}"/>
                                             <input type="hidden" name="totalBookPrice_amount" id="totalBookPrice_amount"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00" />
                                     </div>
@@ -187,8 +189,10 @@
                                                 class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
                                             <button type="submit" class="btn btn-success mt-4 btnApproved"
                                                 disabled>{{ __('Approved') }}</button>
-                                            <button type="button"
+                                            @if ($purchase_request->status_id == 2)
+                                                <button type="button"
                                                 class="btn btn-success mt-4 btnComputePrice">{{ __('Compute Price') }}</button>
+                                            @endif
                                         </div>
                                         <div>
                                             @if ($purchase_request->status_id == 2)
@@ -305,6 +309,7 @@ function retrieveRequest(wrapper) {
     var copies_vol = "{{$purchase_request->copies_vol}}";
     var publication_date = "{{$purchase_request->publication_date}}";
     var publisher_name = "{{$purchase_request->publisher_name}}";
+    var book_price = "{{$purchase_request->book_price}}";
 
     for (var i = 1; i < title.split(',').length; i++) {
         $(wrapper).append(`
@@ -374,15 +379,6 @@ function retrieveRequest(wrapper) {
                                             class="form-control form-control-alternative"
                                             placeholder="{{ __('Enter Publisher Name') }}" required autofocus value="`+publisher_name.split(',')[i]+`">
                                     </div>
-                                    @if ($purchase_request->status_id == 2)
-                                        <div class="form-group">
-                                            <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
-                                            </h5>
-                                            <input type="text" name="amount[]"
-                                                class="form-control form-control-alternative book_price"
-                                                placeholder="{{ __('Enter Book Price') }}" required autofocus>
-                                        </div>
-                                    @endif
                                     <!-- loop data approved by -->
                                     <div class="<?= $purchase_request->status_id == 2 ? 'd-none': '' ?> form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
@@ -413,6 +409,23 @@ function retrieveRequest(wrapper) {
                                             @endforeach
                                         </div>
                                     </div>
+                                    @if ($purchase_request->status_id == 2 || $purchase_request->status_id == 3)
+                                        <div class="form-group">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
+                                            </h5>
+                                            @if($purchase_request->status_id == 3)
+                                                <input type="text" name="amount[]"
+                                                class="form-control form-control-alternative book_price"
+                                                placeholder="{{ __('Enter Book Price') }}" required autofocus
+                                                value="`+book_price.split(',')[i]+`" 
+                                                disabled>
+                                            @else
+                                                <input type="text" name="amount[]"
+                                                class="form-control form-control-alternative book_price"
+                                                placeholder="{{ __('Enter Book Price') }}" required autofocus >
+                                            @endif
+                                        </div>
+                                    @endif
                                     
             <div class="delete d-flex justify-content-center "><button type="button" class="d-none add_form_field-request-form btn btn-danger mt-4"><span style="font-size:16px; font-weight:bold;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span> Remove Form Request</button></div><hr/>
             </div>`);
