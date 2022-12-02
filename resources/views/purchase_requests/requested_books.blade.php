@@ -142,15 +142,15 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                    @if ($purchase_request->status_id == 2 || $purchase_request->status_id == 3)
+                                    @if($purchase_request->status_id >= 2 && $purchase_request->status_id <= 6)
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                         </h5>
                                         <input type="text" name="amount[]"
                                             class="form-control form-control-alternative book_price"
                                             placeholder="{{ __('Enter Book Price') }}" required autofocus 
-                                            value="{{$purchase_request->status_id == 3 ? old('book_price',explode(',',$purchase_request->book_price)[0]) : ''}}"
-                                            {{$purchase_request->status_id == 3 ? 'disabled' : ''}}>
+                                            value="{{$purchase_request->status_id >= 3 && $purchase_request->status_id <= 6 ? old('book_price',explode(',',$purchase_request->book_price)[0]) : ''}}"
+                                            {{$purchase_request->status_id > 3 ? 'disabled' : ''}}>
                                     </div>
                                     @endif
                                     <hr />
@@ -166,13 +166,15 @@
                                 @can('purchase_request-store')
                                 <div class="">
                                     <div class="form-group">
-                                        <h5 class="form-control-label" for="input-region-name">
-                                            {{ __('Total Book Price') }}
+                                        @if ($purchase_request->status_id >= 2 && $purchase_request->status_id <= 6)
+                                            <h5 class="form-control-label" for="input-region-name">
+                                            {{ __('Total Book Price') }}</h5>
                                             <input type="text" id="totalBookPrice"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00"
-                                                disabled value="{{$purchase_request->status_id == 3 ? old('amount',$purchase_request->amount) : '₱ 0.00'}}"/>
+                                                disabled value="{{$purchase_request->status_id >= 4 && $purchase_request->status_id <= 6 ? old('amount',$purchase_request->amount) : '₱ 0.00'}}"/>
                                             <input type="hidden" name="totalBookPrice_amount" id="totalBookPrice_amount"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00" />
+                                        @endif
                                     </div>
                                     <div class="form-group media-single-upload attached_signature d-none">
                                         <span>Attached Signature</span>
@@ -185,17 +187,24 @@
                                     </div>
                                     <div style="display:flex;justify-content: space-between; align-items: center;">
                                         <div>
-                                            <button type="button"
-                                                class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
-                                            <button type="submit" class="btn btn-success mt-4 btnApproved"
-                                                disabled>{{ __('Approved') }}</button>
+                                            <!-- Signatories -->
+                                            @if ($purchase_request->status_id >= 6 && $purchase_request->status_id <= 9)
+                                                <button type="button"
+                                                    class="btn btn-success mt-4 btnAttachedESign">{{ __('Enter Password') }}</button>
+                                                <button type="submit" class="btn btn-success mt-4 btnApproved"
+                                                    disabled>{{ __('Approved') }}</button>
+                                            @endif
                                             @if ($purchase_request->status_id == 2)
                                                 <button type="button"
                                                 class="btn btn-success mt-4 btnComputePrice">{{ __('Compute Price') }}</button>
                                             @endif
+                                            @if ($purchase_request->status_id <= 5)
+                                                <button type="submit" class="btn btn-success mt-4">{{ __('Proceed') }}</button>
+                                            @endif
                                         </div>
                                         <div>
-                                            @if ($purchase_request->status_id == 2)
+                                            <!-- Library Acquisition and VPFA -->
+                                            @if ($purchase_request->status_id >= 2 && $purchase_request->status_id <= 6)
                                             <span>Budget:₱</span>
                                             <span
                                                 id="span_budget">{{number_format((($budget->no_of_students * $budget->amount)-$department_budget_left),2)}}</span>
@@ -409,11 +418,11 @@ function retrieveRequest(wrapper) {
                                             @endforeach
                                         </div>
                                     </div>
-                                    @if ($purchase_request->status_id == 2 || $purchase_request->status_id == 3)
+                                    @if ($purchase_request->status_id >= 2 && $purchase_request->status_id <= 6)
                                         <div class="form-group">
                                             <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                             </h5>
-                                            @if($purchase_request->status_id == 3)
+                                            @if($purchase_request->status_id >= 3 && $purchase_request->status_id <= 6)
                                                 <input type="text" name="amount[]"
                                                 class="form-control form-control-alternative book_price"
                                                 placeholder="{{ __('Enter Book Price') }}" required autofocus

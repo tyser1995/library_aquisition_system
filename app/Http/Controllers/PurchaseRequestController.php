@@ -46,6 +46,7 @@ class PurchaseRequestController extends Controller
                 ->select('purchase_requests.*','users.name')
                 ->where('purchase_requests.deleted_flag','=',0)
                 ->where('purchase_requests.status_id','=',2)
+                ->orWhere('purchase_requests.status_id','=',6)
                 ->get();
             }else{
                 $purchase_requests = DB::table('purchase_requests')
@@ -70,48 +71,77 @@ class PurchaseRequestController extends Controller
             ->get()
             ->first();
 
-            if(strtoupper($dean->name) =="DEAN" || strtoupper($dean->name) == "VPAA" || strtoupper($dean->name) == "PRESIDENT" || strtoupper($dean->name) == "VPFA" || strtoupper($dean->name) == "DIRECTOR OF LIBRARY" ){
-                if(strtoupper($dean->name) =="DEAN"){
-                    $purchase_requests = DB::table('purchase_requests')
-                    ->join('users','users.id','=','purchase_requests.created_by_users_id')
-                    ->join('employees','employees.users_id','=','users.id')
-                    ->where('employees.department_names_id','=',$department_id->department_names_id)
-                    ->where('purchase_requests.deleted_flag','=',0)
-                    ->where('purchase_requests.status_id','=',0)
-                    ->select('purchase_requests.*','users.name')
-                    ->get();
-    
-                    return view('purchase_requests.index',[
-                        'purchase_request' => $purchase_requests
-                    ]);
-                }else{
-                    if(strtoupper($dean->name) =="VPAA"){
-                        $purchase_requests = DB::table('purchase_requests')
+            //9,5,6,4
+            if(Auth::user()->role == 9){//Dean
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->join('employees','employees.users_id','=','users.id')
+                ->where('employees.department_names_id','=',$department_id->department_names_id)
+                ->where('purchase_requests.deleted_flag','=',0)
+                ->where('purchase_requests.status_id','=',0)
+                ->select('purchase_requests.*','users.name')
+                ->get();
+
+                return view('purchase_requests.index',[
+                    'purchase_request' => $purchase_requests
+                ]);
+            }
+
+            if(Auth::user()->role == 5){ //VPAA
+                $purchase_requests = DB::table('purchase_requests')
                         ->join('users','users.id','=','purchase_requests.created_by_users_id')
                         ->select('purchase_requests.*','users.name')
                         ->where('purchase_requests.deleted_flag','=',0)
                         ->where('purchase_requests.status_id','=',1)
+                        ->orWhere('purchase_requests.status_id','=',8)
                         ->get();
             
                         return view('purchase_requests.index',[
                             'purchase_request' => $purchase_requests,
                         ]);
-                    }else if(strtoupper($dean->name) =="VPFA"){
-                        $purchase_requests = DB::table('purchase_requests')
+            }
+
+            if(Auth::user()->role == 6){//VPFA
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->select('purchase_requests.*','users.name')
+                ->where('purchase_requests.deleted_flag','=',0)
+                ->where('purchase_requests.status_id','=',4)
+                ->orWhere('purchase_requests.status_id','=',9)
+                ->get();
+    
+                return view('purchase_requests.index',[
+                    'purchase_request' => $purchase_requests,
+                ]);
+            }
+
+            if(Auth::user()->role == 4){//PRESIDENT
+                $purchase_requests = DB::table('purchase_requests')
                         ->join('users','users.id','=','purchase_requests.created_by_users_id')
                         ->select('purchase_requests.*','users.name')
                         ->where('purchase_requests.deleted_flag','=',0)
-                        ->where('purchase_requests.status_id','=',3)
+                        ->where('purchase_requests.status_id','=',5)
                         ->get();
             
                         return view('purchase_requests.index',[
                             'purchase_request' => $purchase_requests,
                         ]);
-                    }
-                    
-                }
-                
-            }else{
+            }
+
+            if(Auth::user()->role == 7){//DOL
+                $purchase_requests = DB::table('purchase_requests')
+                        ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                        ->select('purchase_requests.*','users.name')
+                        ->where('purchase_requests.deleted_flag','=',0)
+                        ->where('purchase_requests.status_id','=',7)
+                        ->get();
+            
+                        return view('purchase_requests.index',[
+                            'purchase_request' => $purchase_requests,
+                        ]);
+            }
+
+            if(Auth::user()->role == 10){//Faculty
                 $purchase_requests = DB::table('purchase_requests')
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->where('users.id','=',Auth::user()->id)
@@ -123,6 +153,11 @@ class PurchaseRequestController extends Controller
                     'purchase_request' => $purchase_requests
                 ]);
             }
+            // if(strtoupper($dean->name) =="DEAN" || strtoupper($dean->name) == "VPAA" || strtoupper($dean->name) == "PRESIDENT" || strtoupper($dean->name) == "VPFA" || strtoupper($dean->name) == "DIRECTOR OF LIBRARY" ){
+                
+            // }else{
+                
+            // }
         }
     }
 
@@ -411,18 +446,49 @@ class PurchaseRequestController extends Controller
 
     public function requested_books_update(Request $request){
         $purchase_requests = PurchaseRequest::findOrfail($request->purchase_request_id);
-        if($purchase_requests->status_id == 0)
-            $purchase_requests->status_id = 1;
-        else if($purchase_requests->status_id == 1)
-            $purchase_requests->status_id = 2;
-        else if($purchase_requests->status_id == 2){
+        
+        // if($purchase_requests->status_id == 0)
+        //     $purchase_requests->status_id = 1;
+        // else if($purchase_requests->status_id == 1)
+        //     $purchase_requests->status_id = 2;
+        // else if($purchase_requests->status_id == 2){
+        //     $purchase_requests->book_price = implode(',',$request->input('amount'));
+        //     $purchase_requests->amount = $request->input('totalBookPrice_amount');
+        //     $purchase_requests->status_id = 3;
+        // }
+        // else if($purchase_requests->status_id == 3)
+        //     $purchase_requests->status_id = 4;
+        // else if($purchase_requests->status_id == 4){
+        //     //if amount more than 50k status_id = 5 else 6
+        //     if($purchase_requests->amount > 50)
+        //         $purchase_requests->status_id = 5;
+        //     else 
+        //         $purchase_requests->status_id == 6;
+        // }
+        // else if($purchase_requests->status_id == 5)
+        //     $purchase_requests->status_id = 6;
+        // else if($purchase_requests->status_id == 6)
+        //     $purchase_requests->status_id = 7;
+        // else if($purchase_requests->status_id == 7)
+        //     $purchase_requests->status_id = 8;
+        // else if($purchase_requests->status_id == 8)
+        //     $purchase_requests->status_id = 9;
+        // else
+        //     $purchase_requests->status_id = 10;
+
+        if($purchase_requests->status_id == 2){
             $purchase_requests->book_price = implode(',',$request->input('amount'));
             $purchase_requests->amount = $request->input('totalBookPrice_amount');
             $purchase_requests->status_id = 3;
         }
-        else
-            $purchase_requests->status_id = 4;
 
+        if($purchase_requests->status_id == 4 && $request->input('totalBookPrice_amount') < 50000){
+            $purchase_requests->status_id = ($purchase_requests->status_id + 2);
+            $purchase_requests->update();
+            return redirect()->route('purchase_request.index')->withStatus('Request Approved.');
+        }
+        
+        $purchase_requests->status_id = ($purchase_requests->status_id + 1);
         $purchase_requests->update();
         return redirect()->route('purchase_request.index')->withStatus('Request Approved.');
     }

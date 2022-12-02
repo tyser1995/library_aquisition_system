@@ -101,8 +101,42 @@
                                             <span class="badge badge-info">
                                                 <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
                                             </span>
+                                        @elseif ($purchase_requests->status_id == 5)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Approved')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPAA"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
+                                            </span>
                                             <span class="badge badge-info">
                                                 <i class="fa fa-user-circle" data-toggle="tooltip" title="VPFA"></i>
+                                            </span>
+                                        @elseif ($purchase_requests->status_id == 6)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Signatories')}}
+                                            </span>
+                                        @elseif ($purchase_requests->status_id == 7)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Signatories')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
+                                            </span>
+                                        @elseif ($purchase_requests->status_id == 8)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Signatories')}}
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
+                                            </span>
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Director of Libraries"></i>
                                             </span>
                                         @endif
                                          </td>
