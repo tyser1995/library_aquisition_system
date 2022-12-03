@@ -18,6 +18,9 @@
                 </a>
             </li>
            
+            @if (Auth::user()->can('user-list') || Auth::user()->can('role-list') ||
+            Auth::user()->can('employee-list'))
+           
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#usersmgt">
                     <i class="fa fa-users"></i>
@@ -53,7 +56,7 @@
                     </ul>
                 </div>
             </li>
-
+            @endif
             @if (Auth::user()->can('department_budget-list'))
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#budgetmgmt">
@@ -126,6 +129,14 @@
                         @endcan
                     </ul>
                 </div>
+            </li>
+            @endif
+            @if (Auth::user()->can('acquisition_books-list'))
+            <li class="{{ $elementActive == 'acquisition_books' ? 'active' : '' }} ">
+                <a href="{{ route('acquisition_books') }}">
+                    <i class="fa fa-book-open-reader"></i>
+                    <p>{{ __('Acquisition Management') }}</p>
+                </a>
             </li>
             @endif
 

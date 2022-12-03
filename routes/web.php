@@ -66,7 +66,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Signature Attachments
     Route::get('signature_attachments', ['as' => 'signature_attachments', 'uses' => 'App\Http\Controllers\SignatureAttachmentController@index']);
     Route::resource('signature_attachment','App\Http\Controllers\SignatureAttachmentController');
-
+    //Acquisition Books
+    Route::get('acquisition_books', ['as' => 'acquisition_books', 'uses' => 'App\Http\Controllers\AcquisitionBookController@index']);
+    Route::get('acquisition_books/approved/{id}', ['as' => 'acquisition_books/approved/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@approved']);
+    Route::resource('acquisition_book','App\Http\Controllers\AcquisitionBookController');
 
 
   	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);

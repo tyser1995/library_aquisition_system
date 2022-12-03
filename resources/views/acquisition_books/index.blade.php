@@ -1,6 +1,6 @@
 @extends('layouts.app', [
 'class' => '',
-'elementActive' => 'purchase_approved'
+'elementActive' => 'acquisition_books'
 ])
 
 @section('content')
@@ -14,17 +14,6 @@
                             <div class="col-8">
                                 <h3 class="mb-0 h3_title"></h3>
                             </div>
-                            @can('purchase_request-create')
-                            <div class="col-4 text-right add-region-btn d-none">
-                                <a href="{{ route('purchase_request.create') }}" class="btn btn-sm btn-primary"
-                                    id="add-region-btn">{{ __('Add Purchase Request') }}</a>
-                                <div class="input-group-append icon">
-                                    <a href="{{ route('purchase_request.create') }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus-square"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            @endcan
                         </div>
                     </div>
 
@@ -41,7 +30,7 @@
                                     <th>Edition</th>
                                     <th>Created date</th>
                                     <th>Status</th>                                    
-                                    <th></th>
+                                    <!-- <th></th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,27 +43,18 @@
                                         <td>{{$purchase_requests->author_name}}</td>
                                         <td>{{$purchase_requests->edition}}</td>                                       
                                         <td>{{$purchase_requests->created_at}}</td>
-                                        <td>@if ($purchase_requests->status_id == 10)
-                                            <button type="button" class="btnCanDestroy btn btn-info btn-sm" value="{{$purchase_requests->title}}" data-id="{{$purchase_requests->id}}"> 
-                                                <i class="fa fa-check-circle"></i> {{__('Approve')}}
-                                            </button>
-                                            <!-- <span class="badge badge-info">
-                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
+                                        <td>@if ($purchase_requests->status_id == 11)
+                                            <span class="badge badge-info">
+                                                <i class="fa fa-check-circle"></i> {{__('Acquired')}}
                                             </span>
                                             <span class="badge badge-info">
-                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPAA"></i>
+                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Approved by Custodian"></i>
                                             </span>
-                                            <span class="badge badge-info">
-                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="Library Aquisition"></i>
-                                            </span>
-                                            <span class="badge badge-info">
-                                                <i class="fa fa-user-circle" data-toggle="tooltip" title="VPFA"></i>
-                                            </span> -->
                                         @endif
                                          </td>
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                             <a href="{{route('purchase_approves/preview/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-print"></i></a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -95,7 +75,9 @@ $(function() {
         'cursor': 'default',
         'text-decoration': 'none',
     });
-
+    $('h3.h3_title a').find('i').addClass('d-none');
+    
+    
     $('#tblPurchaseRequest').DataTable({
         order:[[2,'asc']]
     });
@@ -103,16 +85,16 @@ $(function() {
     $('.btnCanDestroy').click(function() {
             Swal.fire({
                 // title: 'Error!',
-                text: 'Do you want to approve ' + $(this).val() + ' book title?',
+                text: 'Do you want to remove ' + $(this).val() + ' book title?',
                 icon: 'question',
                 allowOutsideClick:false,
                 confirmButtonText: 'Yes',
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/acquisition_books/approved/" + $(this).data('id');
+                    window.location.href = base_url + "/users/delete/" + $(this).data('id');
                     Swal.fire({
-                        title: $(this).val() + ' Approved Successfully',
+                        title: $(this).val() + ' Deleted Successfully',
                         icon: 'success',
                         allowOutsideClick:false,
                         confirmButtonText: 'Close',

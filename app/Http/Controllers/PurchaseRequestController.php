@@ -53,6 +53,7 @@ class PurchaseRequestController extends Controller
                 $purchase_requests = DB::table('purchase_requests')
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->select('purchase_requests.*','users.name')
+                ->where('purchase_requests.status_id','<', 10)
                 ->where('purchase_requests.deleted_flag','=',0)
                 ->get();
             }
