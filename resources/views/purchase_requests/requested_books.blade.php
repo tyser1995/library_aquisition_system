@@ -172,7 +172,7 @@
                                             <input type="text" id="totalBookPrice"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00"
                                                 disabled value="{{$purchase_request->status_id >= 4 && $purchase_request->status_id <= 6 ? old('amount',$purchase_request->amount) : '₱ 0.00'}}"/>
-                                            <input type="hidden" name="totalBookPrice_amount" id="totalBookPrice_amount"
+                                            <input type="hidden" name="totalBookPrice_amount" id="totalBookPrice_amount" value="{{$purchase_request->status_id >= 4 && $purchase_request->status_id <= 6 ? old('amount',$purchase_request->amount) : '₱ 0.00'}}"
                                                 class="form-control form-control-alternative" placeholder="₱ 0.00" />
                                         @endif
                                     </div>
@@ -207,7 +207,7 @@
                                             @if ($purchase_request->status_id >= 2 && $purchase_request->status_id <= 6)
                                             <span>Budget:₱</span>
                                             <span
-                                                id="span_budget">{{number_format((($budget->no_of_students * $budget->amount)-$department_budget_left),2)}}</span>
+                                                id="span_budget">{{ (($budget->no_of_students * $budget->amount)-$department_budget_left) <= 0 ? 0 : number_format((($budget->no_of_students * $budget->amount)-$department_budget_left),2)}}</span>
                                             @endif
                                         </div>
                                     </div>

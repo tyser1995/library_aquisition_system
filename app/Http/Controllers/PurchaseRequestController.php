@@ -447,9 +447,9 @@ class PurchaseRequestController extends Controller
 
     public function requested_books_update(Request $request){
         $purchase_requests = PurchaseRequest::findOrfail($request->purchase_request_id);
-        $department_name = DepartmentName::findOrfail($request->dept_budgets_id);
-
         if($request->amountToBorrowed != 0){
+            $department_name = DepartmentName::findOrfail($request->dept_budgets_id);
+
             $budget_borroweds = new BudgetBorrow();
             $budget_borroweds->created_by_users_id = Auth::user()->id;
             $budget_borroweds->dept_names_id = $request->dept_budgets_id;

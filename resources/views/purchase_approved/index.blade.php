@@ -54,11 +54,11 @@
                                         <td>{{$purchase_requests->author_name}}</td>
                                         <td>{{$purchase_requests->edition}}</td>                                       
                                         <td>{{$purchase_requests->created_at}}</td>
-                                        <td>@if ($purchase_requests->status_id == 4)
+                                        <td>@if ($purchase_requests->status_id == 10)
                                             <span class="badge badge-info">
                                                 <i class="fa fa-check-circle"></i> {{__('Approved')}}
                                             </span>
-                                            <span class="badge badge-info">
+                                            <!-- <span class="badge badge-info">
                                                 <i class="fa fa-user-circle" data-toggle="tooltip" title="Dean"></i>
                                             </span>
                                             <span class="badge badge-info">
@@ -69,7 +69,7 @@
                                             </span>
                                             <span class="badge badge-info">
                                                 <i class="fa fa-user-circle" data-toggle="tooltip" title="VPFA"></i>
-                                            </span>
+                                            </span> -->
                                         @endif
                                          </td>
                                         <td class="text-center">

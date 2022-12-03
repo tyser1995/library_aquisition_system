@@ -36,14 +36,14 @@ class PurchaseRequestApprovedController extends Controller
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->select('purchase_requests.*','users.name')
                 ->where('purchase_requests.deleted_flag','=',0)
-                ->where('purchase_requests.status_id','=',4)
+                ->where('purchase_requests.status_id','=',10)
                 ->get();
             }else{
                 $purchase_requests = DB::table('purchase_requests')
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->select('purchase_requests.*','users.name')
                 ->where('purchase_requests.deleted_flag','=',0)
-                ->where('purchase_requests.status_id','=',4)
+                ->where('purchase_requests.status_id','=',10)
                 ->get();
             }
           
@@ -69,7 +69,7 @@ class PurchaseRequestApprovedController extends Controller
                     ->join('employees','employees.users_id','=','users.id')
                     ->where('employees.department_names_id','=',$department_id->department_names_id)
                     ->where('purchase_requests.deleted_flag','=',0)
-                    ->where('purchase_requests.status_id','=',4)
+                    ->where('purchase_requests.status_id','=',10)
                     ->select('purchase_requests.*','users.name')
                     ->get();
     
@@ -82,7 +82,7 @@ class PurchaseRequestApprovedController extends Controller
                         ->join('users','users.id','=','purchase_requests.created_by_users_id')
                         ->select('purchase_requests.*','users.name')
                         ->where('purchase_requests.deleted_flag','=',0)
-                        ->where('purchase_requests.status_id','=',4)
+                        ->where('purchase_requests.status_id','=',10)
                         ->get();
             
                         return view('purchase_approved.index',[
@@ -93,7 +93,7 @@ class PurchaseRequestApprovedController extends Controller
                         ->join('users','users.id','=','purchase_requests.created_by_users_id')
                         ->select('purchase_requests.*','users.name')
                         ->where('purchase_requests.deleted_flag','=',0)
-                        ->where('purchase_requests.status_id','=',4)
+                        ->where('purchase_requests.status_id','=',10)
                         ->get();
             
                         return view('purchase_approved.index',[
@@ -108,7 +108,7 @@ class PurchaseRequestApprovedController extends Controller
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->where('users.id','=',Auth::user()->id)
                 ->where('purchase_requests.deleted_flag','=',0)
-                ->where('purchase_requests.status_id','=',4)
+                ->where('purchase_requests.status_id','=',10)
                 ->select('purchase_requests.*','users.name')
                 ->get();
 
@@ -135,7 +135,7 @@ class PurchaseRequestApprovedController extends Controller
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->select('purchase_requests.*','users.name')
                 ->where('purchase_requests.deleted_flag','=',0)
-                ->where('purchase_requests.status_id','=',2)
+                ->where('purchase_requests.status_id','=',10)
                 ->where('purchase_requests.id','=',$id)
                 ->get();
             }else{
