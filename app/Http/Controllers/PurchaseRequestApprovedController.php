@@ -137,8 +137,8 @@ class PurchaseRequestApprovedController extends Controller
         $purchase_request_recommended_users = PurchaseRequestRecommendedUser::all();
         $purchase_request_approver_users = PurchaseRequestApproverUser::all();
 
-        if(in_array(Auth::user()->role,['1','2','3'])){
-            if(Auth::user()->role == 3){
+        if(in_array(Auth::user()->role,['1','2','3','8'])){
+            if(Auth::user()->role == 3 || Auth::user()->role == 8){
                 $purchase_requests = DB::table('purchase_requests')
                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
                 ->select('purchase_requests.*','users.name')
