@@ -56,6 +56,7 @@ class PermissionTableSeeder extends Seeder
            'purchase_request-store',
            'purchase_request-edit',
            'purchase_request-delete',
+           'purchase_request_approved-list',
            'signature-list',
            'signature-create',
            'signature-store',

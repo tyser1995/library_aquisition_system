@@ -116,12 +116,14 @@
                                 <span class="sidebar-normal">{{ __('Request Books ') }}</span>
                             </a>
                         </li>
+                        @can('purchase_request_approved-list')
                         <li class="{{ $elementActive == 'purchase_approved' ? 'active' : '' }}">
                             <a href="{{ route('purchase_approves') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
                                 <span class="sidebar-normal">{{ __('Approved Request ') }}</span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>

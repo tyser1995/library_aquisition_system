@@ -207,7 +207,7 @@
                                             @if ($purchase_request->status_id >= 2 && $purchase_request->status_id <= 6)
                                             <span>Budget:₱</span>
                                             <span
-                                                id="span_budget">{{ (($budget->no_of_students * $budget->amount)-$department_budget_left) <= 0 ? 0 : number_format((($budget->no_of_students * $budget->amount)-$department_budget_left),2)}}</span>
+                                                id="span_budget">{{ (($budget->no_of_students * $budget->amount)-$department_budget_left) < 0 ? 0 : number_format((($budget->no_of_students * $budget->amount)-$department_budget_left),2)}}</span>
                                             @endif
                                         </div>
                                     </div>
