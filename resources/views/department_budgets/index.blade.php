@@ -45,32 +45,38 @@
                             </thead>
                             <tbody>
                                @foreach ($budget as $budgets)
-                               <?php 
-                                $budget_deduct = \App\Models\PurchaseRequest::where('department_names_id','=',$budgets->deptid)
-                                ->where('deleted_flag','=',0)->sum('amount');
-                               ?>
+                                <?php 
+                                    $budget_deduct = \App\Models\PurchaseRequest::where('department_names_id','=',$budgets->deptid)
+                                    ->where('deleted_flag','=',0)->sum('amount');
+
+                                    $budget_borrowed = \App\Models\BudgetBorrow::where('dept_names_id','=',$budgets->deptid)
+                                    ->where('deleted_flag','=',0)->sum('amount');
+                                ?>
                                    <tr>
-                                    <td class="d-none">{{$budgets->id}}</td>
-                                    <td>{{$budgets->department_name}}</td>
-                                    @if ($budgets->no_of_students == 0)
-                                        <td>{{$budgets->amount}}</td>
-                                    @else
-                                        <td>₱{{number_format((($budgets->amount * $budgets->no_of_students)-$budget_deduct),2)}}</td>
-                                    @endif
-                                    @if ($budgets->semester == 1)
-                                        <td>{{__('First Semester')}}</td>
-                                    @elseif ($budgets->semester == 2)
-                                        <td>{{__('Second Semester')}}</td>
-                                    @else
-                                        <td>{{__('Summer')}}</td>
-                                    @endif
-                                    <td>{{$budgets->school_year}}</td>
-                                    <td>{{$budgets->created_at}}</td>
-                                    <td>
-                                        <td class="text-center">
-                                            <a href="{{route('department_budget.edit', $budgets)}}" class="{{Auth::user()->can('department_budget-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                        <td class="d-none">{{$budgets->id}}</td>
+                                        <td>{{$budgets->department_name}}</td>
+                                        <td>
+                                        @if ($budgets->no_of_students == 0)
+                                            ₱{{ $budgets->amount < 0 ? 0 : number_format((($budgets->amount)-$budget_borrowed),2) }}
+                                        @else
+                                          ₱{{ (($budgets->amount * $budgets->no_of_students)-$budget_deduct) < 0 ? 0.00 : number_format(((($budgets->amount * $budgets->no_of_students)-$budget_deduct)-$budget_borrowed),2) }}
+                                        @endif
                                         </td>
-                                    </td>
+                                       <td>
+                                        @if ($budgets->semester == 1)
+                                           {{__('First Semester')}}
+                                        @elseif ($budgets->semester == 2)
+                                            {{__('Second Semester')}}
+                                        @else
+                                            {{__('Summer')}}
+                                        @endif
+                                       </td>
+                                        
+                                        <td>{{$budgets->school_year}}</td>
+                                        <td>{{$budgets->created_at}}</td>
+                                        <td class="text-center">
+                                                <a href="{{route('department_budget.edit', $budgets)}}" class="{{Auth::user()->can('department_budget-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-pencil"></i></a>
+                                            </td>
                                    </tr>
                                @endforeach
                             </tbody>
@@ -91,7 +97,7 @@
 <script>
     $(document).ready(function () {
         $('#tblDepartmentBudget').DataTable({
-            order: [[1, 'asc']],
+            order: [[1, 'asc']]
         });
 
         

@@ -17,7 +17,7 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
-            @if(Auth::user()->role == 1 || Auth::user()->role == 2)
+           
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#usersmgt">
                     <i class="fa fa-users"></i>
@@ -42,17 +42,17 @@
                             </a>
                         </li>
                         @endcan
+                        @can('employee-list')
                         <li class="{{ $elementActive == 'employees' ? 'active' : '' }}">
                             <a href="{{ route('employees') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
                                 <span class="sidebar-normal">{{ __(' Employees ') }}</span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
-
-            @endif
 
             @if (Auth::user()->can('department_budget-list'))
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">

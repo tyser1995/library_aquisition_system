@@ -11,6 +11,7 @@ use App\Models\Employee;
 use App\Models\SignatureAttachment;
 use App\Models\Publisher;
 use App\Models\DepartmentBudget;
+use App\Models\BudgetBorrow;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -446,35 +447,17 @@ class PurchaseRequestController extends Controller
 
     public function requested_books_update(Request $request){
         $purchase_requests = PurchaseRequest::findOrfail($request->purchase_request_id);
-        
-        // if($purchase_requests->status_id == 0)
-        //     $purchase_requests->status_id = 1;
-        // else if($purchase_requests->status_id == 1)
-        //     $purchase_requests->status_id = 2;
-        // else if($purchase_requests->status_id == 2){
-        //     $purchase_requests->book_price = implode(',',$request->input('amount'));
-        //     $purchase_requests->amount = $request->input('totalBookPrice_amount');
-        //     $purchase_requests->status_id = 3;
-        // }
-        // else if($purchase_requests->status_id == 3)
-        //     $purchase_requests->status_id = 4;
-        // else if($purchase_requests->status_id == 4){
-        //     //if amount more than 50k status_id = 5 else 6
-        //     if($purchase_requests->amount > 50)
-        //         $purchase_requests->status_id = 5;
-        //     else 
-        //         $purchase_requests->status_id == 6;
-        // }
-        // else if($purchase_requests->status_id == 5)
-        //     $purchase_requests->status_id = 6;
-        // else if($purchase_requests->status_id == 6)
-        //     $purchase_requests->status_id = 7;
-        // else if($purchase_requests->status_id == 7)
-        //     $purchase_requests->status_id = 8;
-        // else if($purchase_requests->status_id == 8)
-        //     $purchase_requests->status_id = 9;
-        // else
-        //     $purchase_requests->status_id = 10;
+        $department_name = DepartmentName::findOrfail($request->dept_budgets_id);
+
+        if($request->amountToBorrowed != 0){
+            $budget_borroweds = new BudgetBorrow();
+            $budget_borroweds->created_by_users_id = Auth::user()->id;
+            $budget_borroweds->dept_names_id = $request->dept_budgets_id;
+            $budget_borroweds->dept_budgets_id = $request->dept_budgets_id;
+            $budget_borroweds->amount = $request->amountToBorrowed;
+            $budget_borroweds->remarks = "Borrowed from ". $department_name->department_name;
+            $budget_borroweds->save();
+        }
 
         if($purchase_requests->status_id == 2){
             $purchase_requests->book_price = implode(',',$request->input('amount'));

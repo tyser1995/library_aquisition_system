@@ -216,6 +216,8 @@
                                 @endcan
                             </div>
                     </div>
+                    <input type="hidden" id="dept_budgets_id" name="dept_budgets_id" />
+                    <input type="hidden" id="amountToBorrowed" name="amountToBorrowed" value="0" />
                     </form>
                     <div id="app"></div>
                 </div>
@@ -237,11 +239,15 @@
             <div class="modal-body">
                 <h5 class="text-danger">Budget not enough!</h5>
                 <br>
+                <h5>Please choose an amount to borrow.</h5>
+                <h5 class="selectedDepartment d-none">Please select to borrow an amount.</h5>
+                <br>
                 <table id="tblDepartmentBudget" class="table table-responsive-sm table-flush display"
                     style="width:100%">
                     <thead>
                         <tr>
                             <th class="d-none">ID</th>
+                            <th class="d-none">department_names_id</th>
                             <th>Department Name</th>
                             <th>Budget</th>
                             <th>Semester</th>
@@ -253,11 +259,12 @@
                         @foreach ($budget_all as $budgets)
                         <tr>
                             <td class="d-none">{{$budgets->id}}</td>
+                            <td class="d-none">{{$budgets->department_name_id}}</td>
                             <td>{{$budgets->department_name}}</td>
                             @if ($budgets->no_of_students == 0)
-                            <td>{{$budgets->amount}}</td>
+                                <td>₱{{$budgets->amount}}</td>
                             @else
-                            <td>₱{{number_format($budgets->amount * $budgets->no_of_students,2)}}</td>
+                                <td>₱{{number_format($budgets->amount * $budgets->no_of_students,2)}}</td>
                             @endif
                             @if ($budgets->semester == 1)
                             <td>{{__('First Semester')}}</td>
@@ -277,6 +284,7 @@
                 </table>
             </div>
             <div class="modal-footer">
+                <button type="button" id="btnBorrowedSave" class="btn btn-primary" data-dismiss="modal" disabled>Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -550,7 +558,7 @@ $(function() {
         retrieveRequest(wrapper);
     }, 250);
 
-
+    var amountToBorrow = 0;
     $('.btnComputePrice').click(function(e) {
         var sum = 0;
         $.each($('input[name="amount[]"]'), function(indexInArray, valueOfElement) {
@@ -569,16 +577,18 @@ $(function() {
         var budget = "{{($budget->no_of_students * $budget->amount)-$department_budget_left}}"
         var diff = budget - sum;
 
-        if (Number(sum) > Number($('#span_budget')[0].innerHTML)){
+        $('#span_budget')[0].innerHTML = (Math.round(diff * 100) / 100).toFixed(2);
+        amountToBorrow = $('#span_budget')[0].innerHTML;
+        if (Number($('#span_budget')[0].innerHTML) < 0){
             $('#modalBudgetNotEnough').modal('show');
         }
-        $('#span_budget')[0].innerHTML = (Math.round(diff * 100) / 100).toFixed(2);
         //$('#modalBudgetNotEnough').modal('show');
     });
 
     //
     $('#tblDepartmentBudget').DataTable({
-        order: [[1, 'asc']],
+        order: [[2, 'asc']],
+        pageLength: 3,
     });
 
 
@@ -589,8 +599,20 @@ $(function() {
     // });
     $('#tblDepartmentBudget tbody').on('click', '#btnBorrowedAmount', function () {
         //console.log($('#tblDepartmentBudget').DataTable().row($(this).data()).data()[1]);   //full row of array data
-        //$('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data().Field_name); //single data
-        //console.log(row[1]);   //EmployeeId
+        //$('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data().Field_name; //single data
+        //console.log($('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data());
+        
+        $('.selectedDepartment').removeClass('d-none');
+        $('.selectedDepartment')[0].innerHTML = `You will borrow <span class="text-danger">` + amountToBorrow.replace("-","") + `</span> from <b><u>` + $('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data()[2] + `</u></b>, which will be deducted after you proceed. <br/> The remaining balance is `
+        +(Number($('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data()[3].replace("₱","").replace(",",""))+Number(amountToBorrow))+`.`;
+        $('#amountToBorrowed').val(amountToBorrow.replace("-",""));
+        $('#btnBorrowedSave').removeAttr('disabled');
+
+        $('#dept_budgets_id').val($('#tblDepartmentBudget').DataTable().row($(this).parents('tr')).data()[0]);
+    });
+
+    $('#btnBorrowedSave').click(()=>{
+        $('#span_budget')[0].innerHTML = "0.00";
     });
 });
 </script>
