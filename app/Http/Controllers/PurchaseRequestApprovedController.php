@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Hash;
 
 class PurchaseRequestApprovedController extends Controller
 {
+    function __construct()
+    {       
+        $this->middleware('permission:purchase_request_approved-list', ['only' => ['index','data']]);
+        $this->middleware('permission:purchase_request_approved-create', ['only' => ['create','store']]);
+        $this->middleware('permission:purchase_request_approved-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:purchase_request_approved-delete', ['only' => ['destroy','delete']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
