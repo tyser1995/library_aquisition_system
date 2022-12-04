@@ -150,7 +150,7 @@ $(document).ready(function() {
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/purchase_requests/delete/" + $(this).data('id');
+                    window.location.href = base_url + "/users/delete/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Deleted Successfully',
                         icon: 'success',

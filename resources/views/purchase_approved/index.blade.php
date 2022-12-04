@@ -110,7 +110,7 @@ $(function() {
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    window.location.href = base_url + "/acquisition_books/approved/" + $(this).data('id');
+                    window.location.href = base_url + "/purchase_approves/approved/" + $(this).data('id');
                     Swal.fire({
                         title: $(this).val() + ' Approved Successfully',
                         icon: 'success',
