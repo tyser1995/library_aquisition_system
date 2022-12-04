@@ -30,7 +30,7 @@
                                     <th>Edition</th>
                                     <th>Created date</th>
                                     <th>Status</th>                                    
-                                    <!-- <th></th> -->
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,9 +52,9 @@
                                             </span>
                                         @endif
                                          </td>
-                                        <!-- <td class="text-center">
-                                            <a href="{{route('purchase_approves/preview/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-print"></i></a>
-                                        </td> -->
+                                        <td class="text-center">
+                                            <a href="{{route('acquisition_books/preview/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-print"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -135,4 +135,41 @@ class AcquisitionBookController extends Controller
         $purchase_requests->update();
         return redirect()->route('purchase_approve.index')->withError('Approved Successfully ' .$purchase_requests->title);
     }
+
+    public function print_preview($id){
+        //
+        $roles = DB::table('roles')
+        ->select('name')
+        ->get()
+        ->toArray();
+
+        $purchase_request_recommended_users = PurchaseRequestRecommendedUser::all();
+        $purchase_request_approver_users = PurchaseRequestApproverUser::all();
+
+        if(in_array(Auth::user()->role,['1','2','3','8'])){
+            if(Auth::user()->role == 3 || Auth::user()->role == 8){
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->select('purchase_requests.*','users.name')
+                ->where('purchase_requests.deleted_flag','=',0)
+                ->where('purchase_requests.status_id','=',10)
+                ->where('purchase_requests.id','=',$id)
+                ->get();
+            }else{
+                $purchase_requests = DB::table('purchase_requests')
+                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                ->select('purchase_requests.*','users.name')
+                ->where('purchase_requests.deleted_flag','=',0)
+                ->where('purchase_requests.id','=',$id)
+                ->get();
+            }
+          
+
+            return view('purchase_approved.preview',[
+                'purchase_request' => $purchase_requests,
+                'purchase_request_recommended_users' => $purchase_request_recommended_users,
+                'purchase_request_approver_users' => $purchase_request_approver_users,
+            ]);
+        }
+    }
 }
