@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Accession Books
     Route::get('acquisition_books', ['as' => 'acquisition_books', 'uses' => 'App\Http\Controllers\AcquisitionBookController@index']);
     Route::get('acquisition_books/approved/{id}', ['as' => 'acquisition_books/approved/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@approved']);
-    Route::get('acquisition_books/preview/{id}',['as' => 'acquisition_books/preview/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestApprovedController@print_preview']);
+    Route::get('acquisition_books/preview/{id}',['as' => 'acquisition_books/preview/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@print_preview']);
     Route::resource('acquisition_book','App\Http\Controllers\AcquisitionBookController');
 
 
