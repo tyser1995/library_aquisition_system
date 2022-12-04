@@ -147,8 +147,10 @@
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Price') }}
                                         </h5>
                                         <input type="text" name="amount[]"
-                                            class="form-control form-control-alternative book_price"
-                                            placeholder="{{ __('Enter Book Price') }}" required autofocus 
+                                            class="form-control form-control-alternative book_price amount-0"
+                                            placeholder="{{ __('Enter Book Price') }}" required autofocus
+                                            data-id="0" 
+                                            data-copies="{{explode(',',$purchase_request->copies_vol)[0]}}"
                                             value="{{$purchase_request->status_id >= 3 && $purchase_request->status_id <= 6 ? old('book_price',explode(',',$purchase_request->book_price)[0]) : ''}}"
                                             {{$purchase_request->status_id > 3 ? 'disabled' : ''}}>
                                     </div>
@@ -438,8 +440,10 @@ function retrieveRequest(wrapper) {
                                                 disabled>
                                             @else
                                                 <input type="text" name="amount[]"
-                                                class="form-control form-control-alternative book_price"
-                                                placeholder="{{ __('Enter Book Price') }}" required autofocus >
+                                                class="form-control form-control-alternative book_price amount-`+i+`"
+                                                placeholder="{{ __('Enter Book Price') }}" required autofocus 
+                                                data-id="`+ i +`" 
+                                                data-copies="`+copies_vol.split(',')[i]+`">
                                             @endif
                                         </div>
                                     @endif
@@ -562,7 +566,7 @@ $(function() {
     $('.btnComputePrice').click(function(e) {
         var sum = 0;
         $.each($('input[name="amount[]"]'), function(indexInArray, valueOfElement) {
-            sum += Number(valueOfElement.value);
+            sum += (Number(valueOfElement.value) * Number($('.amount-'+indexInArray).data("copies")));
         });
 
         $('#totalBookPrice').val(sum);
