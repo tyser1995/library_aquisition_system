@@ -135,7 +135,7 @@
             <li class="{{ $elementActive == 'acquisition_books' ? 'active' : '' }} ">
                 <a href="{{ route('acquisition_books') }}">
                     <i class="fa fa-book-open-reader"></i>
-                    <p>{{ __('Acquisition Management') }}</p>
+                    <p>{{ __('Accession Management') }}</p>
                 </a>
             </li>
             @endif
