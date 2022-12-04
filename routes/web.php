@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('purchase_request','App\Http\Controllers\PurchaseRequestController');
     //Approved Request
     Route::get('purchase_approves',['as' => 'purchase_approves', 'uses' => 'App\Http\Controllers\PurchaseRequestApprovedController@index']);
+    Route::get('purchase_approves/approved/{id}', ['as' => 'purchase_approves/approved/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestApprovedController@approved']);
     Route::get('purchase_approves/preview/{id}',['as' => 'purchase_approves/preview/{id}', 'uses' => 'App\Http\Controllers\PurchaseRequestApprovedController@print_preview']);
     Route::resource('purchase_approve','App\Http\Controllers\PurchaseRequestApprovedController');
     //Department Type
@@ -71,6 +72,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('acquisition_books/approved/{id}', ['as' => 'acquisition_books/approved/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@approved']);
     Route::get('acquisition_books/preview/{id}',['as' => 'acquisition_books/preview/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@print_preview']);
     Route::resource('acquisition_book','App\Http\Controllers\AcquisitionBookController');
+    //Report Management
+    //By Department
+    Route::get('reports/department', ['as' => 'reports/department', 'uses' => 'App\Http\Controllers\ReportManagementController@by_department']);
+    //Holdings
+    Route::get('reports/holding', ['as' => 'reports/holding', 'uses' => 'App\Http\Controllers\ReportManagementController@holding']);
+    Route::resource('report','App\Http\Controllers\ReportManagementController');
 
 
   	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);

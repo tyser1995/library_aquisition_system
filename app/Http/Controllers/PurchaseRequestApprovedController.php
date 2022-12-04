@@ -127,6 +127,14 @@ class PurchaseRequestApprovedController extends Controller
         }
     }
 
+    public function approved($id){
+        $purchase_requests = PurchaseRequest::findOrfail($id);
+        //$user->deleted_flag = 1;
+        $purchase_requests->status_id = 11;
+        $purchase_requests->update();
+        return redirect()->route('purchase_approve.index')->withError('Approved Successfully ' .$purchase_requests->title);
+    }
+
     public function print_preview($id){
         //
         $roles = DB::table('roles')

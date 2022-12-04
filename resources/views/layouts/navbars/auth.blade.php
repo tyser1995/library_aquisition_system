@@ -179,6 +179,31 @@
                 </div>
             </li>
             @endif
+            <!-- @if (Auth::user()->can('purchase_request-list') || Auth::user()->can('purchase_request_approved-list')) -->
+            <li class="d-none {{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
+                <a data-toggle="collapse" aria-expanded="false" href="#reportMgmt">
+                    <i class="fa fa-newspaper"></i>
+                    <p>{{ __('Report Management')}} <b class="caret"></b></p>
+                </a>
+                <div class="{{ $elementActive == 'reports_department' || $elementActive == 'reports_holdings' ? 'collapse show ' : 'collapse' }}"
+                    id="reportMgmt">
+                    <ul class="nav">
+                        <li class="{{ $elementActive == 'reports_department' ? 'active' : '' }}">
+                            <a href="{{ route('reports/department') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('By Department ') }}</span>
+                            </a>
+                        </li>
+                        <li class="{{ $elementActive == 'reports_holdings' ? 'active' : '' }}">
+                            <a href="{{ route('reports/holding') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Holdings ') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <!-- @endif -->
 
         </ul>
     </div>
