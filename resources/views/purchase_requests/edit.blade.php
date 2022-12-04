@@ -27,8 +27,10 @@
                     </div>
                     <div class="card-body">
                         @include('notification.index')
-                        <form method="post" action="{{ route('purchase_request.update',$purchase_request) }}" autocomplete="off">
+                        <form method="post" action="{{ route('purchase_request.update',$purchase_request) }}"
+                            autocomplete="off">
                             @csrf
+                            @method('put')
                             <div class="pl-lg-4">
                                 <div class="container-request-form">
                                     <div class="form-group">
@@ -55,6 +57,7 @@
                                         </h5>
                                         <input type="text" name="author_name[]" id="author_name"
                                             class="form-control form-control-alternative"
+                                            value="{{old('author_name',explode(',',$purchase_request->author_name)[0])}}"
                                             placeholder="{{ __('Enter Author Name') }}" required autofocus>
                                     </div>
 
@@ -63,6 +66,7 @@
                                         </h5>
                                         <input type="text" name="title[]" id="title[]"
                                             class="form-control form-control-alternative"
+                                            value="{{old('title',explode(',',$purchase_request->title)[0])}}"
                                             placeholder="{{ __('Enter Book Title') }}" required autofocus>
                                     </div>
 
@@ -72,6 +76,7 @@
                                             </h5>
                                             <input type="text" name="edition[]" id="edition[]"
                                                 class="form-control form-control-alternative"
+                                                value="{{old('edition',explode(',',$purchase_request->edition)[0])}}"
                                                 placeholder="{{ __('Enter Book Edition') }}" required autofocus>
                                         </div>
 
@@ -81,6 +86,7 @@
                                             </h5>
                                             <input type="text" name="copies_vol[]" id="copies_vol[]"
                                                 class="form-control form-control-alternative"
+                                                value="{{old('copies_vol',explode(',',$purchase_request->copies_vol)[0])}}"
                                                 placeholder="{{ __('Enter Book Copies/Volume') }}" required autofocus>
                                         </div>
 
@@ -90,6 +96,7 @@
                                             </h5>
                                             <input list="publication-date" name="publication_date[]"
                                                 id="publication_date[]" class="form-control form-control-alternative"
+                                                value="{{old('publication_date',explode(',',$purchase_request->publication_date)[0])}}"
                                                 placeholder="{{ __('Enter Publication Date') }}" required autofocus>
                                             <datalist id="publication-date">
                                                 @for ($year = date('Y'); $year > (date('Y') - 99); $year--)
@@ -104,6 +111,7 @@
                                         </h5>
                                         <input type="text" name="publisher_name[]" id="publisher_name[]"
                                             class="form-control form-control-alternative"
+                                            value="{{old('publisher_name',explode(',',$purchase_request->publisher_name)[0])}}"
                                             placeholder="{{ __('Enter Publisher Name') }}" required autofocus>
                                     </div>
 
@@ -113,6 +121,7 @@
                                         </h5>
                                         <input type="text" name="publisher_address[]" id="publisher_address[]"
                                             class="form-control form-control-alternative"
+                                            value="{{old('publisher_address',explode(',',$purchase_request->publisher_address)[0])}}"
                                             placeholder="{{ __('Enter Publisher Address') }}" required autofocus>
                                     </div>
 
@@ -150,7 +159,7 @@
                                     </div>
 
                                     <!-- loop data approved by -->
-                                    <div class="form-group">
+                                    <div class="form-group d-none">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
                                         </h5>
                                         <div class="form-row">
@@ -160,17 +169,17 @@
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label">
                                                         @if ($role_name ==
-                                                            $purchase_request_approver_user->approver_user)
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="{{$purchase_request_approver_user->id}}"
-                                                                value="{{$purchase_request_approver_user->id}}"
-                                                                name="approver_user_id[]" checked>
-                                                            @else
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="{{$purchase_request_approver_user->id}}"
-                                                                value="{{$purchase_request_approver_user->id}}"
-                                                                name="approver_user_id[]">
-                                                            @endif
+                                                        $purchase_request_approver_user->approver_user)
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="{{$purchase_request_approver_user->id}}"
+                                                            value="{{$purchase_request_approver_user->id}}"
+                                                            name="approver_user_id[]" checked>
+                                                        @else
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="{{$purchase_request_approver_user->id}}"
+                                                            value="{{$purchase_request_approver_user->id}}"
+                                                            name="approver_user_id[]">
+                                                        @endif
                                                         {{$purchase_request_approver_user->approver_user}}
                                                         <span class="form-check-sign"></span>
                                                     </label>
@@ -188,13 +197,14 @@
                                                 class="form-control form-control-alternative"
                                                 placeholder="{{ __('Enter Charge To') }}" required autofocus
                                                 value="<?= !empty($department_name) ? $department_name->department_name : '' ?>">
-                                                
+
                                             @if (empty($department_name))
-                                                <datalist id="charge_to">
-                                                    @foreach($department_name_list as $department_name_lists)
-                                                        <option value="{{$department_name_lists->department_name}}">{{$department_name_lists->department_name}}</option>
-                                                    @endforeach
-                                                </datalist>
+                                            <datalist id="charge_to">
+                                                @foreach($department_name_list as $department_name_lists)
+                                                <option value="{{$department_name_lists->department_name}}">
+                                                    {{$department_name_lists->department_name}}</option>
+                                                @endforeach
+                                            </datalist>
                                             @endif
                                         </div>
 
@@ -203,6 +213,7 @@
                                             </h5>
                                             <input type="text" name="subject[]" id="subject"
                                                 class="form-control form-control-alternative"
+                                                value="{{old('subject',explode(',',$purchase_request->subject)[0])}}"
                                                 placeholder="{{ __('Enter Subject') }}">
                                         </div>
 
@@ -212,6 +223,7 @@
                                             </h5>
                                             <input type="text" name="existing_no_of_titles[]" id="existing_no_of_titles"
                                                 class="form-control form-control-alternative"
+                                                value="{{old('existing_no_of_titles',explode(',',$purchase_request->existing_no_of_titles)[0])}}"
                                                 placeholder="{{ __('Existing No of Titles') }}">
                                         </div>
                                     </div>
@@ -220,6 +232,7 @@
                                         </h5>
                                         <input type="text" name="note[]" id="note[]"
                                             class="form-control form-control-alternative"
+                                            value="{{old('note',explode(',',$purchase_request->note)[0])}}"
                                             placeholder="{{ __('Enter Note') }}" required autofocus>
                                     </div>
                                     <hr />
@@ -281,6 +294,220 @@ $(function() {
     });
 
     checkboxCheckOnlyOneByGroup();
+
+    // var max_fields = 10;
+    var wrapper = $(".container-request-form");
+    // var add_button = $(".add_form_field-request-form");
+
+    var rush_type = "{{$purchase_request->rush_type}}";
+    var author_name = "{{$purchase_request->author_name}}";
+    var title = "{{$purchase_request->title}}";
+    var edition = "{{$purchase_request->edition}}";
+    var copies_vol = "{{$purchase_request->copies_vol}}";
+    var publisher_name = "{{$purchase_request->publisher_name}}";
+    var publication_date = "{{$purchase_request->publication_date}}";
+    var publisher_address = "{{$purchase_request->publisher_address}}";
+    var charge_to = "{{$purchase_request->charge_to}}";
+    var subject = "{{$purchase_request->subject}}";
+    var existing_no_of_titles = "{{$purchase_request->existing_no_of_titles}}";
+    var note = "{{$purchase_request->note}}";
+
+    for (var i = 1; i < publication_date.split(',').length; i++) {
+        $(wrapper).append(` <div>
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Request Type') }}
+                                        </h5>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                    value="0" name="rush_type[]"> Rush
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                    value="1" name="rush_type[]"> Not Rush
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Author') }}
+                                        </h5>
+                                        <input type="text" name="author_name[]" id="author_name"
+                                            class="form-control form-control-alternative" value="`+author_name.split(',')[i]+`"
+                                            placeholder="{{ __('Enter Author Name') }}" required autofocus>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Tile') }}
+                                        </h5>
+                                        <input type="text" name="title[]" id="title[]"
+                                            class="form-control form-control-alternative" value="`+title.split(',')[i]+`"
+                                            placeholder="{{ __('Enter Book Title') }}" required autofocus>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4 col-xs-12">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Edition') }}
+                                            </h5>
+                                            <input type="text" name="edition[]" id="edition[]"
+                                                class="form-control form-control-alternative" value="`+edition.split(',')[i]+`" 
+                                                placeholder="{{ __('Enter Book Edition') }}" required autofocus>
+                                        </div>
+
+                                        <div class="form-group col-md-4 col-xs-12">
+                                            <h5 class="form-control-label" for="input-region-name">
+                                                {{ __('Copies/Volume') }}
+                                            </h5>
+                                            <input type="text" name="copies_vol[]" id="copies_vol[]"
+                                                class="form-control form-control-alternative" value="`+copies_vol.split(',')[i]+`" 
+                                                placeholder="{{ __('Enter Book Copies/Volume') }}" required autofocus>
+                                        </div>
+
+                                        <div class="form-group col-md-4 col-xs-12">
+                                            <h5 class="form-control-label" for="input-region-name">
+                                                {{ __('Publication Date') }}
+                                            </h5>
+                                            <input list="publication-date" name="publication_date[]"
+                                                id="publication_date[]" class="form-control form-control-alternative" value="`+publication_date.split(',')[i]+`"
+                                                placeholder="{{ __('Enter Publication Date') }}" required autofocus>
+                                            <datalist id="publication-date">
+                                                @for ($year = date('Y'); $year > (date('Y') - 99); $year--)
+                                                <option value="{{$year}}">
+                                                    @endfor
+                                            </datalist>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Publisher') }}
+                                        </h5>
+                                        <input type="text" name="publisher_name[]" id="publisher_name[]"
+                                            class="form-control form-control-alternative" value="`+publisher_name.split(',')[i]+`"
+                                            placeholder="{{ __('Enter Publisher Name') }}" required autofocus>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">
+                                            {{ __('Publisher Address') }}
+                                        </h5>
+                                        <input type="text" name="publisher_address[]" id="publisher_address[]"
+                                            class="form-control form-control-alternative" value="`+publisher_address.split(',')[i]+`"
+                                            placeholder="{{ __('Enter Publisher Address') }}" required autofocus>
+                                    </div>
+
+                                    <!-- loop data recommeded by -->
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">
+                                            {{ __('Recommended By') }}
+                                        </h5>
+                                        <div class="form-row">
+                                            @foreach ($purchase_request_recommended_users as
+                                            $purchase_request_recommended_user)
+                                            <div class="form-group col-xs-12 col-md-3">
+                                                <div class="recommended_by_checkbox form-check form-check-inline">
+                                                    <label class="form-check-label">
+                                                        @if ($role_name ==
+                                                        $purchase_request_recommended_user->recommended_user)
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="{{$purchase_request_recommended_user->id}}"
+                                                            value="{{$purchase_request_recommended_user->id}}"
+                                                            name="recommended_user_id[]" checked>
+                                                        @else
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="{{$purchase_request_recommended_user->id}}"
+                                                            value="{{$purchase_request_recommended_user->id}}"
+                                                            name="recommended_user_id[]">
+                                                        @endif
+
+                                                        {{$purchase_request_recommended_user->recommended_user}}
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    <!-- loop data approved by -->
+                                    <div class="form-group d-none">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Approved By') }}
+                                        </h5>
+                                        <div class="form-row">
+                                            @foreach ($purchase_request_approver_users as
+                                            $purchase_request_approver_user)
+                                            <div class="approved_by_checkbox form-group col-xs-12 col-md-3">
+                                                <div class="form-check form-check-inline">
+                                                    <label class="form-check-label">
+                                                        @if ($role_name ==
+                                                            $purchase_request_approver_user->approver_user)
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="{{$purchase_request_approver_user->id}}"
+                                                                value="{{$purchase_request_approver_user->id}}"
+                                                                name="approver_user_id[]" checked>
+                                                            @else
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="{{$purchase_request_approver_user->id}}"
+                                                                value="{{$purchase_request_approver_user->id}}"
+                                                                name="approver_user_id[]">
+                                                            @endif
+                                                        {{$purchase_request_approver_user->approver_user}}
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4 col-xs-12">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Charge To') }}
+                                            </h5>
+                                            <input list="charge_to" type="text" name="charge_to[]" id="charge_to[]"
+                                                class="form-control form-control-alternative"
+                                                placeholder="{{ __('Enter Charge To') }}" required autofocus
+                                                value="<?= !empty($department_name) ? $department_name->department_name : '' ?>">
+                                                
+                                            @if (empty($department_name))
+                                                <datalist id="charge_to">
+                                                    @foreach($department_name_list as $department_name_lists)
+                                                        <option value="{{$department_name_lists->department_name}}">{{$department_name_lists->department_name}}</option>
+                                                    @endforeach
+                                                </datalist>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group col-md-4 col-xs-12">
+                                            <h5 class="form-control-label" for="input-region-name">{{ __('Subject') }}
+                                            </h5>
+                                            <input type="text" name="subject[]" id="subject"
+                                                class="form-control form-control-alternative" value="`+subject.split(',')[i]+`"
+                                                placeholder="{{ __('Enter Subject') }}">
+                                        </div>
+
+                                        <div class="form-group col-md-4 col-xs-12">
+                                            <h5 class="form-control-label" for="input-region-name">
+                                                {{ __('Existing No of Titles') }}
+                                            </h5>
+                                            <input type="text" name="existing_no_of_titles[]" id="existing_no_of_titles"
+                                                class="form-control form-control-alternative" value="`+existing_no_of_titles.split(',')[i]+`"
+                                                placeholder="{{ __('Existing No of Titles') }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Note') }}
+                                        </h5>
+                                        <input type="text" name="note[]" id="note[]"
+                                            class="form-control form-control-alternative" value="`+note.split(',')[i]+`"
+                                            placeholder="{{ __('Enter Note') }}" required autofocus>
+                                    </div>
+                                    <hr />
+                                </div>`);
+    }
 });
 </script>
 @endpush

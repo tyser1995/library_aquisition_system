@@ -356,6 +356,31 @@ class PurchaseRequestController extends Controller
     public function update(Request $request, PurchaseRequest $purchaseRequest)
     {
         //
+        $purchase_requests = new PurchaseRequest();
+        $department_names_id = DepartmentName::where('department_name',$request->input('charge_to')[0])
+        ->get()
+        ->first();
+       
+        //dynamic fields <starts>
+        $purchase_requests -> created_by_users_id = Auth::user()->id;
+        $purchase_requests -> rush_type = !is_null($request->input('rush_type')) ? implode(',',$request->input('rush_type')) : 0;
+        $purchase_requests -> author_name = implode(',',$request->input('author_name'));
+        $purchase_requests -> title = implode(',',str_replace(",",";",$request->input('title')));
+        $purchase_requests -> edition = implode(',',$request->input('edition'));
+        $purchase_requests -> copies_vol = implode(',',$request->input('copies_vol'));
+        $purchase_requests -> publication_date = implode(',',$request->input('publication_date'));
+        $purchase_requests -> publisher_name = implode(',',str_replace(",",";",$request->input('publisher_name')));
+        $purchase_requests -> publisher_address = implode(',',str_replace(",",";",$request->input('publisher_address')));
+        $purchase_requests -> recommended_user_id = implode(',',$request->input('recommended_user_id'));
+        // $purchase_requests -> approver_user_id = implode(',',$request->input('approver_user_id'));
+        $purchase_requests -> charge_to = implode(',',$request->input('charge_to'));
+        $purchase_requests -> department_names_id = $department_names_id->id;
+        $purchase_requests -> subject = implode(',',str_replace(",",";",$request->input('subject')));
+        $purchase_requests -> existing_no_of_titles = implode(',',$request->input('existing_no_of_titles'));
+        $purchase_requests -> note = implode(',',$request->input('note'));
+        //dynamic fields <ends>
+        $purchase_requests->update();
+        return redirect()->route('purchase_request.index')->withStatus('Successfully Updated.');
     }
 
     /**
