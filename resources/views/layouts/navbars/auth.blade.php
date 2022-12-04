@@ -90,7 +90,7 @@
                 </div>
             </li>
             @endif
-            @if (Auth::user()->can('purchase_request-list'))
+            @if (Auth::user()->can('purchase_request-list') || Auth::user()->can('purchase_request_approved-list'))
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#reqbooks">
                     <i class="fa fa-book"></i>
