@@ -131,7 +131,7 @@
                             <div class="numbers">
                                 <p class="card-category">New Request</p>
                                 <p class="card-title">
-                                    @if (Auth::user()->role >= 4)
+                                    @if (Auth::user()->role ==  9)
                                         <?php 
                                             $dean = \App\Models\User::join('roles','roles.id','=','users.role')
                                             ->select('roles.name')
@@ -308,7 +308,7 @@
                             <div class="numbers">
                                 <p class="card-category">Approved Request</p>
                                 <p class="card-title">
-                                    @if (Auth::user()->role > 4)
+                                    @if (Auth::user()->role == 9)
                                         <?php 
                                             $dean = \App\Models\User::join('roles','roles.id','=','users.role')
                                             ->select('roles.name')
@@ -497,7 +497,7 @@
                                 <p class="card-category">Signed Request</p>
                                 <p class="card-title">
                                     <!-- Super Admin and Admin -->
-                                    @if (Auth::user()->role < 3)
+                                        @if (Auth::user()->role < 3)
                                             <?php 
                                                 $count = DB::table('purchase_requests')
                                                 ->join('users','users.id','=','purchase_requests.created_by_users_id')
