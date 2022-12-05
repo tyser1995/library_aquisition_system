@@ -149,6 +149,7 @@
                                                     ->join('users','users.id','=','purchase_requests.created_by_users_id')
                                                     ->join('employees','employees.users_id','=','users.id')
                                                     ->where('employees.department_names_id','=',$department_id->department_names_id)
+                                                    ->where('purchase_requests.deleted_flag','=',0)
                                                     ->select('purchase_requests.*','users.name')
                                                     ->get();
     
@@ -193,6 +194,7 @@
                                             join('users','users.id','=','purchase_requests.created_by_users_id')
                                             ->join('employees','employees.users_id','=','users.id')
                                             ->where('employees.department_names_id','=',$department_id->department_names_id)
+                                            ->where('purchase_requests.deleted_flag','=',0)
                                             ->select('purchase_requests.*')
                                             ->get()
                                             ->last();
