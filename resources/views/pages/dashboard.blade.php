@@ -483,6 +483,144 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 {{ Auth::user()->role == 4 || Auth::user()->role >= 8 && Auth::user()->role <= 10 ? 'd-none' : ' '}}">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-signature text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Signed Request</p>
+                                <p class="card-title">
+                                    <!-- Super Admin and Admin -->
+                                    @if (Auth::user()->role < 3)
+                                            <?php 
+                                                $count = DB::table('purchase_requests')
+                                                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                                                ->select('purchase_requests.*','users.name')
+                                                ->where('purchase_requests.deleted_flag','=',0)
+                                                ->where('purchase_requests.status_id','>',0)
+                                                ->get();
+
+                                                echo count($count);
+                                            ?>
+                                        @endif
+                                        <!-- Acquisition -->
+                                        @if (Auth::user()->role == 3)
+                                            <?php 
+                                                $count = DB::table('purchase_requests')
+                                                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                                                ->select('purchase_requests.*','users.name')
+                                                ->where('purchase_requests.deleted_flag','=',0)
+                                                ->where('purchase_requests.status_id','>',6)
+                                                ->get();
+
+                                                echo count($count);
+                                            ?>
+                                        @endif
+                                        <!-- VPAA 5 -->
+                                        @if (Auth::user()->role == 5)
+                                            <?php 
+                                                $count = DB::table('purchase_requests')
+                                                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                                                ->select('purchase_requests.*','users.name')
+                                                ->where('purchase_requests.deleted_flag','=',0)
+                                                ->where('purchase_requests.status_id','>',8)
+                                                ->get();
+
+                                                echo count($count);
+                                            ?>
+                                        @endif
+                                        <!-- VPFA 6 -->
+                                        @if (Auth::user()->role == 6)
+                                            <?php 
+                                                $count = DB::table('purchase_requests')
+                                                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                                                ->select('purchase_requests.*','users.name')
+                                                ->where('purchase_requests.deleted_flag','=',0)
+                                                ->where('purchase_requests.status_id','>',9)
+                                                ->get();
+
+                                                echo count($count);
+                                            ?>
+                                        @endif
+                                         <!-- DOL 7 -->
+                                         @if (Auth::user()->role == 7)
+                                            <?php 
+                                                $count = DB::table('purchase_requests')
+                                                ->join('users','users.id','=','purchase_requests.created_by_users_id')
+                                                ->select('purchase_requests.*','users.name')
+                                                ->where('purchase_requests.deleted_flag','=',0)
+                                                ->where('purchase_requests.status_id','>',7)
+                                                ->get();
+
+                                                echo count($count);
+                                            ?>
+                                        @endif
+                                   
+                                <p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        @if (Auth::user()->role >= 4)
+                            <?php 
+                                     $dean = \App\Models\User::join('roles','roles.id','=','users.role')
+                                     ->select('roles.name')
+                                     ->where('users.id','=',Auth::user()->id)
+                                     ->get()
+                                     ->first();
+
+                                     $department_id = \App\Models\Employee::where('users_id','=',Auth::user()->id)
+                                     ->get()
+                                     ->first();
+
+                                     if(strtoupper($dean->name) =="DEAN"){
+                                        if(!empty($department_id)){
+                                            $count = \App\Models\PurchaseRequest::
+                                            join('users','users.id','=','purchase_requests.created_by_users_id')
+                                            ->join('employees','employees.users_id','=','users.id')
+                                            ->where('employees.department_names_id','=',$department_id->department_names_id)
+                                            ->where('purchase_requests.deleted_flag','=',0)
+                                            ->select('purchase_requests.*')
+                                            ->get()
+                                            ->last();
+
+                                            //echo count($count);
+                                        }
+                                     }else{
+                                        $count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get()->last();
+                                        //echo count($count);
+                                     }
+
+                                    //$count = \App\Models\PurchaseRequest::where('created_by_users_id','=',Auth::user()->id)->get()->last();
+                                ?>
+                            @if (!empty($count))
+                                <i class="fa fa-calendar-o"></i> Update Since {{$count->created_at->diffForHumans()}}
+                            @else
+                                {{__('No Records found')}}
+                            @endif
+                        @else
+                            <?php 
+                                    $count = \App\Models\PurchaseRequest::get()->last();
+                                ?>
+                            @if (!empty($count))
+                                <i class="fa fa-calendar-o"></i> Update Since {{$count->created_at->diffForHumans()}}
+                            @else
+                            {{__('No Records found')}}
+                            @endif
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12 d-none">
             <div class="card ">
                 <div class="card-header ">
