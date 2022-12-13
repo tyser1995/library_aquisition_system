@@ -139,9 +139,9 @@ class DepartmentNameController extends Controller
     public function update(Request $request)
     {
         //
-        //$department_name = new DepartmentName();
+        $department_name = DepartmentName::findOrfail($request->id);
         $data = $request->except(['_token','_method']);
-        DB::table('department_names')->update($data);
+        $department_name->update($data);
         return redirect()->route('department_name.index')->withStatus('Updated Successfully');
     }
 
