@@ -80,7 +80,7 @@ $(document).ready(function() {
                                     </div>
 
                                     <div class="form-group">
-                                        <h5 class="form-control-label" for="input-region-name">{{ __('Publisher') }}
+                                        <h5 class="form-control-label" for="input-region-name">{{ __('Dealer/Supplier') }}
                                         </h5>
                                         <input type="text" name="publisher_name[]" id="publisher_name[]"
                                             class="form-control form-control-alternative"

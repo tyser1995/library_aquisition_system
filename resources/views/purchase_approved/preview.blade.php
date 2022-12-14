@@ -109,7 +109,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <p id="publisher_name"><b>Publiser:</b>
+                                <p id="publisher_name"><b>Dealer/Supplier:</b>
                                     {{old('publisher_name',explode(',',$purchase_requests->publisher_name)[0])}}
                                 </p>
                                 <p id="publisher_address"><b>Publiser Address:</b>
@@ -276,7 +276,7 @@ $(function() {
                                         </td>
                                     </tr>
                                 </table>
-                                <p id="publisher_name"><b>Publiser:</b> 
+                                <p id="publisher_name"><b>Dealer/Supplier:</b> 
                                 ` + publisher_name.split(',')[i] + `
                                 </p>
                                 <p id="publisher_address"><b>Publiser Address:</b> 

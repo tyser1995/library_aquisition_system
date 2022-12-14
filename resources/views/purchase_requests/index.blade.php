@@ -39,7 +39,7 @@
                                     <th>Title</th>
                                     <th>Author</th>
                                     <th>Edition</th>
-                                    <th>Created date</th>
+                                    <th>Date Requested</th>
                                     <th>Status</th>                                    
                                     <th></th>
                                 </tr>
