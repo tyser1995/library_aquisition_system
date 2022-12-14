@@ -1,5 +1,5 @@
 <div class="sidebar" data-color="dark" data-active-color="primary">
-    <div class="logo" style="display:grid; justify-content:center;">
+    <div class="logo" style="display:grid; justify-content:center;background:#071599;">
         <a href="{{url('/')}}" class="simple-text">
             <div class="logo-image-small">
                 <img src="{{ asset('paper') }}/img/cpu-logo.png">
@@ -9,7 +9,7 @@
             {{ __('Library Aquisition ') }}
         </a>
     </div>
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper" style="background:#071599; width:auto">
         <ul class="nav">
             <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }} ">
                 <a href="{{ route('page.index', 'dashboard') }}">
@@ -180,7 +180,7 @@
             </li>
             @endif
             <!-- @if (Auth::user()->can('purchase_request-list') || Auth::user()->can('purchase_request_approved-list')) -->
-            <li class="d-none {{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
+            <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#reportMgmt">
                     <i class="fa fa-newspaper"></i>
                     <p>{{ __('Report Management')}} <b class="caret"></b></p>

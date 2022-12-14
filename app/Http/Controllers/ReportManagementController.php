@@ -37,7 +37,8 @@ class ReportManagementController extends Controller
 
         $purchase_requests = DB::table('purchase_requests')
         ->join('users','users.id','=','purchase_requests.created_by_users_id')
-        ->select('purchase_requests.*','users.name')
+        ->join('department_names','department_names.id','=','purchase_requests.department_names_id')
+        ->select('purchase_requests.*','users.name','department_names.department_name')
         ->where('purchase_requests.deleted_flag','=',0)
         ->where('purchase_requests.status_id','=',11)
         ->get();

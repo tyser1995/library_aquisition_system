@@ -29,7 +29,7 @@
                                     <th>Author</th>
                                     <th>Edition</th>
                                     <th>Created date</th>
-                                    <th>Status</th>                                    
+                                    <!-- <th>Status</th>                                     -->
                                     <th></th>
                                 </tr>
                             </thead>
@@ -43,7 +43,7 @@
                                         <td>{{$purchase_requests->author_name}}</td>
                                         <td>{{$purchase_requests->edition}}</td>                                       
                                         <td>{{$purchase_requests->created_at}}</td>
-                                        <td>@if ($purchase_requests->status_id == 11)
+                                        <!-- <td>@if ($purchase_requests->status_id == 11)
                                             <span class="badge badge-info">
                                                 <i class="fa fa-check-circle"></i> {{__('Acquired')}}
                                             </span>
@@ -51,7 +51,7 @@
                                                 <i class="fa fa-user-circle" data-toggle="tooltip" title="Approved by Custodian"></i>
                                             </span>
                                         @endif
-                                         </td>
+                                         </td> -->
                                         <td class="text-center">
                                             <a href="{{route('acquisition_books/preview/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-print"></i></a>
                                         </td>

@@ -162,11 +162,7 @@
                                             }
                                             
                                         ?>
-                                    @else
-                                        <?php 
-                                            // $count = \App\Models\PurchaseRequest::all();
-                                            // echo count($count);
-                                        ?>
+                                    @endif
 
                                         <!-- Acquisition -->
                                         @if (Auth::user()->role == 3)
@@ -234,7 +230,7 @@
                                                 echo count($count);
                                             ?>
                                         @endif
-                                    @endif
+                                    
                                    
                                 <p>
                             </div>
@@ -327,6 +323,7 @@
                                                     ->join('employees','employees.users_id','=','users.id')
                                                     ->where('employees.department_names_id','=',$department_id->department_names_id)
                                                     ->where('purchase_requests.deleted_flag','=',0)
+                                                    ->where('purchase_requests.status_id','>',1)
                                                     ->select('purchase_requests.*','users.name')
                                                     ->get();
     
@@ -338,11 +335,8 @@
                                             }
                                             
                                         ?>
-                                    @else
-                                        <?php 
-                                            // $count = \App\Models\PurchaseRequest::all();
-                                            // echo count($count);
-                                        ?>
+                                    @endif
+                                       
                                         <!-- Super Admin and Admin -->
                                         @if (Auth::user()->role < 3)
                                             <?php 
@@ -422,7 +416,6 @@
                                                 echo count($count);
                                             ?>
                                         @endif
-                                    @endif
                                    
                                 <p>
                             </div>

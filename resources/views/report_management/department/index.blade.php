@@ -14,36 +14,53 @@
                             <div class="col-8">
                                 <h3 class="mb-0 h3_title"></h3>
                             </div>
+                            <div class="col-4 text-right add-region-btn">
+                                <button id="btnPrint" class="btn btn-info  btn-sm">Print
+                                    <span><i class="fa fa-print"></i></span>
+                                </button> 
+                            </div>
                         </div>
+                        <!-- <div class="row align-items-center">
+                            <div class="col-8">
+                               asd
+                            </div>
+                            <div class="col-4 text-right add-region-btn">
+                                <button id="btnPrint" class="btn btn-info  btn-sm">Print
+                                    <span><i class="fa fa-print"></i></span>
+                                </button> 
+                            </div>
+                        </div> -->
                     </div>
 
-                    <div class="card-body">
+                    <div id="print_request" class="card-body">
                         @include('notification.index')
                         <table id="tblPurchaseRequest"class="table table-responsive-sm table-flush display"
                             style="width:100%">
                             <thead>
                                 <tr>
                                     <th class="d-none">ID</th>
+                                    <th>Department</th>
                                     <th>Requested by</th>
                                     <th>Title</th>
                                     <th>Author</th>
                                     <th>Edition</th>
                                     <th>Created date</th>
-                                    <th>Status</th>                                    
-                                    <th></th>
+                                    <!-- <th>Status</th>                                     -->
+                                    <!-- <th></th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($purchase_request as $purchase_requests)
                                     <tr>
                                         <td class="d-none">{{$purchase_requests->id}}</td>
+                                        <td>{{$purchase_requests->department_name}}</td>
                                         <td>{{$purchase_requests->name}}</td>
                                         <td>{{ $purchase_requests->title }}
                                         </td>
                                         <td>{{$purchase_requests->author_name}}</td>
                                         <td>{{$purchase_requests->edition}}</td>                                       
                                         <td>{{$purchase_requests->created_at}}</td>
-                                        <td>@if ($purchase_requests->status_id == 11)
+                                        <!-- <td>@if ($purchase_requests->status_id == 11)
                                             <span class="badge badge-info">
                                                 <i class="fa fa-check-circle"></i> {{__('Acquired')}}
                                             </span>
@@ -51,10 +68,10 @@
                                                 <i class="fa fa-user-circle" data-toggle="tooltip" title="Approved by Custodian"></i>
                                             </span>
                                         @endif
-                                         </td>
-                                        <td class="text-center">
+                                         </td> -->
+                                        <!-- <td class="text-center">
                                             <a href="{{route('acquisition_books/preview/{id}', ['id' => $purchase_requests->id])}}" class="{{Auth::user()->can('purchase_request-edit') ? 'btn btn-info btn-sm' : 'btn btn-info btn-sm d-none'}}" ><i class="fa fa-print"></i></a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -69,6 +86,17 @@
 @push('scripts')
 <script>
 $(function() {
+    $('#btnPrint').click(function(e) {
+        e.preventDefault();
+        $("#print_request").printThis({
+            importCSS: true,            // import parent page css
+            importStyle: true,         // import style tags
+            printContainer: true, // print outer container/$.selector 
+            pageTitle:"Library Purchase Request Form",
+            canvas: true,           
+        });
+    });
+ 
     $('h3.h3_title')[0].innerHTML = $('li.active')[0].innerHTML;
     $('h3.h3_title').find('a').css({
         'color': 'black',
@@ -78,9 +106,9 @@ $(function() {
     $('h3.h3_title a').find('i').addClass('d-none');
     
     
-    $('#tblPurchaseRequest').DataTable({
-        order:[[2,'asc']]
-    });
+    // $('#tblPurchaseRequest').DataTable({
+    //     order:[[2,'asc']]
+    // });
 
     $('.btnCanDestroy').click(function() {
             Swal.fire({
