@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //Department Type
         $this->call([DepartmentTypeSeeder::class]);
 
-        //Itinaray
-        //$this->call([ItineraryTypesSeeder::class]);
+        //Publisher
+        $this->call([ListOfPublisherSeeder::class]);
     }
 }

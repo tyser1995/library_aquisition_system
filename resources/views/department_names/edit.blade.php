@@ -30,6 +30,7 @@
                                 @csrf
                                 @method('put')
                                 <div class="pl-lg-4">
+                                <input type="hidden" name="id" value="{{$department_name->id}}" class="form-control form-control-alternative">
                                 <input type="hidden" name="created_by_users_id" value="{{Auth::user()->id}}" class="form-control form-control-alternative">
                                     <div class="form-group">
                                         <h5 class="form-control-label" for="input-region-name">{{ __('Department Type') }}</h5>
