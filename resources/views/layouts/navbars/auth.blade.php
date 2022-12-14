@@ -158,6 +158,14 @@
                             </a>
                         </li>
                         @endcan
+                        @can('department_type-list')
+                        <li class="{{ $elementActive == 'library_sections' ? 'active' : '' }}">
+                            <a href="{{ route('library_sections') }}">
+                                <span class="sidebar-mini-icon">&nbsp;</span>
+                                <span class="sidebar-normal">{{ __('Library Sections ') }}</span>
+                            </a>
+                        </li>
+                        @endcan
                         @can('department_name-list')
                         <li class="{{ $elementActive == 'department_names' ? 'active' : '' }}">
                             <a href="{{ route('department_names') }}">

@@ -76,6 +76,11 @@ class PermissionTableSeeder extends Seeder
            'signature-store',
            'signature-edit',
            'signature-delete',
+           'library_section-list',
+           'library_section-create',
+           'library_section-store',
+           'library_section-edit',
+           'library_section-delete',
         ];
 
         //DB::table('permissions')->truncate();

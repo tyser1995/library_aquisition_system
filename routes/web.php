@@ -60,6 +60,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('department_names/data', ['as' => 'department_names/data', 'uses' => 'App\Http\Controllers\DepartmentNameController@data']);
     Route::get('department_names/delete/{id}', ['as' => 'department_names/delete/{id}', 'uses' => 'App\Http\Controllers\DepartmentNameController@delete']);
     Route::resource('department_name','App\Http\Controllers\DepartmentNameController');
+    //Library Section
+    Route::get('library_sections', ['as' => 'library_sections', 'uses' => 'App\Http\Controllers\LibrarySectionController@index']);
+    Route::get('library_sections/data', ['as' => 'library_sections/data', 'uses' => 'App\Http\Controllers\LibrarySectionController@data']);
+    Route::get('library_sections/delete/{id}', ['as' => 'library_sections/delete/{id}', 'uses' => 'App\Http\Controllers\LibrarySectionController@delete']);
+    Route::resource('library_section','App\Http\Controllers\LibrarySectionController');
     //Department Budget
     Route::get('department_budgets', ['as' => 'department_budgets', 'uses' => 'App\Http\Controllers\DepartmentBudgetController@index']);
     Route::get('department_budgets/delete/{id}', ['as' => 'department_budgets/delete/{id}', 'uses' => 'App\Http\Controllers\DepartmentBudgetController@delete']);
