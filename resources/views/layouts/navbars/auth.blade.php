@@ -141,13 +141,13 @@
             @endif
 
             @if (Auth::user()->can('department_type-list') || Auth::user()->can('department_type-list') ||
-            Auth::user()->can('signature-list'))
+            Auth::user()->can('signature-list') || Auth::user()->can('library_section-list'))
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#datamgt">
                     <i class="fa fa-cog"></i>
                     <p>{{ __('Data Management') }} <b class="caret"></b></p>
                 </a>
-                <div class="{{ $elementActive == 'department_types' || $elementActive == 'department_names' ||  $elementActive == 'signature_attachments' ? 'collapse show ' : 'collapse' }}"
+                <div class="{{ $elementActive == 'department_types' || $elementActive == 'department_names' ||  $elementActive == 'signature_attachments' || $elementActive == 'library_sections' ? 'collapse show ' : 'collapse' }}"
                     id="datamgt">
                     <ul class="nav">
                         @can('department_type-list')
@@ -158,7 +158,7 @@
                             </a>
                         </li>
                         @endcan
-                        @can('department_type-list')
+                        @can('library_section-list')
                         <li class="{{ $elementActive == 'library_sections' ? 'active' : '' }}">
                             <a href="{{ route('library_sections') }}">
                                 <span class="sidebar-mini-icon">&nbsp;</span>
@@ -187,7 +187,7 @@
                 </div>
             </li>
             @endif
-            <!-- @if (Auth::user()->can('purchase_request-list') || Auth::user()->can('purchase_request_approved-list')) -->
+            @if (Auth::user()->can('report_management-list'))
             <li class="{{ $elementActive == '1' || $elementActive == '1' ? 'active' : '' }}">
                 <a data-toggle="collapse" aria-expanded="false" href="#reportMgmt">
                     <i class="fa fa-newspaper"></i>
@@ -211,7 +211,7 @@
                     </ul>
                 </div>
             </li>
-            <!-- @endif -->
+            @endif
 
         </ul>
     </div>

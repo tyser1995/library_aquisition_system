@@ -31,19 +31,7 @@ window.Vue = require("vue").default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 //Purchased Request
-Vue.component('purchase-request-component', require('./components/PurchaseRequestComponent.vue').default);
-//Department Type
-Vue.component('department-type-component', require('./components/DepartmentTypeComponent.vue').default);
-Vue.component('department-name-component', require('./components/DepartmentNameComponent.vue').default);
-// Zoho CRM Live
-Vue.component('zoho-crm-booking-component', require('./components/ZohoCRMBookingComponent.vue').default);
-Vue.component('zoho-crm-invoice-component', require('./components/ZohoCRMInvoiceComponent.vue').default);
-// Zoho CRM Sanbox
-Vue.component('zoho-crm-sandbox-booking-component', require('./components/ZohoCRMSandboxBookingComponent.vue').default);
-Vue.component('zoho-crm-sandbox-invoice-component', require('./components/ZohoCRMSandboxInvoiceComponent.vue').default);
-//Safari Portal
-Vue.component('safari-portal-itinerary-component', require('./components/SafariPortalItinerariesComponent.vue').default);
-
+// Vue.component('purchase-request-component', require('./components/PurchaseRequestComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

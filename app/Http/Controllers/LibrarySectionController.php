@@ -14,10 +14,10 @@ class LibrarySectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:library_sections-list', ['only' => ['index']]);
-        $this->middleware('permission:library_sections-create', ['only' => ['create','store']]);
-        $this->middleware('permission:library_sections-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:library_sections-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:library_section-list', ['only' => ['index']]);
+        $this->middleware('permission:library_section-create', ['only' => ['create','store']]);
+        $this->middleware('permission:library_section-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:library_section-delete', ['only' => ['destroy']]);
     }
     public function index()
     {
