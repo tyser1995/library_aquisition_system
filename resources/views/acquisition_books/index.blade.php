@@ -14,6 +14,17 @@
                             <div class="col-8">
                                 <h3 class="mb-0 h3_title"></h3>
                             </div>
+                            @can('acquisition_books-create')
+                                <div class="col-4 text-right add-region-btn">
+                                    <a href="{{ route('acquisition_books/upload_accession_books') }}" class="btn btn-sm btn-primary"
+                                        id="add-region-btn">{{ __('Import Accession') }}</a>
+                                    <div class="input-group-append icon">
+                                        <a href="{{ route('acquisition_books/upload_accession_books') }}" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-plus-square"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endcan      
                         </div>
                     </div>
 
@@ -37,11 +48,11 @@
                                 @foreach ($purchase_request as $purchase_requests)
                                     <tr>
                                         <td class="d-none">{{$purchase_requests->id}}</td>
-                                        <td>{{$purchase_requests->name}}</td>
-                                        <td>{{ $purchase_requests->title }}
+                                        <td>{{$purchase_requests->name ? $purchase_requests->name : ($purchase_requests->recommended_by ? $purchase_requests->recommended_by : "-") }}</td>
+                                        <td>{{$purchase_requests->title ? $purchase_requests->title : '-'}}
                                         </td>
-                                        <td>{{$purchase_requests->author_name}}</td>
-                                        <td>{{$purchase_requests->edition}}</td>                                       
+                                        <td>{{$purchase_requests->author_name ? $purchase_requests->author_name : $purchase_requests->author}}</td>
+                                        <td>{{$purchase_requests->edition ? $purchase_requests->edition : '-'}}</td>                             
                                         <td>{{$purchase_requests->created_at}}</td>
                                         <td>@if ($purchase_requests->status_id == 11)
                                             <span class="badge badge-info">

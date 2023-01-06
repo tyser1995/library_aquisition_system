@@ -206,7 +206,7 @@ $(function() {
     // var add_button = $(".add_form_field-request-form");
 
     var rush_type = "{{$purchase_requests->rush_type}}";
-    var author_name = "{{$purchase_requests->author_name}}";
+    var author_name = "{{$purchase_requests->author_name ? $purchase_requests->author_name : $purchase_requests->author}}";
     var title = "{{$purchase_requests->title}}";
     var edition = "{{$purchase_requests->edition}}";
     var copies_vol = "{{$purchase_requests->copies_vol}}";

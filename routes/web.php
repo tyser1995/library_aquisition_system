@@ -76,6 +76,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('acquisition_books', ['as' => 'acquisition_books', 'uses' => 'App\Http\Controllers\AcquisitionBookController@index']);
     Route::get('acquisition_books/approved/{id}', ['as' => 'acquisition_books/approved/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@approved']);
     Route::get('acquisition_books/preview/{id}',['as' => 'acquisition_books/preview/{id}', 'uses' => 'App\Http\Controllers\AcquisitionBookController@print_preview']);
+    Route::get('acquisition_books/upload_accession_books',['as' => 'acquisition_books/upload_accession_books', 'uses' => 'App\Http\Controllers\AcquisitionBookController@upload_accession_books']);
+    Route::post('acquisition_books/store_accession_books',['as' => 'acquisition_books/store_accession_books', 'uses' => 'App\Http\Controllers\AcquisitionBookController@store_accession_books']);
     Route::resource('acquisition_book','App\Http\Controllers\AcquisitionBookController');
     //Report Management
     //By Department
