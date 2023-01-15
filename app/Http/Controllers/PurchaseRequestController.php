@@ -456,19 +456,22 @@ class PurchaseRequestController extends Controller
         ->sum('amount');
 
         // dd(floatval($budget->no_of_students * $budget->amount)-floatval($department_budget_left));
-
-        return view('purchase_requests.requested_books',[
-            'purchase_request' => $purchase_requests,
-            'purchase_request_recommended_users' => $purchase_request_recommended_users,
-            'purchase_request_approver_users' => $purchase_request_approver_users,
-            'role_name' => collect($role_name)['name'],
-            'department_name' => $department_name,
-            'department_name_list' => $department_name_list,
-            'signature' => $signature,
-            'budget' => $budget,
-            'budget_all' => $budgetAll,
-            'department_budget_left' => floatval($department_budget_left)
-        ]);
+        if(empty($budget)){
+            return redirect()->route('purchase_request.index')->withError('You must add budget first. Please contact System Admin');
+        }else{
+            return view('purchase_requests.requested_books',[
+                'purchase_request' => $purchase_requests,
+                'purchase_request_recommended_users' => $purchase_request_recommended_users,
+                'purchase_request_approver_users' => $purchase_request_approver_users,
+                'role_name' => collect($role_name)['name'],
+                'department_name' => $department_name,
+                'department_name_list' => $department_name_list,
+                'signature' => $signature,
+                'budget' => $budget,
+                'budget_all' => $budgetAll,
+                'department_budget_left' => floatval($department_budget_left)
+            ]);
+        }
     }
 
     public function requested_books_update(Request $request){
