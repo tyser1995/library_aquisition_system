@@ -21,6 +21,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 <head>
     <meta charset="utf-8" />
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('paper') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('paper') }}/img/cpu-logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -100,6 +101,8 @@ The above copyright notice and this permission notice shall be included in all c
             padding:0.375rem 0.75rem !important;
         }
     </style>
+
+    <script src="{{ asset('js/main.js') }}"></script>
 </head>
 
 <body class="{{ $class }}">
@@ -115,6 +118,30 @@ The above copyright notice and this permission notice shall be included in all c
     <script>
         var base_url = "{{ url('/') }}";
     </script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCeXgaTQllBIN2tcHyTCdvOq4LmDnwW6IM",
+    authDomain: "emergency-responder-76586.firebaseapp.com",
+    projectId: "emergency-responder-76586",
+    storageBucket: "emergency-responder-76586.appspot.com",
+    messagingSenderId: "812446223907",
+    appId: "1:812446223907:web:b6fc909e3e7a4aafca2b96",
+    measurementId: "G-N03LVL6GKL"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!--   Core JS Files   -->
     <script src="{{ asset('js/manifest.js') }}"></script>
